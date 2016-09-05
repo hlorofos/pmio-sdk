@@ -1,0 +1,459 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "ProcessMaker API",
+    "description": "An API to access ProcessMaker core functionality",
+    "termsOfService": "http://processmaker.com/terms/",
+    "contact": {
+      "name": "ProcessMaker API team",
+      "email": "oleg@processmaker.com",
+      "url": "http://processmaker.com/"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "http://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "localhost",
+  "basePath": "/api/v1",
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/vnd.api+json"
+  ],
+  "produces": [
+    "application/vnd.api+json"
+  ],
+  "security": [
+    {
+      "PasswordGrant": []
+    },
+    {
+      "internalApiKey": []
+    }
+  ],
+  "paths": {
+    "/roles": {
+      "get": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Returns all Roles",
+        "operationId": "findRoles",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page Nr to fetch",
+            "required": false,
+            "default": 1,
+            "type": "integer"
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "Amount of Items per Page",
+            "required": false,
+            "default": 15,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Roles list",
+            "schema": {
+              "title": "JsonApiCollection",
+              "description": "Json Api Response with collection of Items in array",
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Role"
+                  }
+                },
+                "meta": {
+                  "$ref": "#/definitions/Meta"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Creates a new role",
+        "operationId": "addRole",
+        "parameters": [
+          {
+            "name": "JsonApiItem",
+            "in": "body",
+            "description": "JsonApi with the Role object to add",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Role"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Created Role response",
+            "schema": {
+              "type": "object",
+              "title": "JsonApiCreatedItem",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Role"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      }
+    },
+    "/roles/{id}": {
+      "get": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Returns the role based on a single ID",
+        "operationId": "findRoleById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of Role to fetch",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Role not found",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "title": "JsonApiItem",
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Role"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Update existing Role",
+        "operationId": "updateRole",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of Role to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "JsonApiUpdateItem",
+            "in": "body",
+            "description": "Role object to edit",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Role"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "JsonApi response with updated Role object",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Role"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Deletes a single item based on the ID supplied",
+        "operationId": "deleteRole",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of item to delete",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Item successfully deleted"
+          },
+          "500": {
+            "description": "Deletion error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "404": {
+            "description": "Item not found",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "PasswordGrant": {
+      "type": "oauth2",
+      "flow": "password",
+      "tokenUrl": "/oauth/access_token"
+    },
+    "internalApiKey": {
+      "type": "apiKey",
+      "in": "query",
+      "name": "access_token"
+    }
+  },
+  "definitions": {
+    "Role": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "9d705617-cc29-482a-85ff-7f7292f72b31"
+        },
+        "type": {
+          "default": "role",
+          "type": "string",
+          "example": "role"
+        },
+        "attributes": {
+          "required": [
+            "code"
+          ],
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "example": "ROLE_ADMIN"
+            },
+            "status": {
+              "default": "ACTIVE",
+              "type": "string",
+              "enum": [
+                "ACTIVE",
+                "INACTIVE"
+              ],
+              "example": "ACTIVE"
+            },
+            "created_at": {
+                "$ref": "#/definitions/DateFull"
+            },
+            "updated_at": {
+              "$ref": "#/definitions/DateFull"
+            }
+          }
+        }
+      }
+    },
+    "DateFull": {
+      "type": "object",
+      "required": [
+        "date", "timezone_type", "timezone"
+      ],
+      "properties": {
+        "date": {
+          "type": "string",
+          "example": "2016-08-23 18:11:05.000000"
+        },
+        "timezone_type": {
+          "type": "integer",
+          "example": 3
+        },
+        "timezone": {
+          "type": "string",
+          "example": "UTC"
+        }
+      }
+    },
+    "Pagination": {
+      "type": "object",
+      "required": [
+        "total",
+        "count",
+        "per_page",
+        "current_page",
+        "total_pages",
+        "links"
+      ],
+      "properties": {
+        "total": {
+          "type": "integer",
+          "example": 125
+        },
+        "count": {
+          "type": "integer",
+          "example": 25
+        },
+        "per_page": {
+          "type": "integer",
+          "example": 25
+        },
+        "current_page": {
+          "type": "integer",
+          "example": 2
+        },
+        "total_pages": {
+          "type": "integer",
+          "example": 30
+        },
+        "links": {
+          "type": "object",
+          "properties": {
+            "next": {
+              "type": "string",
+              "example": "http://localhost/api/v1/users?page=3"
+            },
+            "previous": {
+              "type": "string",
+              "example": "http://localhost/api/v1/users?page=1"
+            }
+          }
+        }
+      }
+    },
+    "Meta": {
+      "type": "object",
+      "properties": {
+        "pagination": {
+          "$ref": "#/definitions/Pagination"
+        }
+      }
+    },
+    "errorArray": {
+      "type": "object",
+      "required": [
+        "errors"
+      ],
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Error"
+          }
+          }
+        }
+    },
+    "Error": {
+      "type": "object",
+      "required": [
+        "code"
+      ],
+          "properties": {
+            "code": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string"
+            },
+            "detail": {
+              "type": "string"
+            }
+          }
+    }
+
+  }
+}
