@@ -4,6 +4,9 @@ VERSION="1.0.0"
 CODEGEN="bin/swagger-codegen-cli-master.jar"
 SCHEMA="schema/$VERSION/swagger.json"
 
+languages="android aspnet5 async-scala csharp cpprest dart flash python-flask go groovy java jaxrs jaxrs-cxf jaxrs-resteasy jaxrs-spec inflector javascript javascript-closure-angular jmeter nancyfx nodejs-server objc perl php python qt5cpp ruby scala scalatra sinatra rails5 slim spring swift tizen typescript-angular2 typescript-angular typescript-node typescript-fetch akka-scala CsharpDotNet2 clojure haskell lumen"
+docs="swagger html html2 dynamic-html cwiki"
+
 DetectJava() {
 
 if type -p java; then
@@ -27,7 +30,7 @@ fi
 }
 
 RunCodegen() {
-    java -jar $CODEGEN generate -i $SCHEMA -l $1 -o $2 2>logs/$1-build.log
+    java -jar ${CODEGEN} generate -i ${SCHEMA} -l $1 -o $2 2>logs/$1-build.log
     if cat logs/$1-build.log|grep ERROR
     then
         echo ERROR during codegen run
@@ -36,15 +39,12 @@ RunCodegen() {
 }
 
 Cleanup() {
-    echo Cleaning result folders for API v.$VERSION
-	rm -rf api/$VERSION/
-	rm -rf docs/$VERSION/
+    echo Cleaning result folders for API v.${VERSION}
+	rm -rf api/${VERSION}/
+	rm -rf docs/${VERSION}/
 	rm -f logs/*
     echo DONE
 }
-
-languages="php perl"
-docs="swagger html html2 cwiki"
 
 if [ "$1" = "clean" ]
 then 
@@ -54,22 +54,22 @@ fi
 
 DetectJava
 
-echo Building APIs and DOCs from $SCHEMA file
+echo Building APIs and DOCs from ${SCHEMA} file
 
 echo Generating Documentation
 
-for doc in $docs
+for doc in ${docs}
 do
-    echo -e "\tDocumentation: $doc"
-    RunCodegen $doc docs/$VERSION/$doc
+    echo -e "\tDocumentation: ${doc}"
+    RunCodegen ${doc} docs/${VERSION}/${doc}
 done
 
 echo Generating API
 
-for lang in $languages
+for lang in ${languages}
 do
-    echo -e "\tLanguage: $lang"
-    RunCodegen $lang api/$VERSION/$lang
+    echo -e "\tLanguage: ${lang}"
+    RunCodegen ${lang} api/${VERSION}/${lang}
 done
 
-echo Swagger result schema located at docs/$VERSION/swagger/swagger.json
+echo Swagger result schema located at docs/${VERSION}/swagger/swagger.json
