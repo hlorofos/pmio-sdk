@@ -73,3 +73,4 @@ do
 done
 
 echo Swagger result schema located at docs/${VERSION}/swagger/swagger.json
+
