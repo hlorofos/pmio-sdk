@@ -2,6 +2,10 @@
 
 This README would normally document whatever steps are necessary to get your application up and running.
 
+# Documentation #
+
+* [HTML](docs/1.0.0/html/)
+
 ### What is this repository for? ###
 
 * Quick summary
