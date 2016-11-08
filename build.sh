@@ -31,7 +31,7 @@ fi
 
 RunCodegen() {
     java -jar ${CODEGEN} generate -i ${SCHEMA} -l $1 -o $2 2>logs/$1-build.log
-    if cat logs/$1-build.log|grep -E 'ERROR|Exception'
+    if cat logs/$1-build.log|grep -E 'ERROR|Exception in'
     then
         echo ERROR during codegen run
         exit 255
