@@ -31,7 +31,7 @@ fi
 
 RunCodegen() {
     java -jar ${CODEGEN} generate -i ${SCHEMA} -l $1 -o $2 2>logs/$1-build.log
-    if cat logs/$1-build.log|grep ERROR
+    if cat logs/$1-build.log|grep -E 'ERROR|Exception'
     then
         echo ERROR during codegen run
         exit 255
@@ -52,7 +52,16 @@ then
     exit
 fi
 
+
 DetectJava
+
+if [ "$1" = "test" ]
+then
+    echo Running swagger test generator
+    RunCodegen swagger api/${VERSION}/swagger
+    echo DONE
+    exit
+fi
 
 echo Building APIs and DOCs from ${SCHEMA} file
 
