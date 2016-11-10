@@ -144,6 +144,115 @@
                 }
             }
         },
+        "/users": {
+            "get": {
+                "tags": [
+                    "processmaker"
+                ],
+                "description": "Returns all Users",
+                "operationId": "findUsers",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page Nr to fetch",
+                        "required": false,
+                        "default": 1,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Amount of Items per Page",
+                        "required": false,
+                        "default": 15,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Users list",
+                        "schema": {
+                            "title": "JsonApiCollection",
+                            "description": "Json Api Response with collection of Items in array",
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/User"
+                                    }
+                                },
+                                "meta": {
+                                    "$ref": "#/definitions/Meta"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/errorArray"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "processmaker"
+                ],
+                "description": "Creates a new user",
+                "operationId": "addUser",
+                "parameters": [
+                    {
+                        "name": "JsonApiItem",
+                        "in": "body",
+                        "description": "JsonApi with the User object to add",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "required": [
+                                "data"
+                            ],
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/User"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Created User response",
+                        "schema": {
+                            "type": "object",
+                            "title": "JsonApiCreatedItem",
+                            "required": [
+                                "data"
+                            ],
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/User"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid parameters",
+                        "schema": {
+                            "$ref": "#/definitions/errorArray"
+                        }
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/errorArray"
+                        }
+                    }
+                }
+            }
+        },
         "/groups/{id}": {
             "get": {
                 "tags": [
@@ -290,6 +399,153 @@
                     }
                 }
             }
+        },
+        "/users/{id}": {
+            "get": {
+                "tags": [
+                    "processmaker"
+                ],
+                "description": "Returns the user based on a single ID",
+                "operationId": "findUserById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of User to fetch",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "title": "JsonApiItem",
+                            "type": "object",
+                            "required": [
+                                "data"
+                            ],
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/User"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User not found",
+                        "schema": {
+                            "$ref": "#/definitions/errorArray"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/errorArray"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "processmaker"
+                ],
+                "description": "Update existing User",
+                "operationId": "updateUser",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of User to fetch",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "JsonApiUpdateItem",
+                        "in": "body",
+                        "description": "User object to edit",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "required": [
+                                "data"
+                            ],
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/User"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "JsonApi response with updated User object",
+                        "schema": {
+                            "type": "object",
+                            "required": [
+                                "data"
+                            ],
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/User"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid parameters",
+                        "schema": {
+                            "$ref": "#/definitions/errorArray"
+                        }
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/errorArray"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "processmaker"
+                ],
+                "description": "Deletes a single item based on the ID supplied",
+                "operationId": "deleteUser",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of item to delete",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Item successfully deleted"
+                    },
+                    "404": {
+                        "description": "Item not found",
+                        "schema": {
+                            "$ref": "#/definitions/errorArray"
+                        }
+                    },
+                    "500": {
+                        "description": "Deletion error",
+                        "schema": {
+                            "$ref": "#/definitions/errorArray"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/errorArray"
+                        }
+                    }
+                }
+            }
         }
     },
     "securityDefinitions": {
@@ -347,6 +603,123 @@
                                 "INACTIVE"
                             ],
                             "example": "ACTIVE"
+                        },
+                        "created_at": {
+                            "$ref": "#/definitions/DateFull"
+                        },
+                        "updated_at": {
+                            "$ref": "#/definitions/DateFull"
+                        }
+                    }
+                }
+            }
+        },
+        "User": {
+            "type": "object",
+            "required": [
+                "type"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "example": "9d705617-cc29-482a-85ff-7f7292f72b31"
+                },
+                "type": {
+                    "default": "user",
+                    "type": "string",
+                    "example": "user"
+                },
+                "attributes": {
+                    "required": [
+                        "username",
+                        "password",
+                        "email"
+                    ],
+                    "type": "object",
+                    "properties": {
+                        "username": {
+                            "type": "string",
+                            "example": "user_name"
+                        },
+                        "password": {
+                            "type": "string",
+                            "example": "some_password"
+                        },
+                        "firstname": {
+                            "type": "string",
+                            "example": "First_name"
+                        },
+                        "lastname": {
+                            "type": "string",
+                            "example": "Last_name"
+                        },
+                        "email": {
+                            "type": "string",
+                            "example": "example@example.com"
+                        },
+                        "expire_date": {
+                            "$ref": "#/definitions/DateFull"
+                        },
+                        "status": {
+                            "default": "ACTIVE",
+                            "type": "string",
+                            "enum": [
+                                "ACTIVE",
+                                "INACTIVE",
+                                "VACATION",
+                                "CLOSED"
+                            ],
+                            "example": "ACTIVE"
+                        },
+                        "country": {
+                            "type": "string",
+                            "example": "USA"
+                        },
+                        "city": {
+                            "type": "string",
+                            "example": "Washington"
+                        },
+                        "location": {
+                            "type": "string",
+                            "example": "Location"
+                        },
+                        "address": {
+                            "type": "string",
+                            "example": "USA"
+                        },
+                        "phone": {
+                            "type": "string",
+                            "example": "+1(99)999-99-99"
+                        },
+                        "fax": {
+                            "type": "string",
+                            "example": "+1(99)999-99-99"
+                        },
+                        "cellular": {
+                            "type": "string",
+                            "example": "+1(99)999-99-99"
+                        },
+                        "zip_code": {
+                            "type": "string"
+                        },
+                        "position": {
+                            "type": "string"
+                        },
+                        "resume": {
+                            "type": "string"
+                        },
+                        "birthday": {
+                            "type": "string"
+                        },
+                        "bookmark_start_cases": {
+                            "type": "string"
+                        },
+                        "time_zone": {
+                            "type": "string"
+                        },
+                        "default_lang": {
+                            "type": "string",
+                            "default": "en_US"
                         },
                         "created_at": {
                             "$ref": "#/definitions/DateFull"
