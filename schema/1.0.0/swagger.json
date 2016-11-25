@@ -517,6 +517,12 @@
                             "$ref": "#/definitions/errorArray"
                         }
                     },
+                    "500": {
+                      "description": "Internal server error",
+                      "schema": {
+                        "$ref": "#/definitions/errorArray"
+                      }
+                    },
                     "default": {
                         "description": "unexpected error",
                         "schema": {
