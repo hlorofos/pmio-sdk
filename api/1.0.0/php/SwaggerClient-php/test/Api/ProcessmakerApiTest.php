@@ -193,9 +193,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             //print_r($result->getMeta());
             $this->assertEquals('1021', $result->getMeta()->getCode(), 'User should be attached to the Group');
         } catch (ApiException $e) {
-
             echo 'Exception when calling ProcessmakerApi->addUsersToGroup: ', $e->getMessage(), PHP_EOL;
-
             /** @var Error[] $errorArray */
             $errorArray = $e->getResponseObject()->getErrors();
             print_r($errorArray);
@@ -248,9 +246,13 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             $result = $this->apiInstance->findGroups()->getData();
             $this->assertGreaterThan(0, count($result));
             //print_r($result);
-        } catch (Exception $e) {
-            echo 'Exception when calling ProcessmakerApi->findGroups: ', $e->getMessage(), PHP_EOL;
+        } catch (ApiException $e) {
+            echo 'Exception when calling ProcessmakerApi->testFindGroups: ', $e->getMessage(), PHP_EOL;
+            /** @var Error[] $errorArray */
+            $errorArray = $e->getResponseObject()->getErrors();
+            print_r($errorArray);
         }
+
     }
 
     /**
