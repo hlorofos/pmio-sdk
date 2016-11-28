@@ -1,1036 +1,1105 @@
 {
-    "swagger": "2.0",
-    "info": {
-        "version": "1.0.0",
-        "title": "ProcessMaker API",
-        "description": "An API to access ProcessMaker core functionality",
-        "termsOfService": "http://processmaker.com/terms/",
-        "contact": {
-            "name": "ProcessMaker API team",
-            "email": "oleg@processmaker.com",
-            "url": "http://processmaker.com/"
-        },
-        "license": {
-            "name": "MIT",
-            "url": "http://opensource.org/licenses/MIT"
-        }
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "ProcessMaker API",
+    "description": "An API to access ProcessMaker core functionality",
+    "termsOfService": "http://processmaker.com/terms/",
+    "contact": {
+      "name": "ProcessMaker API team",
+      "email": "oleg@processmaker.com",
+      "url": "http://processmaker.com/"
     },
-    "host": "localhost",
-    "basePath": "/api/v1",
-    "schemes": [
-        "http"
-    ],
-    "consumes": [
-        "application/vnd.api+json"
-    ],
-    "produces": [
-        "application/vnd.api+json"
-    ],
-    "security": [
-        {
-            "PasswordGrant": []
-        },
-        {
-            "internalApiKey": []
-        }
-    ],
-    "paths": {
-        "/groups": {
-            "get": {
-                "tags": [
-                    "processmaker"
-                ],
-                "description": "Returns all Groups",
-                "operationId": "findGroups",
-                "parameters": [
-                    {
-                        "name": "page",
-                        "in": "query",
-                        "description": "Page Nr to fetch",
-                        "required": false,
-                        "default": 1,
-                        "type": "integer"
-                    },
-                    {
-                        "name": "per_page",
-                        "in": "query",
-                        "description": "Amount of Items per Page",
-                        "required": false,
-                        "default": 15,
-                        "type": "integer"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Groups list",
-                        "schema": {
-                            "title": "JsonApiCollection",
-                            "description": "Json Api Response with collection of Items in array",
-                            "type": "object",
-                            "properties": {
-                                "data": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/definitions/Group"
-                                    }
-                                },
-                                "meta": {
-                                    "$ref": "#/definitions/Meta"
-                                }
-                            }
-                        }
-                    },
-                    "default": {
-                        "description": "Unexpected error",
-                        "schema": {
-                            "$ref": "#/definitions/errorArray"
-                        }
-                    }
-                }
-            },
-            "post": {
-                "tags": [
-                    "processmaker"
-                ],
-                "description": "Creates a new group",
-                "operationId": "addGroup",
-                "parameters": [
-                    {
-                        "name": "JsonApiItem",
-                        "in": "body",
-                        "description": "JsonApi with the Group object to add",
-                        "required": true,
-                        "schema": {
-                            "type": "object",
-                            "required": [
-                                "data"
-                            ],
-                            "properties": {
-                                "data": {
-                                    "$ref": "#/definitions/Group"
-                                }
-                            }
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Created Group response",
-                        "schema": {
-                            "type": "object",
-                            "title": "JsonApiCreatedItem",
-                            "required": [
-                                "data"
-                            ],
-                            "properties": {
-                                "data": {
-                                    "$ref": "#/definitions/Group"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid parameters",
-                        "schema": {
-                            "$ref": "#/definitions/errorArray"
-                        }
-                    },
-                    "default": {
-                        "description": "unexpected error",
-                        "schema": {
-                            "$ref": "#/definitions/errorArray"
-                        }
-                    }
-                }
-            }
-        },
-        "/users": {
-            "get": {
-                "tags": [
-                    "processmaker"
-                ],
-                "description": "Returns all Users",
-                "operationId": "findUsers",
-                "parameters": [
-                    {
-                        "name": "page",
-                        "in": "query",
-                        "description": "Page Nr to fetch",
-                        "required": false,
-                        "default": 1,
-                        "type": "integer"
-                    },
-                    {
-                        "name": "per_page",
-                        "in": "query",
-                        "description": "Amount of Items per Page",
-                        "required": false,
-                        "default": 15,
-                        "type": "integer"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Users list",
-                        "schema": {
-                            "title": "JsonApiCollection",
-                            "description": "Json Api Response with collection of Items in array",
-                            "type": "object",
-                            "properties": {
-                                "data": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/definitions/User"
-                                    }
-                                },
-                                "meta": {
-                                    "$ref": "#/definitions/Meta"
-                                }
-                            }
-                        }
-                    },
-                    "default": {
-                        "description": "Unexpected error",
-                        "schema": {
-                            "$ref": "#/definitions/errorArray"
-                        }
-                    }
-                }
-            },
-            "post": {
-                "tags": [
-                    "processmaker"
-                ],
-                "description": "Creates a new user",
-                "operationId": "addUser",
-                "parameters": [
-                    {
-                        "name": "JsonApiItem",
-                        "in": "body",
-                        "description": "JsonApi with the User object to add",
-                        "required": true,
-                        "schema": {
-                            "type": "object",
-                            "required": [
-                                "data"
-                            ],
-                            "properties": {
-                                "data": {
-                                    "$ref": "#/definitions/User"
-                                }
-                            }
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Created User response",
-                        "schema": {
-                            "type": "object",
-                            "title": "JsonApiCreatedItem",
-                            "required": [
-                                "data"
-                            ],
-                            "properties": {
-                                "data": {
-                                    "$ref": "#/definitions/User"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid parameters",
-                        "schema": {
-                            "$ref": "#/definitions/errorArray"
-                        }
-                    },
-                    "default": {
-                        "description": "unexpected error",
-                        "schema": {
-                            "$ref": "#/definitions/errorArray"
-                        }
-                    }
-                }
-            }
-        },
-        "/groups/{id}": {
-            "get": {
-                "tags": [
-                    "processmaker"
-                ],
-                "description": "Returns the group based on a single ID",
-                "operationId": "findGroupById",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID of Group to fetch",
-                        "required": true,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful response",
-                        "schema": {
-                            "title": "JsonApiItem",
-                            "type": "object",
-                            "required": [
-                                "data"
-                            ],
-                            "properties": {
-                                "data": {
-                                    "$ref": "#/definitions/Group"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Group not found",
-                        "schema": {
-                            "$ref": "#/definitions/errorArray"
-                        }
-                    },
-                    "default": {
-                        "description": "Unexpected error",
-                        "schema": {
-                            "$ref": "#/definitions/errorArray"
-                        }
-                    }
-                }
-            },
-            "put": {
-                "tags": [
-                    "processmaker"
-                ],
-                "description": "Update existing Group",
-                "operationId": "updateGroup",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID of Group to fetch",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "JsonApiUpdateItem",
-                        "in": "body",
-                        "description": "Group object to edit",
-                        "required": true,
-                        "schema": {
-                            "type": "object",
-                            "required": [
-                                "data"
-                            ],
-                            "properties": {
-                                "data": {
-                                    "$ref": "#/definitions/Group"
-                                }
-                            }
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "JsonApi response with updated Group object",
-                        "schema": {
-                            "type": "object",
-                            "required": [
-                                "data"
-                            ],
-                            "properties": {
-                                "data": {
-                                    "$ref": "#/definitions/Group"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid parameters",
-                        "schema": {
-                            "$ref": "#/definitions/errorArray"
-                        }
-                    },
-                    "default": {
-                        "description": "unexpected error",
-                        "schema": {
-                            "$ref": "#/definitions/errorArray"
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "processmaker"
-                ],
-                "description": "Deletes a single item based on the ID supplied",
-                "operationId": "deleteGroup",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID of item to delete",
-                        "required": true,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "204": {
-                        "description": "Item successfully deleted"
-                    },
-                    "404": {
-                        "description": "Item not found",
-                        "schema": {
-                            "$ref": "#/definitions/errorArray"
-                        }
-                    },
-                    "500": {
-                        "description": "Deletion error",
-                        "schema": {
-                            "$ref": "#/definitions/errorArray"
-                        }
-                    },
-                    "default": {
-                        "description": "Unexpected error",
-                        "schema": {
-                            "$ref": "#/definitions/errorArray"
-                        }
-                    }
-                }
-            }
-        },
-        "/groups/{id}/users": {
-            "put": {
-                "tags": [
-                    "processmaker"
-                ],
-                "description": "Add User to Group",
-                "operationId": "addUserGroup",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID of Group to fetch",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "JsonApiAddUserItems",
-                        "in": "body",
-                        "description": "Users ids to add",
-                        "required": true,
-                        "schema": {
-                            "type": "object",
-                            "required": [
-                                "data"
-                            ],
-                            "properties": {
-                                "data": {
-                                    "$ref": "#/definitions/GroupAddUser"
-                                }
-                            }
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "JsonApi response with updated Group object",
-                        "schema": {
-                            "type": "object",
-                            "required": [
-                                "data"
-                            ],
-                            "properties": {
-                                "data": {
-                                    "$ref": "#/definitions/Group"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Unprocessable entity",
-                        "schema": {
-                            "$ref": "#/definitions/errorArray"
-                        }
-                    },
-                    "default": {
-                        "description": "unexpected error",
-                        "schema": {
-                            "$ref": "#/definitions/errorArray"
-                        }
-                    }
-                }
-            }
-        },
-        "/groups/{id}/users": {
-            "delete": {
-                "tags": [
-                    "processmaker"
-                ],
-                "description": "Remove User from Group",
-                "operationId": "removeUserGroup",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID of Group to fetch",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "JsonApiDeleteUserItems",
-                        "in": "body",
-                        "description": "Users ids to remove",
-                        "required": true,
-                        "schema": {
-                            "type": "object",
-                            "required": [
-                                "data"
-                            ],
-                            "properties": {
-                                "data": {
-                                    "$ref": "#/definitions/GroupRemoveUser"
-                                }
-                            }
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "JsonApi response with updated Group object",
-                        "schema": {
-                            "type": "object",
-                            "required": [
-                                "data"
-                            ],
-                            "properties": {
-                                "data": {
-                                    "$ref": "#/definitions/Group"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Unprocessable entity",
-                        "schema": {
-                            "$ref": "#/definitions/errorArray"
-                        }
-                    },
-                    "500": {
-                      "description": "Internal server error",
-                      "schema": {
-                        "$ref": "#/definitions/errorArray"
-                      }
-                    },
-                    "default": {
-                        "description": "unexpected error",
-                        "schema": {
-                            "$ref": "#/definitions/errorArray"
-                        }
-                    }
-                }
-            }
-        },
-        "/users/{id}": {
-            "get": {
-                "tags": [
-                    "processmaker"
-                ],
-                "description": "Returns the user based on a single ID",
-                "operationId": "findUserById",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID of User to fetch",
-                        "required": true,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful response",
-                        "schema": {
-                            "title": "JsonApiItem",
-                            "type": "object",
-                            "required": [
-                                "data"
-                            ],
-                            "properties": {
-                                "data": {
-                                    "$ref": "#/definitions/User"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "User not found",
-                        "schema": {
-                            "$ref": "#/definitions/errorArray"
-                        }
-                    },
-                    "default": {
-                        "description": "Unexpected error",
-                        "schema": {
-                            "$ref": "#/definitions/errorArray"
-                        }
-                    }
-                }
-            },
-            "put": {
-                "tags": [
-                    "processmaker"
-                ],
-                "description": "Update existing User",
-                "operationId": "updateUser",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID of User to fetch",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "JsonApiUpdateItem",
-                        "in": "body",
-                        "description": "User object to edit",
-                        "required": true,
-                        "schema": {
-                            "type": "object",
-                            "required": [
-                                "data"
-                            ],
-                            "properties": {
-                                "data": {
-                                    "$ref": "#/definitions/User"
-                                }
-                            }
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "JsonApi response with updated User object",
-                        "schema": {
-                            "type": "object",
-                            "required": [
-                                "data"
-                            ],
-                            "properties": {
-                                "data": {
-                                    "$ref": "#/definitions/User"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid parameters",
-                        "schema": {
-                            "$ref": "#/definitions/errorArray"
-                        }
-                    },
-                    "default": {
-                        "description": "unexpected error",
-                        "schema": {
-                            "$ref": "#/definitions/errorArray"
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "processmaker"
-                ],
-                "description": "Deletes a single item based on the ID supplied",
-                "operationId": "deleteUser",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID of item to delete",
-                        "required": true,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "204": {
-                        "description": "Item successfully deleted"
-                    },
-                    "404": {
-                        "description": "Item not found",
-                        "schema": {
-                            "$ref": "#/definitions/errorArray"
-                        }
-                    },
-                    "500": {
-                        "description": "Deletion error",
-                        "schema": {
-                            "$ref": "#/definitions/errorArray"
-                        }
-                    },
-                    "default": {
-                        "description": "Unexpected error",
-                        "schema": {
-                            "$ref": "#/definitions/errorArray"
-                        }
-                    }
-                }
-            }
-        }
-    },
-    "securityDefinitions": {
-        "PasswordGrant": {
-            "type": "oauth2",
-            "flow": "password",
-            "tokenUrl": "/oauth/access_token"
-        },
-        "internalApiKey": {
-            "type": "apiKey",
-            "in": "query",
-            "name": "access_token"
-        }
-    },
-    "definitions": {
-        "Group": {
-            "type": "object",
-            "required": [
-                "type"
-            ],
-            "properties": {
-                "id": {
-                    "type": "string",
-                    "example": "9d705617-cc29-482a-85ff-7f7292f72b31"
-                },
-                "type": {
-                    "default": "group",
-                    "type": "string",
-                    "example": "group"
-                },
-                "attributes": {
-                    "required": [
-                        "code",
-                        "title"
-                    ],
-                    "type": "object",
-                    "properties": {
-                        "code": {
-                            "type": "string",
-                            "example": "GROUP_ADMIN"
-                        },
-                        "title": {
-                            "type": "string",
-                            "example": "Goup_Title"
-                        },
-                        "description": {
-                            "type": "string",
-                            "example": "Some description"
-                        },
-                        "status": {
-                            "default": "ACTIVE",
-                            "type": "string",
-                            "enum": [
-                                "ACTIVE",
-                                "INACTIVE"
-                            ],
-                            "example": "ACTIVE"
-                        },
-                        "created_at": {
-                            "$ref": "#/definitions/DateFull"
-                        },
-                        "updated_at": {
-                            "$ref": "#/definitions/DateFull"
-                        }
-                    }
-                }
-            }
-        },
-        "GroupAddUser": {
-            "type": "object",
-            "required": [
-                "type"
-            ],
-            "properties": {
-                "id": {
-                    "type": "string",
-                    "example": "9d705617-cc29-482a-85ff-7f7292f72b31"
-                },
-                "attributes": {
-                    "required": [
-                        "users"
-                    ],
-                    "type": "object",
-                    "properties": {
-                        "users": {
-                            "type": "array",
-                            "example": [
-                                [
-                                    "9d705617-cc29-482a-85ff-7f7292f72b31"
-                                ],
-                                [
-                                    "9d705617-cc29-482a-85ff-7f7292f72b31"
-                                ]
-                            ]
-                        }
-                    }
-                }
-            }
-        },
-        "GroupRemoveUser": {
-            "type": "object",
-            "required": [
-                "type"
-            ],
-            "properties": {
-                "id": {
-                    "type": "string",
-                    "example": "9d705617-cc29-482a-85ff-7f7292f72b31"
-                },
-                "attributes": {
-                    "required": [
-                        "users"
-                    ],
-                    "type": "object",
-                    "properties": {
-                        "users": {
-                            "type": "array",
-                            "example": [
-                                [
-                                    "9d705617-cc29-482a-85ff-7f7292f72b31"
-                                ],
-                                [
-                                    "9d705617-cc29-482a-85ff-7f7292f72b31"
-                                ]
-                            ]
-                        }
-                    }
-                }
-            }
-        },
-        "User": {
-            "type": "object",
-            "required": [
-                "type"
-            ],
-            "properties": {
-                "id": {
-                    "type": "string",
-                    "example": "9d705617-cc29-482a-85ff-7f7292f72b31"
-                },
-                "type": {
-                    "default": "user",
-                    "type": "string",
-                    "example": "user"
-                },
-                "attributes": {
-                    "required": [
-                        "username",
-                        "password",
-                        "email"
-                    ],
-                    "type": "object",
-                    "properties": {
-                        "username": {
-                            "type": "string",
-                            "example": "user_name"
-                        },
-                        "password": {
-                            "type": "string",
-                            "example": "some_password"
-                        },
-                        "firstname": {
-                            "type": "string",
-                            "example": "First_name"
-                        },
-                        "lastname": {
-                            "type": "string",
-                            "example": "Last_name"
-                        },
-                        "email": {
-                            "type": "string",
-                            "example": "example@example.com"
-                        },
-                        "expire_date": {
-                            "$ref": "#/definitions/DateFull"
-                        },
-                        "status": {
-                            "default": "ACTIVE",
-                            "type": "string",
-                            "enum": [
-                                "ACTIVE",
-                                "INACTIVE",
-                                "VACATION",
-                                "CLOSED"
-                            ],
-                            "example": "ACTIVE"
-                        },
-                        "country": {
-                            "type": "string",
-                            "example": "USA"
-                        },
-                        "city": {
-                            "type": "string",
-                            "example": "Washington"
-                        },
-                        "location": {
-                            "type": "string",
-                            "example": "Location"
-                        },
-                        "address": {
-                            "type": "string",
-                            "example": "USA"
-                        },
-                        "phone": {
-                            "type": "string",
-                            "example": "+1(99)999-99-99"
-                        },
-                        "fax": {
-                            "type": "string",
-                            "example": "+1(99)999-99-99"
-                        },
-                        "cellular": {
-                            "type": "string",
-                            "example": "+1(99)999-99-99"
-                        },
-                        "zip_code": {
-                            "type": "string"
-                        },
-                        "position": {
-                            "type": "string"
-                        },
-                        "resume": {
-                            "type": "string"
-                        },
-                        "birthday": {
-                            "type": "string"
-                        },
-                        "bookmark_start_cases": {
-                            "type": "string"
-                        },
-                        "time_zone": {
-                            "type": "string"
-                        },
-                        "default_lang": {
-                            "type": "string",
-                            "default": "en_US"
-                        },
-                        "created_at": {
-                            "$ref": "#/definitions/DateFull"
-                        },
-                        "updated_at": {
-                            "$ref": "#/definitions/DateFull"
-                        }
-                    }
-                }
-            }
-        },
-        "DateFull": {
-            "type": "object",
-            "required": [
-                "date",
-                "timezone_type",
-                "timezone"
-            ],
-            "properties": {
-                "date": {
-                    "type": "string",
-                    "example": "2016-08-23 18:11:05.000000"
-                },
-                "timezone_type": {
-                    "type": "integer",
-                    "example": 3
-                },
-                "timezone": {
-                    "type": "string",
-                    "example": "UTC"
-                }
-            }
-        },
-        "Pagination": {
-            "type": "object",
-            "required": [
-                "total",
-                "count",
-                "per_page",
-                "current_page",
-                "total_pages",
-                "links"
-            ],
-            "properties": {
-                "total": {
-                    "type": "integer",
-                    "example": 125
-                },
-                "count": {
-                    "type": "integer",
-                    "example": 25
-                },
-                "per_page": {
-                    "type": "integer",
-                    "example": 25
-                },
-                "current_page": {
-                    "type": "integer",
-                    "example": 2
-                },
-                "total_pages": {
-                    "type": "integer",
-                    "example": 30
-                },
-                "links": {
-                    "type": "object",
-                    "properties": {
-                        "next": {
-                            "type": "string",
-                            "example": "http://localhost/api/v1/groups?page=3"
-                        },
-                        "previous": {
-                            "type": "string",
-                            "example": "http://localhost/api/v1/groups?page=1"
-                        }
-                    }
-                }
-            }
-        },
-        "Meta": {
-            "type": "object",
-            "properties": {
-                "pagination": {
-                    "$ref": "#/definitions/Pagination"
-                }
-            }
-        },
-        "errorArray": {
-            "type": "object",
-            "required": [
-                "errors"
-            ],
-            "properties": {
-                "errors": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/Error"
-                    }
-                }
-            }
-        },
-        "Error": {
-            "type": "object",
-            "required": [
-                "code"
-            ],
-            "properties": {
-                "code": {
-                    "type": "string"
-                },
-                "title": {
-                    "type": "string"
-                },
-                "detail": {
-                    "type": "string"
-                }
-            }
-        }
+    "license": {
+      "name": "MIT",
+      "url": "http://opensource.org/licenses/MIT"
     }
+  },
+  "host": "localhost",
+  "basePath": "/api/v1",
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/vnd.api+json"
+  ],
+  "produces": [
+    "application/vnd.api+json"
+  ],
+  "security": [
+    {
+      "PasswordGrant": []
+    },
+    {
+      "internalApiKey": []
+    }
+  ],
+  "paths": {
+    "/groups": {
+      "get": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Returns all Groups",
+        "operationId": "findGroups",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page Nr to fetch",
+            "required": false,
+            "default": 1,
+            "type": "integer"
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "Amount of Items per Page",
+            "required": false,
+            "default": 15,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Groups list",
+            "schema": {
+              "title": "JsonApiCollection",
+              "description": "Json Api Response with collection of Items in array",
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Group"
+                  }
+                },
+                "meta": {
+                  "$ref": "#/definitions/Meta"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Creates a new group",
+        "operationId": "addGroup",
+        "parameters": [
+          {
+            "name": "JsonApiItem",
+            "in": "body",
+            "description": "JsonApi with the Group object to add",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Group"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Created Group response",
+            "schema": {
+              "type": "object",
+              "title": "JsonApiCreatedItem",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Group"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Returns all Users",
+        "operationId": "findUsers",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page Nr to fetch",
+            "required": false,
+            "default": 1,
+            "type": "integer"
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "Amount of Items per Page",
+            "required": false,
+            "default": 15,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Users list",
+            "schema": {
+              "title": "JsonApiCollection",
+              "description": "Json Api Response with collection of Items in array",
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/User"
+                  }
+                },
+                "meta": {
+                  "$ref": "#/definitions/Meta"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Creates a new user",
+        "operationId": "addUser",
+        "parameters": [
+          {
+            "name": "JsonApiItem",
+            "in": "body",
+            "description": "JsonApi with the User object to add",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/User"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Created User response",
+            "schema": {
+              "type": "object",
+              "title": "JsonApiCreatedItem",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      }
+    },
+    "/groups/{id}": {
+      "get": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Returns the group based on a single ID",
+        "operationId": "findGroupById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of Group to fetch",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "title": "JsonApiItem",
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Group"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Group not found",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Update existing Group",
+        "operationId": "updateGroup",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of Group to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "JsonApiUpdateItem",
+            "in": "body",
+            "description": "Group object to edit",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Group"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "JsonApi response with updated Group object",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Group"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Deletes a single item based on the ID supplied",
+        "operationId": "deleteGroup",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of item to delete",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Item successfully deleted"
+          },
+          "404": {
+            "description": "Item not found",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "500": {
+            "description": "Deletion error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      }
+    },
+    "/groups/{id}/users": {
+      "put": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Add User to Group",
+        "operationId": "addUserGroup",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of Group to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "JsonApiAddUserItems",
+            "in": "body",
+            "description": "Users ids to add",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/GroupAddUser"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "JsonApi response with updated Group object",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Group"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      }
+    },
+    "/groups/{id}/users": {
+      "delete": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Remove User from Group",
+        "operationId": "removeUserGroup",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of Group to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "JsonApiDeleteUserItems",
+            "in": "body",
+            "description": "Users ids to remove",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/GroupRemoveUser"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "JsonApi response with updated Group object",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Group"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      }
+    },
+    "/groups/{id}/users": {
+      "post": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Sync User(s) with the given Group",
+        "operationId": "syncUserGroup",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of Group to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "JsonApiSyncUserItems",
+            "in": "body",
+            "description": "Users ids to remove",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/GroupRemoveUser"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "JsonApi response with updated Group object",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Group"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Returns the user based on a single ID",
+        "operationId": "findUserById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of User to fetch",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "title": "JsonApiItem",
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/User"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Update existing User",
+        "operationId": "updateUser",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of User to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "JsonApiUpdateItem",
+            "in": "body",
+            "description": "User object to edit",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/User"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "JsonApi response with updated User object",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Deletes a single item based on the ID supplied",
+        "operationId": "deleteUser",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of item to delete",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Item successfully deleted"
+          },
+          "404": {
+            "description": "Item not found",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "500": {
+            "description": "Deletion error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "PasswordGrant": {
+      "type": "oauth2",
+      "flow": "password",
+      "tokenUrl": "/oauth/access_token"
+    },
+    "internalApiKey": {
+      "type": "apiKey",
+      "in": "query",
+      "name": "access_token"
+    }
+  },
+  "definitions": {
+    "Group": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "9d705617-cc29-482a-85ff-7f7292f72b31"
+        },
+        "type": {
+          "default": "group",
+          "type": "string",
+          "example": "group"
+        },
+        "attributes": {
+          "required": [
+            "code",
+            "title"
+          ],
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "example": "GROUP_ADMIN"
+            },
+            "title": {
+              "type": "string",
+              "example": "Goup_Title"
+            },
+            "description": {
+              "type": "string",
+              "example": "Some description"
+            },
+            "status": {
+              "default": "ACTIVE",
+              "type": "string",
+              "enum": [
+                "ACTIVE",
+                "INACTIVE"
+              ],
+              "example": "ACTIVE"
+            },
+            "created_at": {
+              "$ref": "#/definitions/DateFull"
+            },
+            "updated_at": {
+              "$ref": "#/definitions/DateFull"
+            }
+          }
+        }
+      }
+    },
+    "GroupAddUser": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "9d705617-cc29-482a-85ff-7f7292f72b31"
+        },
+        "attributes": {
+          "required": [
+            "users"
+          ],
+          "type": "object",
+          "properties": {
+            "users": {
+              "type": "array",
+              "example": [
+                [
+                  "9d705617-cc29-482a-85ff-7f7292f72b31"
+                ],
+                [
+                  "9d705617-cc29-482a-85ff-7f7292f72b31"
+                ]
+              ]
+            }
+          }
+        }
+      }
+    },
+    "GroupRemoveUser": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "9d705617-cc29-482a-85ff-7f7292f72b31"
+        },
+        "attributes": {
+          "required": [
+            "users"
+          ],
+          "type": "object",
+          "properties": {
+            "users": {
+              "type": "array",
+              "example": [
+                [
+                  "9d705617-cc29-482a-85ff-7f7292f72b31"
+                ],
+                [
+                  "9d705617-cc29-482a-85ff-7f7292f72b31"
+                ]
+              ]
+            }
+          }
+        }
+      }
+    },
+    "User": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "9d705617-cc29-482a-85ff-7f7292f72b31"
+        },
+        "type": {
+          "default": "user",
+          "type": "string",
+          "example": "user"
+        },
+        "attributes": {
+          "required": [
+            "username",
+            "password",
+            "email"
+          ],
+          "type": "object",
+          "properties": {
+            "username": {
+              "type": "string",
+              "example": "user_name"
+            },
+            "password": {
+              "type": "string",
+              "example": "some_password"
+            },
+            "firstname": {
+              "type": "string",
+              "example": "First_name"
+            },
+            "lastname": {
+              "type": "string",
+              "example": "Last_name"
+            },
+            "email": {
+              "type": "string",
+              "example": "example@example.com"
+            },
+            "expire_date": {
+              "$ref": "#/definitions/DateFull"
+            },
+            "status": {
+              "default": "ACTIVE",
+              "type": "string",
+              "enum": [
+                "ACTIVE",
+                "INACTIVE",
+                "VACATION",
+                "CLOSED"
+              ],
+              "example": "ACTIVE"
+            },
+            "country": {
+              "type": "string",
+              "example": "USA"
+            },
+            "city": {
+              "type": "string",
+              "example": "Washington"
+            },
+            "location": {
+              "type": "string",
+              "example": "Location"
+            },
+            "address": {
+              "type": "string",
+              "example": "USA"
+            },
+            "phone": {
+              "type": "string",
+              "example": "+1(99)999-99-99"
+            },
+            "fax": {
+              "type": "string",
+              "example": "+1(99)999-99-99"
+            },
+            "cellular": {
+              "type": "string",
+              "example": "+1(99)999-99-99"
+            },
+            "zip_code": {
+              "type": "string"
+            },
+            "position": {
+              "type": "string"
+            },
+            "resume": {
+              "type": "string"
+            },
+            "birthday": {
+              "type": "string"
+            },
+            "bookmark_start_cases": {
+              "type": "string"
+            },
+            "time_zone": {
+              "type": "string"
+            },
+            "default_lang": {
+              "type": "string",
+              "default": "en_US"
+            },
+            "created_at": {
+              "$ref": "#/definitions/DateFull"
+            },
+            "updated_at": {
+              "$ref": "#/definitions/DateFull"
+            }
+          }
+        }
+      }
+    },
+    "DateFull": {
+      "type": "object",
+      "required": [
+        "date",
+        "timezone_type",
+        "timezone"
+      ],
+      "properties": {
+        "date": {
+          "type": "string",
+          "example": "2016-08-23 18:11:05.000000"
+        },
+        "timezone_type": {
+          "type": "integer",
+          "example": 3
+        },
+        "timezone": {
+          "type": "string",
+          "example": "UTC"
+        }
+      }
+    },
+    "Pagination": {
+      "type": "object",
+      "required": [
+        "total",
+        "count",
+        "per_page",
+        "current_page",
+        "total_pages",
+        "links"
+      ],
+      "properties": {
+        "total": {
+          "type": "integer",
+          "example": 125
+        },
+        "count": {
+          "type": "integer",
+          "example": 25
+        },
+        "per_page": {
+          "type": "integer",
+          "example": 25
+        },
+        "current_page": {
+          "type": "integer",
+          "example": 2
+        },
+        "total_pages": {
+          "type": "integer",
+          "example": 30
+        },
+        "links": {
+          "type": "object",
+          "properties": {
+            "next": {
+              "type": "string",
+              "example": "http://localhost/api/v1/groups?page=3"
+            },
+            "previous": {
+              "type": "string",
+              "example": "http://localhost/api/v1/groups?page=1"
+            }
+          }
+        }
+      }
+    },
+    "Meta": {
+      "type": "object",
+      "properties": {
+        "pagination": {
+          "$ref": "#/definitions/Pagination"
+        }
+      }
+    },
+    "errorArray": {
+      "type": "object",
+      "required": [
+        "errors"
+      ],
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Error"
+          }
+        }
+      }
+    },
+    "Error": {
+      "type": "object",
+      "required": [
+        "code"
+      ],
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "detail": {
+          "type": "string"
+        }
+      }
+    }
+  }
 }
