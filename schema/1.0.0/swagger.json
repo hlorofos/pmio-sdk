@@ -716,25 +716,6 @@
                 }
             }
         },
-        "Result": {
-            "type": "object",
-            "required": [
-                "code"
-            ],
-            "properties": {
-                "code": {
-                    "type": "string",
-                    "example": "1021"
-                },
-                "title": {
-                    "type": "string",
-                    "example": "User(s) has been attached to the Group"
-                },
-                "detail": {
-                    "type": "string"
-                }
-            }
-        },
         "User": {
             "type": "object",
             "required": [

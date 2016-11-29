@@ -127,9 +127,11 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
         } catch (ApiException $e) {
             echo 'Exception when calling ProcessmakerApi->addGroup: ', $e->getMessage(), PHP_EOL;
-            /** @var Error[] $errorArray */
-            $errorArray = $e->getResponseObject()->getErrors();
-            print_r($errorArray);
+            if ($e->getResponseObject()) {
+                /** @var Error[] $errorArray */
+                $errorArray = $e->getResponseObject()->getErrors();
+                print_r($errorArray);
+            }
         }
     }
 
@@ -159,10 +161,12 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             //print_r($result->getData());
             return $result->getData()->getId();
         } catch (ApiException $e) {
-            echo 'Exception when calling ProcessmakerApi->addGroup: ', $e->getMessage(), PHP_EOL;
-            /** @var Error[] $errorArray */
-            $errorArray = $e->getResponseObject()->getErrors();
-            print_r($errorArray);
+            echo 'Exception when calling ProcessmakerApi->addUser: ', $e->getMessage(), PHP_EOL;
+            if ($e->getResponseObject()) {
+                /** @var Error[] $errorArray */
+                $errorArray = $e->getResponseObject()->getErrors();
+                print_r($errorArray);
+            }
         }
 
     }
@@ -177,9 +181,11 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
     {
         /** @var string $groupId */
         $groupId = $this->testAddGroup();
+        $this->assertNotNull($groupId, 'Group should be created');
 
         /** @var string $userIdId */
         $userId = $this->testAddUser();
+        $this->assertNotNull($userId, 'User should be created');
 
         $GroupAddUsersItem = new GroupAddUsersItem([
             'data' => new UserIds([
@@ -194,9 +200,11 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             $this->assertEquals('1021', $result->getMeta()->getCode(), 'User should be attached to the Group');
         } catch (ApiException $e) {
             echo 'Exception when calling ProcessmakerApi->addUsersToGroup: ', $e->getMessage(), PHP_EOL;
-            /** @var Error[] $errorArray */
-            $errorArray = $e->getResponseObject()->getErrors();
-            print_r($errorArray);
+            if ($e->getResponseObject()) {
+                /** @var Error[] $errorArray */
+                $errorArray = $e->getResponseObject()->getErrors();
+                print_r($errorArray);
+            }
         }
     }
 
@@ -248,9 +256,11 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             //print_r($result);
         } catch (ApiException $e) {
             echo 'Exception when calling ProcessmakerApi->testFindGroups: ', $e->getMessage(), PHP_EOL;
-            /** @var Error[] $errorArray */
-            $errorArray = $e->getResponseObject()->getErrors();
-            print_r($errorArray);
+            if ($e->getResponseObject()) {
+                /** @var Error[] $errorArray */
+                $errorArray = $e->getResponseObject()->getErrors();
+                print_r($errorArray);
+            }
         }
 
     }
