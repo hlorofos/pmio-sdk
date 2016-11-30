@@ -349,6 +349,65 @@
               }
             }
           }
+        },
+        "delete": {
+          "tags": [
+            "processmaker"
+          ],
+          "description": "Remove User(s) from Group",
+          "operationId": "removeUsersFromGroup",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID of Group to modify",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "GroupRemoveUsersItem",
+              "in": "body",
+              "description": "JsonApi with Users ids to add",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "required": [
+                  "data"
+                ],
+                "properties": {
+                  "data": {
+                    "$ref": "#/definitions/UserIds"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "JsonApi response with result details",
+              "schema": {
+                "$ref": "#/definitions/ResultSuccess"
+              }
+            },
+            "422": {
+              "description": "Un-processable entity",
+              "schema": {
+                "$ref": "#/definitions/errorArray"
+              }
+            },
+            "500": {
+              "description": "Error adding Group(s)",
+              "schema": {
+                "$ref": "#/definitions/errorArray"
+              }
+            },
+            "default": {
+              "description": "unexpected error",
+              "schema": {
+                "$ref": "#/definitions/errorArray"
+              }
+            }
+          }
         }
       },
       "/users": {

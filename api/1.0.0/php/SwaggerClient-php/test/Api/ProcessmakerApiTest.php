@@ -47,6 +47,7 @@ use Swagger\Client\Model\GroupAddUsersItem;
 use Swagger\Client\Model\GroupAttributes;
 use Swagger\Client\Model\GroupCreateItem;
 use Swagger\Client\Model\GroupItem;
+use Swagger\Client\Model\GroupRemoveUsersItem;
 use Swagger\Client\Model\MetaResult;
 use Swagger\Client\Model\User;
 use Swagger\Client\Model\UserAttributes;
@@ -200,6 +201,43 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             $this->assertEquals('1021', $result->getMeta()->getCode(), 'User should be attached to the Group');
         } catch (ApiException $e) {
             echo 'Exception when calling ProcessmakerApi->addUsersToGroup: ', $e->getMessage(), PHP_EOL;
+            if ($e->getResponseObject()) {
+                /** @var Error[] $errorArray */
+                $errorArray = $e->getResponseObject()->getErrors();
+                print_r($errorArray);
+            }
+        }
+    }
+
+    public function testRemoveUsersFromGroup()
+    {
+        /** @var string $groupId */
+        $groupId = $this->testAddGroup();
+        $this->assertNotNull($groupId, 'Group should be created');
+
+        /** @var string $userIdId */
+        $userId = $this->testAddUser();
+        $this->assertNotNull($userId, 'User should be created');
+
+
+        $UsersItem = new GroupRemoveUsersItem([
+            'data' => new UserIds([
+                'users' => [$userId]
+            ])
+        ]);
+
+        /** Try to attach UsersItem to given group
+         * @var MetaResult $result */
+        $result = $this->apiInstance->addUsersToGroup($groupId, $UsersItem);
+        $this->assertEquals('1021', $result->getMeta()->getCode(), 'User should be attached to the Group');
+
+        try {
+            /** @var MetaResult $result */
+            $result = $this->apiInstance->removeUsersFromGroup($groupId, $UsersItem);
+            //print_r($result->getMeta());
+            $this->assertEquals('1024', $result->getMeta()->getCode(), 'User should be detached from the Group');
+        } catch (ApiException $e) {
+            echo 'Exception when calling ProcessmakerApi->removeUsersFromGroup: ', $e->getMessage(), PHP_EOL;
             if ($e->getResponseObject()) {
                 /** @var Error[] $errorArray */
                 $errorArray = $e->getResponseObject()->getErrors();
