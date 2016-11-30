@@ -408,7 +408,7 @@
               }
             }
           }
-        }
+        },
         "post": {
           "tags": [
             "processmaker"
