@@ -605,10 +605,10 @@
                             "example": "ACTIVE"
                         },
                         "created_at": {
-                            "$ref": "#/definitions/DateFull"
+                            "$ref": "#/definitions/dateTime"
                         },
                         "updated_at": {
-                            "$ref": "#/definitions/DateFull"
+                            "$ref": "#/definitions/dateTime"
                         }
                     }
                 }
@@ -658,7 +658,7 @@
                             "example": "example@example.com"
                         },
                         "expire_date": {
-                            "$ref": "#/definitions/DateFull"
+                            "$ref": "#/definitions/dateTime"
                         },
                         "status": {
                             "default": "ACTIVE",
@@ -722,34 +722,24 @@
                             "default": "en_US"
                         },
                         "created_at": {
-                            "$ref": "#/definitions/DateFull"
+                            "$ref": "#/definitions/dateTime"
                         },
                         "updated_at": {
-                            "$ref": "#/definitions/DateFull"
+                            "$ref": "#/definitions/dateTime"
                         }
                     }
                 }
             }
         },
-        "DateFull": {
+        "dateTime": {
             "type": "object",
             "required": [
-                "date",
-                "timezone_type",
-                "timezone"
+                "date"
             ],
             "properties": {
                 "date": {
                     "type": "string",
                     "example": "2016-08-23 18:11:05.000000"
-                },
-                "timezone_type": {
-                    "type": "integer",
-                    "example": 3
-                },
-                "timezone": {
-                    "type": "string",
-                    "example": "UTC"
                 }
             }
         },
