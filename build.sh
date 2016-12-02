@@ -1,7 +1,7 @@
 #!/bin/bash
 
 VERSION="1.0.0"
-CODEGEN="bin/swagger-codegen-cli-master.jar"
+CODEGEN="bin/swagger-codegen-cli-modified.jar"
 SCHEMA="schema/$VERSION/swagger.json"
 
 languages="android aspnet5 async-scala csharp cpprest dart flash python-flask go groovy java jaxrs jaxrs-cxf jaxrs-resteasy jaxrs-spec inflector javascript javascript-closure-angular jmeter nancyfx nodejs-server objc perl php python qt5cpp ruby scala scalatra sinatra rails5 slim spring swift tizen typescript-angular2 typescript-angular typescript-node typescript-fetch akka-scala CsharpDotNet2 clojure haskell lumen"
@@ -13,7 +13,7 @@ if type -p java; then
     echo Found Java executable in PATH
     _java=java
 elif [[ -n "$JAVA_HOME" ]] && [[ -x "$JAVA_HOME/bin/java" ]];  then
-    echo Found java executable in JAVA_HOME     
+    echo Found java executable in JAVA_HOME
     _java="$JAVA_HOME/bin/java"
 else
     echo "ERROR: no Java installed, please install Java 1.7+"
@@ -47,7 +47,7 @@ Cleanup() {
 }
 
 if [ "$1" = "clean" ]
-then 
+then
     Cleanup
     exit
 fi
