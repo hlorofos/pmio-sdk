@@ -367,7 +367,7 @@
             {
               "name": "GroupRemoveUsersItem",
               "in": "body",
-              "description": "JsonApi with Users ids to add",
+              "description": "JsonApi with Users ids to remove",
               "required": true,
               "schema": {
                 "type": "object",
