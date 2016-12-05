@@ -49,6 +49,7 @@ use Swagger\Client\Model\GroupCreateItem;
 use Swagger\Client\Model\GroupItem;
 use Swagger\Client\Model\GroupRemoveUsersItem;
 use Swagger\Client\Model\MetaResult;
+use Swagger\Client\Model\ResultSuccess;
 use Swagger\Client\Model\User;
 use Swagger\Client\Model\UserAttributes;
 use Swagger\Client\Model\UserCreateItem;
@@ -113,12 +114,14 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
     public function testAddGroup()
     {
         try {
+
+            $groupAtt = new GroupAttributes();
+            $groupAtt->setCode('Test Code '.mt_rand(100000,999999));
+            $groupAtt->setTitle('Group title');
+
             /** @var GroupItem $result */
             $result = $this->apiInstance->addGroup(new GroupCreateItem([
-                'data' => new Group(['attributes' => new GroupAttributes([
-                    'code' => 'Test Code '.mt_rand(100000,999999),
-                    'title' => 'Group title']
-                )])
+                'data' => new Group(['attributes' => $groupAtt])
             ]));
 
             $this->assertNotNull($result->getData()->getId());
@@ -127,12 +130,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             return $result->getData()->getId();
 
         } catch (ApiException $e) {
-            echo 'Exception when calling ProcessmakerApi->addGroup: ', $e->getMessage(), PHP_EOL;
-            if ($e->getResponseObject()) {
-                /** @var Error[] $errorArray */
-                $errorArray = $e->getResponseObject()->getErrors();
-                print_r($errorArray);
-            }
+            $this->dumpError($e, __METHOD__);
         }
     }
 
@@ -162,12 +160,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             //print_r($result->getData());
             return $result->getData()->getId();
         } catch (ApiException $e) {
-            echo 'Exception when calling ProcessmakerApi->addUser: ', $e->getMessage(), PHP_EOL;
-            if ($e->getResponseObject()) {
-                /** @var Error[] $errorArray */
-                $errorArray = $e->getResponseObject()->getErrors();
-                print_r($errorArray);
-            }
+            $this->dumpError($e, __METHOD__);
         }
 
     }
@@ -200,12 +193,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             //print_r($result->getMeta());
             $this->assertEquals('1021', $result->getMeta()->getCode(), 'User should be attached to the Group');
         } catch (ApiException $e) {
-            echo 'Exception when calling ProcessmakerApi->addUsersToGroup: ', $e->getMessage(), PHP_EOL;
-            if ($e->getResponseObject()) {
-                /** @var Error[] $errorArray */
-                $errorArray = $e->getResponseObject()->getErrors();
-                print_r($errorArray);
-            }
+            $this->dumpError($e, __METHOD__);
         }
     }
 
@@ -237,12 +225,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             //print_r($result->getMeta());
             $this->assertEquals('1024', $result->getMeta()->getCode(), 'User should be detached from the Group');
         } catch (ApiException $e) {
-            echo 'Exception when calling ProcessmakerApi->removeUsersFromGroup: ', $e->getMessage(), PHP_EOL;
-            if ($e->getResponseObject()) {
-                /** @var Error[] $errorArray */
-                $errorArray = $e->getResponseObject()->getErrors();
-                print_r($errorArray);
-            }
+            $this->dumpError($e, __METHOD__);
         }
     }
 
@@ -269,40 +252,13 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         ]);
 
         try {
-            /** @var MetaResult $result */
+            /** @var ResultSuccess $result */
             $result = $this->apiInstance->syncUsersToGroup($groupId, $UsersItem);
             //print_r($result->getMeta());
             $this->assertEquals('1021', $result->getMeta()->getCode(), 'User should be attached with Group');
         } catch (ApiException $e) {
-            echo 'Exception when calling ProcessmakerApi->syncUsersFromGroup: ', $e->getMessage(), PHP_EOL;
-            if ($e->getResponseObject()) {
-                /** @var Error[] $errorArray */
-                $errorArray = $e->getResponseObject()->getErrors();
-                print_r($errorArray);
-            }
+            $this->dumpError($e, __METHOD__);
         }
-    }
-
-    /**
-     * Test case for deleteGroup
-     *
-     * .
-     *
-     */
-    public function testDeleteGroup()
-    {
-
-    }
-
-    /**
-     * Test case for deleteUser
-     *
-     * .
-     *
-     */
-    public function testDeleteUser()
-    {
-
     }
 
     /**
@@ -330,14 +286,8 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             $this->assertGreaterThan(0, count($result));
             //print_r($result);
         } catch (ApiException $e) {
-            echo 'Exception when calling ProcessmakerApi->testFindGroups: ', $e->getMessage(), PHP_EOL;
-            if ($e->getResponseObject()) {
-                /** @var Error[] $errorArray */
-                $errorArray = $e->getResponseObject()->getErrors();
-                print_r($errorArray);
-            }
+            $this->dumpError($e, __METHOD__);
         }
-
     }
 
     /**
@@ -384,4 +334,55 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
     }
 
+    /**
+     * Test case for deleteUser
+     *
+     * .
+     *
+     */
+    public function testDeleteUser()
+    {
+        /** @var string $userIdId */
+        $userId = $this->testAddUser();
+        $this->assertNotNull($userId, 'User should be created');
+
+        try {
+            /** @var ResultSuccess $result */
+            $result = $this->apiInstance->deleteUser($userId);
+            $this->assertEquals('1002', $result->getMeta()->getCode(), 'Result code expected');
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    /**
+     * Test case for deleteGroup
+     *
+     * .
+     *
+     */
+    public function testDeleteGroup()
+    {
+        /** @var string $userIdId */
+        $userId = $this->testAddGroup();
+        $this->assertNotNull($userId, 'Group should be created');
+
+        try {
+            /** @var ResultSuccess $result */
+            $result = $this->apiInstance->deleteGroup($userId);
+            $this->assertEquals('1017', $result->getMeta()->getCode(), 'Result code expected');
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    private function dumpError(ApiException $e, $methodName)
+    {
+        echo "Exception when calling $methodName, ". $e->getMessage(). PHP_EOL;
+        if ($e->getResponseObject()) {
+            /** @var Error[] $errorArray */
+            $errorArray = $e->getResponseObject()->getErrors();
+            print_r($errorArray);
+        }
+    }
 }

@@ -267,7 +267,10 @@
           ],
           "responses": {
             "204": {
-              "description": "Item successfully deleted"
+              "description": "Item successfully deleted",
+              "schema": {
+                "$ref": "#/definitions/ResultSuccess"
+              }
             },
             "404": {
               "description": "Item not found",
@@ -696,7 +699,10 @@
                 ],
                 "responses": {
                     "204": {
-                        "description": "Item successfully deleted"
+                      "description": "Item successfully deleted",
+                      "schema": {
+                        "$ref": "#/definitions/ResultSuccess"
+                      }
                     },
                     "404": {
                         "description": "Item not found",
@@ -816,12 +822,12 @@
                     "properties": {
                         "code": {
                             "type": "string",
-                            "example": "1021",
+                            "example": "1234",
                             "description": "Result code from ApiCodes dictionary"
                         },
                         "title": {
                             "type": "string",
-                            "example": "User(s) has been attached to the Group",
+                            "example": "Some positive result description",
                             "description": "Result textual explanation"
                         }
                     }
