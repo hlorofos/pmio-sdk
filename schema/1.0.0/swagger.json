@@ -782,6 +782,14 @@
                             ],
                             "example": "ACTIVE"
                         },
+                        "users": {
+                          "type": "array",
+                          "description": "User Ids array",
+                          "items": {
+                            "type": "string",
+                            "example": "9d705617-cc29-482a-85ff-7f7292f72b31"
+                          }
+                        },
                         "created_at": {
                             "$ref": "#/definitions/DateFull"
                         },

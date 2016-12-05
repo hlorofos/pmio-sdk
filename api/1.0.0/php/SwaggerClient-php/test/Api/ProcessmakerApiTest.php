@@ -188,7 +188,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         ]);
 
         try {
-            /** @var MetaResult $result */
+            /** @var ResultSuccess $result */
             $result = $this->apiInstance->addUsersToGroup($groupId, $GroupAddUsersItem);
             //print_r($result->getMeta());
             $this->assertEquals('1021', $result->getMeta()->getCode(), 'User should be attached to the Group');
@@ -254,7 +254,6 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         try {
             /** @var ResultSuccess $result */
             $result = $this->apiInstance->syncUsersToGroup($groupId, $UsersItem);
-            //print_r($result->getMeta());
             $this->assertEquals('1021', $result->getMeta()->getCode(), 'User should be attached with Group');
         } catch (ApiException $e) {
             $this->dumpError($e, __METHOD__);
@@ -269,7 +268,25 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
      */
     public function testFindGroupById()
     {
+        $groupId = $this->testAddGroup();
+        $userId = $this->testAddUser();
+        try {
+            /** @var GroupAttributes $result */
+            $result = $this->apiInstance->findGroupById($groupId)->getData()->getAttributes();
 
+            $this->assertCount(0, $result->getUsers(), 'Should be no users attached');
+
+            $GroupAddUsersItem = new GroupAddUsersItem(['data' => new UserIds(['users' => [$userId]])]);
+            $this->apiInstance->addUsersToGroup($groupId, $GroupAddUsersItem);
+
+            /** @var GroupAttributes $result */
+            $result = $this->apiInstance->findGroupById($groupId)->getData()->getAttributes();
+
+            $this->assertCount(1, $result->getUsers(), 'Should be one user attached');
+            $this->assertEquals($userId, $result->getUsers()[0], 'Should be proper User Id');
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
     }
 
     /**
