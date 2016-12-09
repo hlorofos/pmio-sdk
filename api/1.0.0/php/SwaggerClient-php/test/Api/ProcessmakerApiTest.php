@@ -55,6 +55,11 @@ use Swagger\Client\Model\UserAttributes;
 use Swagger\Client\Model\UserCreateItem;
 use Swagger\Client\Model\UserIds;
 use Swagger\Client\Model\UserItem;
+use Swagger\Client\Model\Process;
+use Swagger\Client\Model\ProcessCreateItem;
+use Swagger\Client\Model\ProcessItem;
+use Swagger\Client\Model\ProcessAttributes;
+
 
 /**
  * ProcessmakerApiTest Class Doc Comment
@@ -402,4 +407,81 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             print_r($errorArray);
         }
     }
+
+    public function testAddProcess() {
+        try {
+
+            $processAtt = new ProcessAttributes();
+            $processAtt->setStatus('ACTIVE');
+            $processAtt->setName('Process name');
+            $processAtt->setDurationBy('WORKING_DAYS');
+            $processAtt->setType('NORMAL');
+            $processAtt->setDesignAccess('PUBLIC');
+            $processAtt->setCreateUserId($this->testAddUser());
+
+            /** @var GroupItem $result */
+            $result = $this->apiInstance->addProcess(new ProcessCreateItem(
+                    [
+                        'data' => new Process(['attributes' => $processAtt])
+                    ]
+                )
+            );
+
+            $this->assertNotNull($result->getData()->getId());
+            $this->assertEquals('Process name', $result->getData()->getAttributes()->getName());
+            //print_r($result->getData());
+            return $result->getData()->getId();
+
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+
+    }
+
+    public function testFindProcesses()
+    {
+        try {
+            /** @var Group[] $result */
+            $result = $this->apiInstance->findProcesses()->getData();
+            $this->assertGreaterThan(0, count($result));
+            //print_r($result);
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    public function testDeleteProcess()
+    {
+        /** @var string $userIdId */
+        $processId = $this->testAddProcess();
+        $this->assertNotNull($processId, 'Process should be created');
+
+        try {
+            /** @var ResultSuccess $result */
+            $result = $this->apiInstance->deleteProcess($processId);
+            $this->assertEquals('1202', $result->getMeta()->getCode(), 'Result code expected');
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    public function testFindProcessById()
+    {
+        $this->markTestIncomplete();
+        $processId = $this->testAddProcess();
+
+        try {
+            /** @var GroupAttributes $result */
+            $result = $this->apiInstance->findGroupById($processId)->getData()->getAttributes();
+
+             /** @var GroupAttributes $result */
+            $result = $this->apiInstance->findGroupById($processId)->getData()->getAttributes();
+
+
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+
 }

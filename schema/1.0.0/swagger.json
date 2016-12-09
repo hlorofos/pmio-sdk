@@ -1043,11 +1043,11 @@
             "type",
             "design_access",
             "create_user_id",
-            "title"
+            "name"
           ],
           "type": "object",
           "properties": {
-            "title": {
+            "name": {
               "type": "string",
               "example": "Process_Title"
             },
