@@ -1,6 +1,6 @@
 {
   "swagger": "2.0",
-  "info": {
+  "info":{
     "version": "1.0.0",
     "title": "ProcessMaker API",
     "description": "An API to access ProcessMaker core functionality",
@@ -35,6 +35,288 @@
     }
   ],
   "paths": {
+    "/processes": {
+      "get": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Returns all Processes",
+        "operationId": "findProcesses",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page Nr to fetch",
+            "required": false,
+            "default": 1,
+            "type": "integer"
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "Amount of Items per Page",
+            "required": false,
+            "default": 15,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Processes list",
+            "schema": {
+              "title": "ProcessCollection",
+              "description": "Json Api Response with collection of Items in array",
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Process"
+                  }
+                },
+                "meta": {
+                  "$ref": "#/definitions/Meta"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized access",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "403": {
+            "description": "Forbidden access",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Creates a new process",
+        "operationId": "addProcess",
+        "parameters": [
+          {
+            "name": "ProcessCreateItem",
+            "in": "body",
+            "description": "JsonApi with the Process object to add",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Process"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Created Process response",
+            "schema": {
+              "type": "object",
+              "title": "ProcessItem",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Process"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      }
+    },
+    "/processes/{id}": {
+      "get": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Returns the process based on a single ID",
+        "operationId": "findProcessById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of Process to fetch",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Process Item response",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Process"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Process not found",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Update existing Process",
+        "operationId": "updateProcess",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of Process to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "ProcessUpdateItem",
+            "in": "body",
+            "description": "Process object to edit",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Process"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "JsonApi response with updated Process object",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Process"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Deletes a single item based on the ID supplied",
+        "operationId": "deleteProcess",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of item to delete",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Item successfully deleted",
+            "schema": {
+              "$ref": "#/definitions/ResultSuccess"
+            }
+          },
+          "404": {
+            "description": "Item not found",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "500": {
+            "description": "Deletion error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "401": {
+            "description": "Unauthorized access",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      }
+    },
     "/groups": {
       "get": {
         "tags": [
@@ -739,6 +1021,127 @@
     }
   },
   "definitions": {
+    "Process": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "9d705617-cc29-482a-85ff-7f7292f72b31"
+        },
+        "type": {
+          "default": "process",
+          "type": "string",
+          "example": "process"
+        },
+        "attributes": {
+          "required": [
+            "status",
+            "duration_by",
+            "type",
+            "design_access",
+            "create_user_id",
+            "title"
+          ],
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string",
+              "example": "Process_Title"
+            },
+            "description": {
+              "type": "string",
+              "example": "Some description"
+            },
+            "parent_process_id": {
+              "type": "string",
+              "example": "9d705617-cc29-482a-85ff-7f7292f72b11"
+            },
+            "status": {
+              "default": "ACTIVE",
+              "type": "string",
+              "enum": [
+                "ACTIVE",
+                "INACTIVE",
+                "DISABLED"
+              ]
+            },
+            "duration_by": {
+              "default": "WORKING_DAYS",
+              "type": "string",
+              "enum": [
+                "WORKING_DAYS",
+                "CALENDAR_DAYS"
+              ]
+            },
+            "type": {
+              "default": "NORMAL",
+              "type": "string",
+              "enum": [
+                "NORMAL",
+                "SUB_PROCESS"
+              ]
+            },
+            "assignment": {
+              "default": false,
+              "type": "boolean"
+            },
+            "design_access": {
+              "default": "PUBLIC",
+              "type": "string",
+              "enum": [
+                "PUBLIC",
+                "PRIVATE"
+              ]
+            },
+            "show_map": {
+              "default": true,
+              "type": "boolean"
+            },
+            "show_message": {
+              "default": true,
+              "type": "boolean"
+            },
+            "show_delegate": {
+              "default": true,
+              "type": "boolean"
+            },
+            "show_dynaform": {
+              "default": false,
+              "type": "boolean"
+            },
+            "category_id": {
+              "type": "string",
+              "example": "9d705617-cc29-482a-85ff-7f7292f72b22"
+            },
+            "sub_category_id": {
+              "type": "string",
+              "example": "9d705617-cc29-482a-85ff-7f7292f72b33"
+            },
+            "create_user_id":{
+              "type": "string",
+              "example": "9d705617-cc29-482a-85ff-7f7292f72b44"
+            },
+            "debug": {
+              "type":"boolean",
+              "default": false
+            },
+            "dynaform_summary_id": {
+              "type": "string",
+              "example": "9d705617-cc29-482a-85ff-7f7292f72b55"
+            },
+            "created_at": {
+              "$ref": "#/definitions/dateTime"
+            },
+            "updated_at": {
+              "$ref": "#/definitions/dateTime"
+            }
+          }
+        }
+      }
+    },
     "Group": {
       "type": "object",
       "required": [
