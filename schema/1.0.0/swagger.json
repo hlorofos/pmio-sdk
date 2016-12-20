@@ -126,7 +126,7 @@
           }
         ],
         "responses": {
-          "200": {
+          "201": {
             "description": "Created Process response",
             "schema": {
               "type": "object",
