@@ -91,6 +91,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         $this->apiInstance = new Api\ProcessmakerApi();
         if (in_array('--debug', $_SERVER['argv'])) {
             $this->apiInstance->getApiClient()->getConfig()->setDebug(true);
+
         }
     }
 
@@ -442,9 +443,11 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
     {
         try {
             /** @var Group[] $result */
+
+            $this->apiInstance->getApiClient()->getConfig()->setAccessToken('eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6Ijg5ZjhjOGIzNzQ1Y2E2YjlhYTAyNzRlNDVmZmM3Nzk0MzYwNTE5MzVmYjkwYWYyMzhmZWRmMWI1NTQxYjY3MGZjOTJhZjljOTgxZWM0N2YxIn0.eyJhdWQiOiI0IiwianRpIjoiODlmOGM4YjM3NDVjYTZiOWFhMDI3NGU0NWZmYzc3OTQzNjA1MTkzNWZiOTBhZjIzOGZlZGYxYjU1NDFiNjcwZmM5MmFmOWM5ODFlYzQ3ZjEiLCJpYXQiOjE0ODIxNjgxNzAsIm5iZiI6MTQ4MjE2ODE3MCwiZXhwIjoxNTEzNzA0MTcwLCJzdWIiOiIzNSIsInNjb3BlcyI6W119.S2dCO3jVXKX3a-k4lQqpmnEcxcb5EHaZ-94sO5iE6OZSK0b44IRRAIgTfLtaziFOiaIBT1Nj3bCYrijh5Um2ipQuJ1mIur3aOoszHGV7XFuaMU4oPXEpsMGRZjRAQoi3YuvZmBjg4yhqC9JRy-Q672gAdxHAD9IL0d0taYV8eCoDbYzcxz4TBYPkxIv6M3W9wA9o8b91l6HmQQ4iEqIX07Awu1U-2hHBdB8OlFao6_31y-O9FZPUgNByvqtKZ76o2PbaRTm4BQ7nFWF7JHz8jfaOtQVFp32TATc7DzW8Sec4RkXMsvlJC03ETutIijrEGP8dH2NP_ZjVg1Lnajw8nxkUboBcdRO9ATM0LixjUxCrXNi7q3376WPLE1da0YqsUjqekaAM2cnw5HIOXw4kS-kE6tPF_PnOjrzteKXPCWNOF5Ksewp8ezLUpeIyzstsFHslRvzY9G_H2bn2n8QevMypP7g54h-9C8peFLSEEcuTISNiFD6GsmLQDXgwaH4taJ_xnLHrttIx15tHvSV0xb2SaBxmkQWeomKneX09E6tg9mFeKFQnnS9kyOz1dO2KQ1qtF9DyAa3DhN4_ikkRyqTcCQUVjkOS_WtIgt7lIQYDp2e1c8DzFa7AhYNkuI0k_vBUUz51HomWS5__KFL3raN6W6PJEMkw_74sIQZjglc');
             $result = $this->apiInstance->findProcesses()->getData();
             $this->assertGreaterThan(0, count($result));
-            //print_r($result);
+            print_r($result);
         } catch (ApiException $e) {
             $this->dumpError($e, __METHOD__);
         }
@@ -472,16 +475,14 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
         try {
             /** @var GroupAttributes $result */
-            $result = $this->apiInstance->findGroupById($processId)->getData()->getAttributes();
-
-             /** @var GroupAttributes $result */
-            $result = $this->apiInstance->findGroupById($processId)->getData()->getAttributes();
-
+            $result = $this->apiInstance->findProcessById($processId)->getData()->getAttributes();
+            $this->assertNotEmpty($result);
 
         } catch (ApiException $e) {
             $this->dumpError($e, __METHOD__);
         }
     }
+
 
 
 }

@@ -162,6 +162,127 @@
         }
       }
     },
+    "/processes/{tasks}/tasks": {
+      "get": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Returns all Tasks",
+        "operationId": "findTasks",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page Nr to fetch",
+            "required": false,
+            "default": 1,
+            "type": "integer"
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "Amount of Items per Page",
+            "required": false,
+            "default": 15,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Tasks list",
+            "schema": {
+              "title": "TaskCollection",
+              "description": "Json Api Response with collection of Items in array",
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Task"
+                  }
+                },
+                "meta": {
+                  "$ref": "#/definitions/Meta"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Creates a new task",
+        "operationId": "addTask",
+        "parameters": [
+          {
+            "name": "TaskCreateItem",
+            "in": "body",
+            "description": "JsonApi with the Task object to add",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Task"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created Process response",
+            "schema": {
+              "type": "object",
+              "title": "ProcessItem",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Process"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "404": {
+            "description": "Not found user",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      }
+    },
     "/processes/{id}": {
       "get": {
         "tags": [
