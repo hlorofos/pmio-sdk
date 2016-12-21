@@ -62,6 +62,10 @@ use Swagger\Client\Model\ProcessAttributes;
 use Swagger\Client\Model\Task;
 use Swagger\Client\Model\TaskCreateItem;
 use Swagger\Client\Model\TaskAttributes;
+use Swagger\Client\Model\TaskAddGroupsItem;
+use Swagger\Client\Model\TaskSyncGroupsItem;
+use Swagger\Client\Model\TaskRemoveGroupsItem;
+use Swagger\Client\Model\GroupIds;
 /**
  * ProcessmakerApiTest Class Doc Comment
  *
@@ -92,7 +96,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         $this->apiInstance = new Api\ProcessmakerApi();
         if (in_array('--debug', $_SERVER['argv'])) {
             $this->apiInstance->getApiClient()->getConfig()->setDebug(true);
-
+            $this->apiInstance->getApiClient()->getConfig()->setAccessToken('eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6Ijg5ZjhjOGIzNzQ1Y2E2YjlhYTAyNzRlNDVmZmM3Nzk0MzYwNTE5MzVmYjkwYWYyMzhmZWRmMWI1NTQxYjY3MGZjOTJhZjljOTgxZWM0N2YxIn0.eyJhdWQiOiI0IiwianRpIjoiODlmOGM4YjM3NDVjYTZiOWFhMDI3NGU0NWZmYzc3OTQzNjA1MTkzNWZiOTBhZjIzOGZlZGYxYjU1NDFiNjcwZmM5MmFmOWM5ODFlYzQ3ZjEiLCJpYXQiOjE0ODIxNjgxNzAsIm5iZiI6MTQ4MjE2ODE3MCwiZXhwIjoxNTEzNzA0MTcwLCJzdWIiOiIzNSIsInNjb3BlcyI6W119.S2dCO3jVXKX3a-k4lQqpmnEcxcb5EHaZ-94sO5iE6OZSK0b44IRRAIgTfLtaziFOiaIBT1Nj3bCYrijh5Um2ipQuJ1mIur3aOoszHGV7XFuaMU4oPXEpsMGRZjRAQoi3YuvZmBjg4yhqC9JRy-Q672gAdxHAD9IL0d0taYV8eCoDbYzcxz4TBYPkxIv6M3W9wA9o8b91l6HmQQ4iEqIX07Awu1U-2hHBdB8OlFao6_31y-O9FZPUgNByvqtKZ76o2PbaRTm4BQ7nFWF7JHz8jfaOtQVFp32TATc7DzW8Sec4RkXMsvlJC03ETutIijrEGP8dH2NP_ZjVg1Lnajw8nxkUboBcdRO9ATM0LixjUxCrXNi7q3376WPLE1da0YqsUjqekaAM2cnw5HIOXw4kS-kE6tPF_PnOjrzteKXPCWNOF5Ksewp8ezLUpeIyzstsFHslRvzY9G_H2bn2n8QevMypP7g54h-9C8peFLSEEcuTISNiFD6GsmLQDXgwaH4taJ_xnLHrttIx15tHvSV0xb2SaBxmkQWeomKneX09E6tg9mFeKFQnnS9kyOz1dO2KQ1qtF9DyAa3DhN4_ikkRyqTcCQUVjkOS_WtIgt7lIQYDp2e1c8DzFa7AhYNkuI0k_vBUUz51HomWS5__KFL3raN6W6PJEMkw_74sIQZjglc');
         }
     }
 
@@ -270,7 +274,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
     /**
      * Test case for findGroupById
      *
-     * .
+     *
      *
      */
     public function testFindGroupById()
@@ -366,7 +370,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
      */
     public function testDeleteUser()
     {
-        /** @var string $userIdId */
+        /** @var string $userId */
         $userId = $this->testAddUser();
         $this->assertNotNull($userId, 'User should be created');
 
@@ -374,7 +378,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             /** @var ResultSuccess $result */
             $result = $this->apiInstance->deleteUser($userId);
             $this->assertEquals('1002', $result->getMeta()->getCode(), 'Result code expected');
-            return $result->getData()->getId();
+            //return $result->getData()->getId();
         } catch (ApiException $e) {
             $this->dumpError($e, __METHOD__);
         }
@@ -388,7 +392,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
      */
     public function testDeleteGroup()
     {
-        /** @var string $userIdId */
+        /** @var string $userId */
         $userId = $this->testAddGroup();
         $this->assertNotNull($userId, 'Group should be created');
 
@@ -422,7 +426,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             $processAtt->setDesignAccess('PUBLIC');
             $processAtt->setCreateUserId($this->testAddUser());
 
-            /** @var GroupItem $result */
+            /** @var ProcessItem $result */
             $result = $this->apiInstance->addProcess(new ProcessCreateItem(
                     [
                         'data' => new Process(['attributes' => $processAtt])
@@ -445,9 +449,6 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
     {
         $this->markTestIncomplete();
         try {
-            /** @var Group[] $result */
-
-            $this->apiInstance->getApiClient()->getConfig()->setAccessToken('eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6Ijg5ZjhjOGIzNzQ1Y2E2YjlhYTAyNzRlNDVmZmM3Nzk0MzYwNTE5MzVmYjkwYWYyMzhmZWRmMWI1NTQxYjY3MGZjOTJhZjljOTgxZWM0N2YxIn0.eyJhdWQiOiI0IiwianRpIjoiODlmOGM4YjM3NDVjYTZiOWFhMDI3NGU0NWZmYzc3OTQzNjA1MTkzNWZiOTBhZjIzOGZlZGYxYjU1NDFiNjcwZmM5MmFmOWM5ODFlYzQ3ZjEiLCJpYXQiOjE0ODIxNjgxNzAsIm5iZiI6MTQ4MjE2ODE3MCwiZXhwIjoxNTEzNzA0MTcwLCJzdWIiOiIzNSIsInNjb3BlcyI6W119.S2dCO3jVXKX3a-k4lQqpmnEcxcb5EHaZ-94sO5iE6OZSK0b44IRRAIgTfLtaziFOiaIBT1Nj3bCYrijh5Um2ipQuJ1mIur3aOoszHGV7XFuaMU4oPXEpsMGRZjRAQoi3YuvZmBjg4yhqC9JRy-Q672gAdxHAD9IL0d0taYV8eCoDbYzcxz4TBYPkxIv6M3W9wA9o8b91l6HmQQ4iEqIX07Awu1U-2hHBdB8OlFao6_31y-O9FZPUgNByvqtKZ76o2PbaRTm4BQ7nFWF7JHz8jfaOtQVFp32TATc7DzW8Sec4RkXMsvlJC03ETutIijrEGP8dH2NP_ZjVg1Lnajw8nxkUboBcdRO9ATM0LixjUxCrXNi7q3376WPLE1da0YqsUjqekaAM2cnw5HIOXw4kS-kE6tPF_PnOjrzteKXPCWNOF5Ksewp8ezLUpeIyzstsFHslRvzY9G_H2bn2n8QevMypP7g54h-9C8peFLSEEcuTISNiFD6GsmLQDXgwaH4taJ_xnLHrttIx15tHvSV0xb2SaBxmkQWeomKneX09E6tg9mFeKFQnnS9kyOz1dO2KQ1qtF9DyAa3DhN4_ikkRyqTcCQUVjkOS_WtIgt7lIQYDp2e1c8DzFa7AhYNkuI0k_vBUUz51HomWS5__KFL3raN6W6PJEMkw_74sIQZjglc');
             $result = $this->apiInstance->findProcesses()->getData();
             $this->assertGreaterThan(0, count($result));
             print_r($result);
@@ -478,7 +479,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         $processId = $this->testAddProcess();
 
         try {
-            /** @var GroupAttributes $result */
+            /** @var ProcessAttributes $result */
             $result = $this->apiInstance->findProcessById($processId)->getData()->getAttributes();
             $this->assertNotEmpty($result);
 
@@ -554,6 +555,93 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         try {
             $result = $this->apiInstance->deleteTask($array_ids['process_uid'],$array_ids['task_uid']);
             $this->assertEquals('1122', $result->getMeta()->getCode(), 'Result code expected');
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    public function testAddGroupsToTask()
+    {
+        /** @var string $groupId */
+        $groupId = $this->testAddGroup();
+        $this->assertNotNull($groupId, 'Group should be created');
+
+        /** @var array $array_ids of Process and Task*/
+        $array_ids = $this->testAddTask();
+        $this->assertEquals(2,count($array_ids), 'We should get Process UID and Task UID');
+
+        $taskAddGroupsItem = new TaskAddGroupsItem([
+            'data' => new GroupIds([
+                'groups' => [$groupId]
+            ])
+        ]);
+
+        try {
+            /** @var ResultSuccess $result */
+            $result = $this->apiInstance->addGroupsToTask(
+                $array_ids['process_uid'],
+                $array_ids['task_uid'],
+                $taskAddGroupsItem
+            );
+            //print_r($result->getMeta());
+            $this->assertEquals('1126', $result->getMeta()->getCode(), 'User should be attached to the Group');
+            $array_ids['group_uid'] = $groupId;
+            return $array_ids;
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    public function testSyncGroupsToTask()
+    {
+        /** @var string $groupId */
+        $groupId = $this->testAddGroup();
+        $this->assertNotNull($groupId, 'Group should be created');
+
+        /** @var array $array_ids of Process and Task*/
+        $array_ids = $this->testAddTask();
+        $this->assertEquals(2, count($array_ids), 'We should get Process UID and Task UID');
+
+
+        $groupItems = new TaskSyncGroupsItem([
+            'data' => new GroupIds([
+                'groups' => [$groupId]
+            ])
+        ]);
+
+        try {
+            /** @var ResultSuccess $result */
+            $result = $this->apiInstance->syncGroupsToTask(
+                $array_ids['process_uid'],
+                $array_ids['task_uid'],
+                $groupItems
+            );
+            $this->assertEquals('1126', $result->getMeta()->getCode(), 'User should be attached with Group');
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    public function testRemoveGroupsFromTask()
+    {
+        /** @var array $array_ids of Process and Task and ID of attached group*/
+        $array_ids = $this->testAddGroupsToTask();
+
+        $groupItems = new TaskRemoveGroupsItem([
+            'data' => new GroupIds([
+                'groups' => [$array_ids['group_uid']]
+            ])
+        ]);
+
+        try {
+
+            /** @var MetaResult $result */
+            $result = $this->apiInstance->removeGroupsFromTask(
+                $array_ids['process_uid'],
+                $array_ids['task_uid'],
+                $groupItems);
+            //print_r($result->getMeta());
+            $this->assertEquals('1128', $result->getMeta()->getCode(), 'User should be detached from the Group');
         } catch (ApiException $e) {
             $this->dumpError($e, __METHOD__);
         }
