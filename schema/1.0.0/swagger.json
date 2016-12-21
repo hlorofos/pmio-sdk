@@ -170,7 +170,7 @@
         }
       }
     },
-    "/processes/{id}/tasks{task_id}": {
+    "/processes/{id}/tasks/{task_id}": {
       "get": {
         "tags": [
           "processmaker"
@@ -1571,7 +1571,7 @@
           "properties": {
             "name": {
               "type": "string",
-              "example": "Process_Title"
+              "example": "Task_Title"
             },
             "description": {
               "type": "string",

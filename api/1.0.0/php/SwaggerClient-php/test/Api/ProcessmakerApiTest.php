@@ -59,8 +59,9 @@ use Swagger\Client\Model\Process;
 use Swagger\Client\Model\ProcessCreateItem;
 use Swagger\Client\Model\ProcessItem;
 use Swagger\Client\Model\ProcessAttributes;
-
-
+use Swagger\Client\Model\Task;
+use Swagger\Client\Model\TaskCreateItem;
+use Swagger\Client\Model\TaskAttributes;
 /**
  * ProcessmakerApiTest Class Doc Comment
  *
@@ -373,6 +374,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             /** @var ResultSuccess $result */
             $result = $this->apiInstance->deleteUser($userId);
             $this->assertEquals('1002', $result->getMeta()->getCode(), 'Result code expected');
+            return $result->getData()->getId();
         } catch (ApiException $e) {
             $this->dumpError($e, __METHOD__);
         }
@@ -441,6 +443,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
     public function testFindProcesses()
     {
+        $this->markTestIncomplete();
         try {
             /** @var Group[] $result */
 
@@ -455,6 +458,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
     public function testDeleteProcess()
     {
+        $this->markTestIncomplete();
         /** @var string $userIdId */
         $processId = $this->testAddProcess();
         $this->assertNotNull($processId, 'Process should be created');
@@ -482,6 +486,79 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             $this->dumpError($e, __METHOD__);
         }
     }
+
+    public function testAddTask() {
+        try {
+            $processUid = $this->testAddProcess();
+            $taskAttr = new TaskAttributes();
+            $taskAttr->setName('Task name');
+            $taskAttr->setType('NORMAL');
+            $taskAttr->setProcessId($processUid);
+            $taskAttr->setAssignType('BALANCED');
+            $taskAttr->setTransferFly(true);
+            $taskAttr->setCanUpload(true);
+            $taskAttr->setViewUpload(true);
+            $taskAttr->setViewAdditionalDocumentation(true);
+            $taskAttr->setStart(false);
+            $taskAttr->setSendLastEmail(true);
+            $taskAttr->setSelfserviceTimeout(10);
+
+            /** @var GroupItem $result */
+            $result = $this->apiInstance->addTask(
+                $processUid,
+                new TaskCreateItem(
+                    [
+                        'data' => new Task(['attributes' => $taskAttr])
+                    ]
+                )
+            );
+
+            $this->assertNotNull($result->getData()->getId());
+            $this->assertEquals('Task name', $result->getData()->getAttributes()->getName());
+            //print_r($result->getData());
+            return ['task_uid'=>$result->getData()->getId(),'process_uid'=>$processUid];
+
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+
+    }
+
+    public function testFindTasks()
+    {
+        try {
+            $result = $this->apiInstance->findTasks($this->testAddTask()['process_uid'])->getData();
+            $this->assertGreaterThan(0, count($result));
+            //print_r($result);
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    public function testFindTaskById()
+    {
+        $array_ids = $this->testAddTask();
+        try {
+
+            $result = $this->apiInstance->findTaskById($array_ids['process_uid'],$array_ids['task_uid'])->getData()->getAttributes();
+            $this->assertNotEmpty($result);
+
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    public function testDeleteTask()
+    {
+        $array_ids = $this->testAddTask();
+        try {
+            $result = $this->apiInstance->deleteTask($array_ids['process_uid'],$array_ids['task_uid']);
+            $this->assertEquals('1122', $result->getMeta()->getCode(), 'Result code expected');
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
 
 
 
