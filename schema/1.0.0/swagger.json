@@ -35,133 +35,6 @@
     }
   ],
   "paths": {
-    "/processes": {
-      "get": {
-        "tags": [
-          "processmaker"
-        ],
-        "description": "Returns all Processes",
-        "operationId": "findProcesses",
-        "parameters": [
-          {
-            "name": "page",
-            "in": "query",
-            "description": "Page Nr to fetch",
-            "required": false,
-            "default": 1,
-            "type": "integer"
-          },
-          {
-            "name": "per_page",
-            "in": "query",
-            "description": "Amount of Items per Page",
-            "required": false,
-            "default": 15,
-            "type": "integer"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Processes list",
-            "schema": {
-              "title": "ProcessCollection",
-              "description": "Json Api Response with collection of Items in array",
-              "type": "object",
-              "properties": {
-                "data": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/definitions/Process"
-                  }
-                },
-                "meta": {
-                  "$ref": "#/definitions/Meta"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized access",
-            "schema": {
-              "$ref": "#/definitions/errorArray"
-            }
-          },
-          "403": {
-            "description": "Forbidden access",
-            "schema": {
-              "$ref": "#/definitions/errorArray"
-            }
-          },
-          "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/errorArray"
-            }
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "processmaker"
-        ],
-        "description": "Creates a new process",
-        "operationId": "addProcess",
-        "parameters": [
-          {
-            "name": "ProcessCreateItem",
-            "in": "body",
-            "description": "JsonApi with the Process object to add",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "data": {
-                  "$ref": "#/definitions/Process"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Created Process response",
-            "schema": {
-              "type": "object",
-              "title": "ProcessItem",
-              "required": [
-                "data"
-              ],
-              "properties": {
-                "data": {
-                  "$ref": "#/definitions/Process"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal server error",
-            "schema": {
-              "$ref": "#/definitions/errorArray"
-            }
-          },
-          "400": {
-            "description": "Invalid parameters",
-            "schema": {
-              "$ref": "#/definitions/errorArray"
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "schema": {
-              "$ref": "#/definitions/errorArray"
-            }
-          }
-        }
-      }
-    },
     "/processes/{id}/tasks": {
       "get": {
         "tags": [
@@ -278,6 +151,515 @@
           },
           "404": {
             "description": "Not item",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      }
+    },
+    "/processes/{id}/tasks{task_id}": {
+      "get": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Returns the task based on a single ID",
+        "operationId": "findTaskById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of Process to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "task_id",
+            "in": "path",
+            "description": "ID of Task to fetch",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Task Item response",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Task"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Task not found",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Update existing Task",
+        "operationId": "updateTask",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of Process to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "task_id",
+            "in": "path",
+            "description": "ID of Task to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "TaskUpdateItem",
+            "in": "body",
+            "description": "Task object to edit",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Task"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "JsonApi response with updated Task object",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Task"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Deletes a single item based on the task_id supplied and Process ID",
+        "operationId": "deleteTask",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of of Process item",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "task_id",
+            "in": "path",
+            "description": "ID of item to delete",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Item successfully deleted",
+            "schema": {
+              "$ref": "#/definitions/ResultSuccess"
+            }
+          },
+          "404": {
+            "description": "Item not found",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "500": {
+            "description": "Deletion error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      }
+    },
+    "/processes/{id}/tasks/{task_id}/groups": {
+      "put": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Attach Group(s) to the given Task",
+        "operationId": "addGroupsToTask",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of Process",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "task_id",
+            "in": "path",
+            "description": "ID of Task to modify",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "TaskAddGroupsItem",
+            "in": "body",
+            "description": "JsonApi with Groups ids to add",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/GroupIds"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "JsonApi response with result details",
+            "schema": {
+              "$ref": "#/definitions/ResultSuccess"
+            }
+          },
+          "422": {
+            "description": "Un-processable entity",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "404": {
+            "description": "Group(s) not found",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "500": {
+            "description": "Error adding Group(s)",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Remove Groups from given Task",
+        "operationId": "removeGroupsFromTask",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of Process",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "task_id",
+            "in": "path",
+            "description": "ID of Task",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "TaskRemoveGroupsItem",
+            "in": "body",
+            "description": "JsonApi with Groups ids to remove",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/GroupIds"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "JsonApi response with result details",
+            "schema": {
+              "$ref": "#/definitions/ResultSuccess"
+            }
+          },
+          "422": {
+            "description": "Un-processable entity",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "404": {
+            "description": "Group(s) not found",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "500": {
+            "description": "Error removing Group(s)",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Sync Groups to Task",
+        "operationId": "syncGroupsToTask",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of Process",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "task_id",
+            "in": "path",
+            "description": "ID of Task to modify",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "TaskSyncGroupsItem",
+            "in": "body",
+            "description": "JsonApi with Groups ids to sync",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/GroupIds"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "JsonApi response with result details",
+            "schema": {
+              "$ref": "#/definitions/ResultSuccess"
+            }
+          },
+          "404": {
+            "description": "Group(s) not found",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "500": {
+            "description": "Error sync Group(s)",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      }
+    },
+    "/processes": {
+      "get": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Returns all Processes",
+        "operationId": "findProcesses",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page Nr to fetch",
+            "required": false,
+            "default": 1,
+            "type": "integer"
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "Amount of Items per Page",
+            "required": false,
+            "default": 15,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Processes list",
+            "schema": {
+              "title": "ProcessCollection",
+              "description": "Json Api Response with collection of Items in array",
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Process"
+                  }
+                },
+                "meta": {
+                  "$ref": "#/definitions/Meta"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized access",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "403": {
+            "description": "Forbidden access",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Creates a new process",
+        "operationId": "addProcess",
+        "parameters": [
+          {
+            "name": "ProcessCreateItem",
+            "in": "body",
+            "description": "JsonApi with the Process object to add",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Process"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created Process response",
+            "schema": {
+              "type": "object",
+              "title": "ProcessItem",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Process"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
             "schema": {
               "$ref": "#/definitions/errorArray"
             }
@@ -1498,6 +1880,22 @@
         "users": {
           "type": "array",
           "description": "User Ids array",
+          "items": {
+            "type": "string",
+            "example": "9d705617-cc29-482a-85ff-7f7292f72b31"
+          }
+        }
+      }
+    },
+    "GroupIds": {
+      "type": "object",
+      "required": [
+        "groups"
+      ],
+      "properties": {
+        "groups": {
+          "type": "array",
+          "description": "Group Ids array",
           "items": {
             "type": "string",
             "example": "9d705617-cc29-482a-85ff-7f7292f72b31"
