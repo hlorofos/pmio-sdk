@@ -66,6 +66,9 @@ use Swagger\Client\Model\TaskAddGroupsItem;
 use Swagger\Client\Model\TaskSyncGroupsItem;
 use Swagger\Client\Model\TaskRemoveGroupsItem;
 use Swagger\Client\Model\GroupIds;
+use Swagger\Client\Model\Event;
+use Swagger\Client\Model\EventCreateItem;
+use Swagger\Client\Model\EventAttributes;
 /**
  * ProcessmakerApiTest Class Doc Comment
  *
@@ -647,6 +650,73 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+
+    public function testAddEvent() {
+        try {
+            $processUid = $this->testAddProcess();
+            $eventAttr = new EventAttributes();
+            $eventAttr->setName('Event name');
+            $eventAttr->setType('START');
+            $eventAttr->setProcessId($processUid);
+            $eventAttr->setBehavior('THROW');
+
+            /** @var GroupItem $result */
+            $result = $this->apiInstance->addEvent(
+                $processUid,
+                new EventCreateItem(
+                    [
+                        'data' => new Event(['attributes' => $eventAttr])
+                    ]
+                )
+            );
+
+            $this->assertNotNull($result->getData()->getId());
+            $this->assertEquals('Event name', $result->getData()->getAttributes()->getName());
+            //print_r($result->getData());
+            return ['event_uid'=>$result->getData()->getId(),'process_uid'=>$processUid];
+
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+
+    }
+
+
+
+    public function testFindEvents()
+    {
+        try {
+            $result = $this->apiInstance->findEvents($this->testAddEvent()['process_uid'])->getData();
+            $this->assertGreaterThan(0, count($result));
+            //print_r($result);
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    public function testFindEventById()
+    {
+        $array_ids = $this->testAddEvent();
+        try {
+
+            $result = $this->apiInstance->findEventById($array_ids['process_uid'],$array_ids['event_uid'])->getData()->getAttributes();
+            $this->assertNotEmpty($result);
+
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    public function testDeleteEvent()
+    {
+        $array_ids = $this->testAddEvent();
+        try {
+            $result = $this->apiInstance->deleteEvent($array_ids['process_uid'],$array_ids['event_uid']);
+            $this->assertEquals('1770', $result->getMeta()->getCode(), 'Result code expected');
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
 
 
 
