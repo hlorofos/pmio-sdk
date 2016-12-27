@@ -112,7 +112,7 @@
           {
             "name": "FlowCreateItem",
             "in": "body",
-            "description": "JsonApi with the Gateway object to add",
+            "description": "JsonApi with the Flow object to add",
             "required": true,
             "schema": {
               "type": "object",
@@ -121,7 +121,7 @@
               ],
               "properties": {
                 "data": {
-                  "$ref": "#/definitions/Gateway"
+                  "$ref": "#/definitions/Flow"
                 }
               }
             }
@@ -129,16 +129,16 @@
         ],
         "responses": {
           "201": {
-            "description": "Created Gateway response",
+            "description": "Created Flow response",
             "schema": {
               "type": "object",
-              "title": "EventItem",
+              "title": "FlowItem",
               "required": [
                 "data"
               ],
               "properties": {
                 "data": {
-                  "$ref": "#/definitions/Gateway"
+                  "$ref": "#/definitions/Flow"
                 }
               }
             }
@@ -175,8 +175,8 @@
         "tags": [
           "processmaker"
         ],
-        "description": "Returns gateway based on a single ID",
-        "operationId": "findGatewayById",
+        "description": "Returns flow based on a single ID",
+        "operationId": "findFlowById",
         "parameters": [
           {
             "name": "id",
@@ -186,16 +186,16 @@
             "type": "string"
           },
           {
-            "name": "gateway_id",
+            "name": "flow_id",
             "in": "path",
-            "description": "ID of Gateway to fetch",
+            "description": "ID of Flow to fetch",
             "required": true,
             "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Gateway Item response",
+            "description": "Flow Item response",
             "schema": {
               "type": "object",
               "required": [
@@ -203,7 +203,7 @@
               ],
               "properties": {
                 "data": {
-                  "$ref": "#/definitions/Gateway"
+                  "$ref": "#/definitions/Flow"
                 }
               }
             }
@@ -226,8 +226,8 @@
         "tags": [
           "processmaker"
         ],
-        "description": "Update existing Gateway",
-        "operationId": "updateGateway",
+        "description": "Update existing Flow",
+        "operationId": "updateFlow",
         "parameters": [
           {
             "name": "id",
@@ -237,16 +237,16 @@
             "type": "string"
           },
           {
-            "name": "gateway_id",
+            "name": "flow_id",
             "in": "path",
-            "description": "ID of Gateway to fetch",
+            "description": "ID of Flow to fetch",
             "required": true,
             "type": "string"
           },
           {
-            "name": "GatewayUpdateItem",
+            "name": "FlowUpdateItem",
             "in": "body",
-            "description": "Gateway object to edit",
+            "description": "Flow object to edit",
             "required": true,
             "schema": {
               "type": "object",
@@ -255,7 +255,7 @@
               ],
               "properties": {
                 "data": {
-                  "$ref": "#/definitions/Gateway"
+                  "$ref": "#/definitions/Flow"
                 }
               }
             }
@@ -263,7 +263,7 @@
         ],
         "responses": {
           "200": {
-            "description": "JsonApi response with updated Gateway object",
+            "description": "JsonApi response with updated Flow object",
             "schema": {
               "type": "object",
               "required": [
@@ -271,7 +271,7 @@
               ],
               "properties": {
                 "data": {
-                  "$ref": "#/definitions/Gateway"
+                  "$ref": "#/definitions/Flow"
                 }
               }
             }
@@ -294,8 +294,8 @@
         "tags": [
           "processmaker"
         ],
-        "description": "Deletes a single item based on the gateway_id supplied and Process ID",
-        "operationId": "deleteGateway",
+        "description": "Deletes a single item based on the flow_id supplied and Process ID",
+        "operationId": "deleteFlow",
         "parameters": [
           {
             "name": "id",
@@ -305,7 +305,7 @@
             "type": "string"
           },
           {
-            "name": "gateway_id",
+            "name": "flow_id",
             "in": "path",
             "description": "ID of item to delete",
             "required": true,
@@ -2527,6 +2527,17 @@
                 "SEC-JOIN",
                 "DISCRIMINATOR"
               ]
+            },
+            "condition": {
+              "type": "string"
+            },
+            "default": {
+              "type": "boolean",
+              "default": false
+            },
+            "optional": {
+              "type": "boolean",
+              "default": false
             },
             "created_at": {
               "$ref": "#/definitions/dateTime"
