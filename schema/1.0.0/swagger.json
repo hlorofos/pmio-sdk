@@ -100,7 +100,7 @@
           "processmaker"
         ],
         "description": "Creates a new gateway",
-        "operationId": "addEvent",
+        "operationId": "addGateway",
         "parameters": [
           {
             "name": "id",
@@ -237,7 +237,7 @@
             "type": "string"
           },
           {
-            "name": "event_id",
+            "name": "gateway_id",
             "in": "path",
             "description": "ID of Gateway to fetch",
             "required": true,
@@ -2166,8 +2166,7 @@
         "attributes": {
           "required": [
             "type",
-            "process_id",
-            "type"
+            "process_id"
             ],
           "type": "object",
           "properties": {
@@ -2227,11 +2226,10 @@
         },
         "attributes": {
           "required": [
-            "type",
+            "name",
             "process_id",
             "type",
-            "behavior",
-            "name"
+            "behavior"
           ],
           "type": "object",
           "properties": {
