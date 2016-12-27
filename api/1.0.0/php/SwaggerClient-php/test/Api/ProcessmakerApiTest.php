@@ -724,10 +724,10 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
     public function testAddGateway() {
         try {
             $processUid = $this->testAddProcess();
-            $eventAttr = new GatewayAttributes();
-            $eventAttr->setName('Gateway name');
-            $eventAttr->setType('EXCLUSIVE');
-            $eventAttr->setProcessId($processUid);
+            $gatewayAttr = new GatewayAttributes();
+            $gatewayAttr->setName('Gateway name');
+            $gatewayAttr->setType('EXCLUSIVE');
+            $gatewayAttr->setProcessId($processUid);
 
 
             /** @var GroupItem $result */
@@ -735,7 +735,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
                 $processUid,
                 new GatewayCreateItem(
                     [
-                        'data' => new Gateway(['attributes' => $eventAttr])
+                        'data' => new Gateway(['attributes' => $gatewayAttr])
                     ]
                 )
             );
