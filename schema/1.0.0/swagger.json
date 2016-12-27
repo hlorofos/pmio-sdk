@@ -46,7 +46,7 @@
           {
             "name": "id",
             "in": "path",
-            "description": "ID of Process relative to event",
+            "description": "ID of Process relative to gateway",
             "required": true,
             "type": "string"
           },
