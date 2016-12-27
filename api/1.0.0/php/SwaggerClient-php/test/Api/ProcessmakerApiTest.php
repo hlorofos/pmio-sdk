@@ -69,6 +69,9 @@ use Swagger\Client\Model\GroupIds;
 use Swagger\Client\Model\Event;
 use Swagger\Client\Model\EventCreateItem;
 use Swagger\Client\Model\EventAttributes;
+use Swagger\Client\Model\Gateway;
+use Swagger\Client\Model\GatewayCreateItem;
+use Swagger\Client\Model\GatewayAttributes;
 /**
  * ProcessmakerApiTest Class Doc Comment
  *
@@ -713,6 +716,73 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         try {
             $result = $this->apiInstance->deleteEvent($array_ids['process_uid'],$array_ids['event_uid']);
             $this->assertEquals('1770', $result->getMeta()->getCode(), 'Result code expected');
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    public function testAddGateway() {
+        try {
+            $processUid = $this->testAddProcess();
+            $eventAttr = new GatewayAttributes();
+            $eventAttr->setName('Gateway name');
+            $eventAttr->setType('EXCLUSIVE');
+            $eventAttr->setProcessId($processUid);
+
+
+            /** @var GroupItem $result */
+            $result = $this->apiInstance->addGateway(
+                $processUid,
+                new GatewayCreateItem(
+                    [
+                        'data' => new Gateway(['attributes' => $eventAttr])
+                    ]
+                )
+            );
+
+            $this->assertNotNull($result->getData()->getId());
+            $this->assertEquals('Gateway name', $result->getData()->getAttributes()->getName());
+            //print_r($result->getData());
+            return ['gateway_uid'=>$result->getData()->getId(),'process_uid'=>$processUid];
+
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+
+    }
+
+
+
+    public function testFindGateways()
+    {
+        try {
+            $result = $this->apiInstance->findGateways($this->testAddGateway()['process_uid'])->getData();
+            $this->assertGreaterThan(0, count($result));
+            //print_r($result);
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    public function testFindGatewayById()
+    {
+        $array_ids = $this->testAddGateway();
+        try {
+
+            $result = $this->apiInstance->findGatewayById($array_ids['process_uid'],$array_ids['gateway_uid'])->getData()->getAttributes();
+            $this->assertNotEmpty($result);
+
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    public function testDeleteGateway()
+    {
+        $array_ids = $this->testAddGateway();
+        try {
+            $result = $this->apiInstance->deleteGateway($array_ids['process_uid'],$array_ids['gateway_uid']);
+            $this->assertEquals('1751', $result->getMeta()->getCode(), 'Result code expected');
         } catch (ApiException $e) {
             $this->dumpError($e, __METHOD__);
         }
