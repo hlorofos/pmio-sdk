@@ -271,7 +271,7 @@
               ],
               "properties": {
                 "data": {
-                  "$ref": "#/definitions/Event"
+                  "$ref": "#/definitions/Gateway"
                 }
               }
             }
@@ -294,8 +294,8 @@
         "tags": [
           "processmaker"
         ],
-        "description": "Deletes a single item based on the event_id supplied and Process ID",
-        "operationId": "deleteEvent",
+        "description": "Deletes a single item based on the gateway_id supplied and Process ID",
+        "operationId": "deleteGateway",
         "parameters": [
           {
             "name": "id",
@@ -305,7 +305,7 @@
             "type": "string"
           },
           {
-            "name": "event_id",
+            "name": "gateway_id",
             "in": "path",
             "description": "ID of item to delete",
             "required": true,
@@ -2148,6 +2148,68 @@
     }
   },
   "definitions": {
+    "Gateway": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "9d705617-cc29-482a-85ff-7f7292f72b31"
+        },
+        "type": {
+          "default": "gateway",
+          "type": "string",
+          "example": "gateway"
+        },
+        "attributes": {
+          "required": [
+            "type",
+            "process_id",
+            "type"
+            ],
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "example": "Gateway Title"
+            },
+            "description": {
+              "type": "string",
+              "example": "Some description"
+            },
+            "process_id": {
+              "type": "string",
+              "example": "9d705617-cc29-482a-85ff-7f7292f72b11"
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "EXCLUSIVE",
+                "INCLUSIVE",
+                "PARALLEL",
+                "EVENT"
+              ]
+            },
+            "direction": {
+              "type": "string",
+              "enum": [
+                "DIVERGENT",
+                "CONVERGENT",
+                "MIXED"
+              ]
+            },
+            "created_at": {
+              "$ref": "#/definitions/dateTime"
+            },
+            "updated_at": {
+              "$ref": "#/definitions/dateTime"
+            }
+          }
+        }
+      }
+    },
     "Event": {
       "type": "object",
       "required": [
