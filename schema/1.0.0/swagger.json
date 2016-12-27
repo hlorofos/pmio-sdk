@@ -35,6 +35,311 @@
     }
   ],
   "paths": {
+    "/processes/{id}/flows": {
+      "get": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Returns all Flows",
+        "operationId": "findFlows",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of Process relative to flow",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page Nr to fetch",
+            "required": false,
+            "default": 1,
+            "type": "integer"
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "Amount of Items per Page",
+            "required": false,
+            "default": 15,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Flows list",
+            "schema": {
+              "title": "FlowCollection",
+              "description": "Json Api Response with collection of Items in array",
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Flow"
+                  }
+                },
+                "meta": {
+                  "$ref": "#/definitions/Meta"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Creates a new flow",
+        "operationId": "addFlow",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of Process relative to flow",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "FlowCreateItem",
+            "in": "body",
+            "description": "JsonApi with the Gateway object to add",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Gateway"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created Gateway response",
+            "schema": {
+              "type": "object",
+              "title": "EventItem",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Gateway"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "404": {
+            "description": "Not found item",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      }
+    },
+    "/processes/{id}/flows/{flow_id}": {
+      "get": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Returns gateway based on a single ID",
+        "operationId": "findGatewayById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of Process to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "gateway_id",
+            "in": "path",
+            "description": "ID of Gateway to fetch",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Gateway Item response",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Gateway"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Item not found",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Update existing Gateway",
+        "operationId": "updateGateway",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of Process to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "gateway_id",
+            "in": "path",
+            "description": "ID of Gateway to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "GatewayUpdateItem",
+            "in": "body",
+            "description": "Gateway object to edit",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Gateway"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "JsonApi response with updated Gateway object",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Gateway"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Deletes a single item based on the gateway_id supplied and Process ID",
+        "operationId": "deleteGateway",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of of Process item",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "gateway_id",
+            "in": "path",
+            "description": "ID of item to delete",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Item successfully deleted",
+            "schema": {
+              "$ref": "#/definitions/ResultSuccess"
+            }
+          },
+          "404": {
+            "description": "Item not found",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "500": {
+            "description": "Deletion error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      }
+    },
     "/processes/{id}/gateways": {
       "get": {
         "tags": [
@@ -46,7 +351,7 @@
           {
             "name": "id",
             "in": "path",
-            "description": "ID of Process relative to event",
+            "description": "ID of Process relative to gateway",
             "required": true,
             "type": "string"
           },
@@ -2148,6 +2453,91 @@
     }
   },
   "definitions": {
+    "Flow": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "9d705617-cc29-482a-85ff-7f7292f72b31"
+        },
+        "type": {
+          "default": "flow",
+          "type": "string",
+          "example": "flow"
+        },
+        "attributes": {
+          "required": [
+            "process_id",
+            "from_object_id",
+            "from_object_uid",
+            "from_object_type",
+            "to_object_id",
+            "to_object_uid",
+            "to_object_type",
+            "type",
+            "default",
+            "optional"
+          ],
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "example": "Flow name"
+            },
+            "description": {
+              "type": "string",
+              "example": "Some description"
+            },
+            "process_id": {
+              "type": "string",
+              "example": "9d705617-cc29-482a-85ff-7f7292f72b11"
+            },
+            "from_object_id": {
+              "type": "integer"
+              },
+            "from_object_uid": {
+              "type": "string",
+              "example": "9d705617-cc29-482a-85ff-7f7292f72b25"
+            },
+            "from_object_type": {
+              "type": "string"
+            },
+            "to_object_id": {
+              "type": "integer"
+            },
+            "to_object_uid": {
+              "type": "string",
+              "example": "9d705617-cc29-482a-85ff-7f7292f72b25"
+            },
+            "to_object_type": {
+              "type": "string"
+            },
+            "type": {
+              "type": "string",
+              "default":"SEQUENTIAL",
+              "enum": [
+                "SEQUENTIAL",
+                "EVALUATE",
+                "SELECT",
+                "PARALLEL",
+                "PARALLEL-BY-EVALUATION",
+                "SEC-JOIN",
+                "DISCRIMINATOR"
+              ]
+            },
+            "created_at": {
+              "$ref": "#/definitions/dateTime"
+            },
+            "updated_at": {
+              "$ref": "#/definitions/dateTime"
+            }
+          }
+        }
+      }
+    },
     "Gateway": {
       "type": "object",
       "required": [
