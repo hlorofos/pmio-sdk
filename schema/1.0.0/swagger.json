@@ -2148,6 +2148,76 @@
     }
   },
   "definitions": {
+    "Instance": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "9d705617-cc29-482a-85ff-7f7292f72b31"
+        },
+        "type": {
+          "default": "instance",
+          "type": "string",
+          "example": "instance"
+        },
+        "attributes": {
+          "required": [
+            "name",
+            "process_id",
+            "status"
+          ],
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "example": "Instance Name"
+            },
+            "description": {
+              "type": "string",
+              "example": "Some description"
+            },
+            "process_id": {
+              "type": "string",
+              "example": "9d705617-cc29-482a-85ff-7f7292f72b11"
+            },
+            "parent_instance_id": {
+              "type": "string",
+              "example": "9d705617-cc29-482a-85ff-7f7292f72b12"
+            },
+            "init_user_id": {
+              "type": "string",
+              "example": "9d705617-cc29-482a-85ff-7f7292f72b14"
+            },
+            "pin": {
+              "type": "string"
+            },
+            "duration": {
+              "type": "integer"
+            },
+            "status": {
+              "type": "string",
+              "default": "DRAFT",
+              "enum": [
+                "DRAFT",
+                "TODO",
+                "PAUSED",
+                "COMPLETED",
+                "CANCELLED"
+              ]
+            },
+            "created_at": {
+              "$ref": "#/definitions/dateTime"
+            },
+            "updated_at": {
+              "$ref": "#/definitions/dateTime"
+            }
+          }
+        }
+      }
+    },
     "Gateway": {
       "type": "object",
       "required": [
