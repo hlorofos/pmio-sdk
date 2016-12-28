@@ -497,9 +497,9 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    public function testAddTask() {
+    public function testAddTask($process = false) {
         try {
-            $processUid = $this->testAddProcess();
+            ($process == false) ? $processUid = $this->testAddProcess() : $processUid = $process;
             $taskAttr = new TaskAttributes();
             $taskAttr->setName('Task name');
             $taskAttr->setType('NORMAL');
@@ -657,9 +657,9 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
     }
 
 
-    public function testAddEvent() {
+    public function testAddEvent($process = false) {
         try {
-            $processUid = $this->testAddProcess();
+            ($process == false) ? $processUid = $this->testAddProcess() : $processUid = $process;
             $eventAttr = new EventAttributes();
             $eventAttr->setName('Event name');
             $eventAttr->setType('START');
@@ -727,10 +727,10 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
     public function testAddGateway() {
         try {
             $processUid = $this->testAddProcess();
-            $eventAttr = new GatewayAttributes();
-            $eventAttr->setName('Gateway name');
-            $eventAttr->setType('EXCLUSIVE');
-            $eventAttr->setProcessId($processUid);
+            $gatewayAttr = new GatewayAttributes();
+            $gatewayAttr->setName('Gateway name');
+            $gatewayAttr->setType('EXCLUSIVE');
+            $gatewayAttr->setProcessId($processUid);
 
 
             /** @var GroupItem $result */
@@ -738,7 +738,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
                 $processUid,
                 new GatewayCreateItem(
                     [
-                        'data' => new Gateway(['attributes' => $eventAttr])
+                        'data' => new Gateway(['attributes' => $gatewayAttr])
                     ]
                 )
             );
@@ -794,26 +794,33 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
     public function testAddFlow() {
         try {
             $processUid = $this->testAddProcess();
-            $eventAttr = new GatewayAttributes();
-            $eventAttr->setName('Gateway name');
-            $eventAttr->setType('EXCLUSIVE');
-            $eventAttr->setProcessId($processUid);
-
-
+            /*Creating 2 objects for Flow under the same Process Id */
+            $task = $this->testAddTask($processUid);
+            $event = $this->testAddEvent($processUid);
+            $flowAttr= new FlowAttributes();
+            $flowAttr->setName('Flow name');
+            $flowAttr->setType('SEQUENTIAL');
+            $flowAttr->setProcessId($processUid);
+            $flowAttr->setFromObjectUid($task['task_uid']);
+            $flowAttr->setFromObjectType('task');
+            $flowAttr->setToObjectUid($event['event_uid']);
+            $flowAttr->setToObjectType('event');
+            $flowAttr->setDefault(false);
+            $flowAttr->setOptional(false);
             /** @var GroupItem $result */
-            $result = $this->apiInstance->addGateway(
+            $result = $this->apiInstance->addFlow(
                 $processUid,
-                new GatewayCreateItem(
+                new FlowCreateItem(
                     [
-                        'data' => new Gateway(['attributes' => $eventAttr])
+                        'data' => new Flow(['attributes' => $flowAttr])
                     ]
                 )
             );
 
             $this->assertNotNull($result->getData()->getId());
-            $this->assertEquals('Gateway name', $result->getData()->getAttributes()->getName());
+            $this->assertEquals('Flow name', $result->getData()->getAttributes()->getName());
             //print_r($result->getData());
-            return ['gateway_uid'=>$result->getData()->getId(),'process_uid'=>$processUid];
+            return ['flow_uid'=>$result->getData()->getId(),'process_uid'=>$processUid];
 
         } catch (ApiException $e) {
             $this->dumpError($e, __METHOD__);
@@ -826,7 +833,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
     public function testFindFlow()
     {
         try {
-            $result = $this->apiInstance->findGateways($this->testAddGateway()['process_uid'])->getData();
+            $result = $this->apiInstance->findFlows($this->testAddFlow()['process_uid'])->getData();
             $this->assertGreaterThan(0, count($result));
             //print_r($result);
         } catch (ApiException $e) {
@@ -836,10 +843,10 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
     public function testFindFlowById()
     {
-        $array_ids = $this->testAddGateway();
+        $array_ids = $this->testAddFlow();
         try {
 
-            $result = $this->apiInstance->findGatewayById($array_ids['process_uid'],$array_ids['gateway_uid'])->getData()->getAttributes();
+            $result = $this->apiInstance->findFlowById($array_ids['process_uid'],$array_ids['flow_uid'])->getData()->getAttributes();
             $this->assertNotEmpty($result);
 
         } catch (ApiException $e) {
@@ -849,10 +856,10 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
     public function testDeleteFlow()
     {
-        $array_ids = $this->testAddGateway();
+        $array_ids = $this->testAddFlow();
         try {
-            $result = $this->apiInstance->deleteGateway($array_ids['process_uid'],$array_ids['gateway_uid']);
-            $this->assertEquals('1751', $result->getMeta()->getCode(), 'Result code expected');
+            $result = $this->apiInstance->deleteFlow($array_ids['process_uid'],$array_ids['flow_uid']);
+            $this->assertEquals('1761', $result->getMeta()->getCode(), 'Result code expected');
         } catch (ApiException $e) {
             $this->dumpError($e, __METHOD__);
         }

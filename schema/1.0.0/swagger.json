@@ -2471,10 +2471,8 @@
         "attributes": {
           "required": [
             "process_id",
-            "from_object_id",
             "from_object_uid",
             "from_object_type",
-            "to_object_id",
             "to_object_uid",
             "to_object_type",
             "type",
