@@ -35,6 +35,311 @@
     }
   ],
   "paths": {
+    "/processes/{id}/instances": {
+      "get": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Returns all Instances",
+        "operationId": "findInstances",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of Process relative to instance",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page Nr to fetch",
+            "required": false,
+            "default": 1,
+            "type": "integer"
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "Amount of Items per Page",
+            "required": false,
+            "default": 15,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Instances list",
+            "schema": {
+              "title": "InstanceCollection",
+              "description": "Json Api Response with collection of Items in array",
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Instance"
+                  }
+                },
+                "meta": {
+                  "$ref": "#/definitions/Meta"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Creates a new instance",
+        "operationId": "addInstance",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of Process relative to instance",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "InstanceCreateItem",
+            "in": "body",
+            "description": "JsonApi with the Instance object to add",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Instance"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created Instance response",
+            "schema": {
+              "type": "object",
+              "title": "InstanceItem",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Instance"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "404": {
+            "description": "Not found item",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      }
+    },
+    "/processes/{id}/instances/{instance_id}": {
+      "get": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Returns instance based on a single ID",
+        "operationId": "findInstanceById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of Process to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "instance_id",
+            "in": "path",
+            "description": "ID of Instance to fetch",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Instance Item response",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Instance"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Item not found",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Update existing Instance",
+        "operationId": "updateInstance",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of Process to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "instance_id",
+            "in": "path",
+            "description": "ID of Instance to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "InstanceUpdateItem",
+            "in": "body",
+            "description": "Instance object to edit",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Instance"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "JsonApi response with updated Instance object",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Instance"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Deletes a single item based on the instance_id supplied and Process ID",
+        "operationId": "deleteInstance",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of of Process item",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "instance_id",
+            "in": "path",
+            "description": "ID of item to delete",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Item successfully deleted",
+            "schema": {
+              "$ref": "#/definitions/ResultSuccess"
+            }
+          },
+          "404": {
+            "description": "Item not found",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "500": {
+            "description": "Deletion error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      }
+    },
     "/processes/{id}/gateways": {
       "get": {
         "tags": [
