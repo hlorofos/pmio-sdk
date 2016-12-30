@@ -810,7 +810,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             $flowAttr->setToObjectType('event');
             $flowAttr->setDefault(false);
             $flowAttr->setOptional(false);
-            /** @var GroupItem $result */
+
             $result = $this->apiInstance->addFlow(
                 $processUid,
                 new FlowCreateItem(
