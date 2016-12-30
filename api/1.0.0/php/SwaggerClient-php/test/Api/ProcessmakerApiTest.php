@@ -75,6 +75,9 @@ use Swagger\Client\Model\GatewayAttributes;
 use Swagger\Client\Model\Flow;
 use Swagger\Client\Model\FlowCreateItem;
 use Swagger\Client\Model\FlowAttributes;
+use Swagger\Client\Model\Instance;
+use Swagger\Client\Model\InstanceCreateItem;
+use Swagger\Client\Model\InstanceAttributes;
 /**
  * ProcessmakerApiTest Class Doc Comment
  *
@@ -860,6 +863,74 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         try {
             $result = $this->apiInstance->deleteFlow($array_ids['process_uid'],$array_ids['flow_uid']);
             $this->assertEquals('1761', $result->getMeta()->getCode(), 'Result code expected');
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    public function testAddInstance() {
+        try {
+            $processUid = $this->testAddProcess();
+            $instanceAttr = new InstanceAttributes();
+            $instanceAttr->setName('Instance name');
+            $instanceAttr->setStatus('TODO');
+            $instanceAttr->setPin('123456');
+            $instanceAttr->setProcessId($processUid);
+
+
+            /** @var GroupItem $result */
+            $result = $this->apiInstance->addInstance(
+                $processUid,
+                new InstanceCreateItem(
+                    [
+                        'data' => new Instance(['attributes' => $instanceAttr])
+                    ]
+                )
+            );
+
+            $this->assertNotNull($result->getData()->getId());
+            $this->assertEquals('Instance name', $result->getData()->getAttributes()->getName());
+            //print_r($result->getData());
+            return ['instance_uid'=>$result->getData()->getId(),'process_uid'=>$processUid];
+
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+
+    }
+
+
+
+    public function testFindInstance()
+    {
+        try {
+            $result = $this->apiInstance->findInstances($this->testAddInstance()['process_uid'])->getData();
+            $this->assertGreaterThan(0, count($result));
+            //print_r($result);
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    public function testFindInstanceById()
+    {
+        $array_ids = $this->testAddInstance();
+        try {
+
+            $result = $this->apiInstance->findInstanceById($array_ids['process_uid'],$array_ids['instance_uid'])->getData()->getAttributes();
+            $this->assertNotEmpty($result);
+
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    public function testDeleteInstance()
+    {
+        $array_ids = $this->testAddInstance();
+        try {
+            $result = $this->apiInstance->deleteInstance($array_ids['process_uid'],$array_ids['instance_uid']);
+            $this->assertEquals('1756', $result->getMeta()->getCode(), 'Result code expected');
         } catch (ApiException $e) {
             $this->dumpError($e, __METHOD__);
         }
