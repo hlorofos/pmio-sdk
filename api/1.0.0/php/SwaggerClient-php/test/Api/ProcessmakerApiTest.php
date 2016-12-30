@@ -72,6 +72,9 @@ use Swagger\Client\Model\EventAttributes;
 use Swagger\Client\Model\Gateway;
 use Swagger\Client\Model\GatewayCreateItem;
 use Swagger\Client\Model\GatewayAttributes;
+use Swagger\Client\Model\Flow;
+use Swagger\Client\Model\FlowCreateItem;
+use Swagger\Client\Model\FlowAttributes;
 /**
  * ProcessmakerApiTest Class Doc Comment
  *
@@ -494,9 +497,9 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    public function testAddTask() {
+    public function testAddTask($process = false) {
         try {
-            $processUid = $this->testAddProcess();
+            ($process == false) ? $processUid = $this->testAddProcess() : $processUid = $process;
             $taskAttr = new TaskAttributes();
             $taskAttr->setName('Task name');
             $taskAttr->setType('NORMAL');
@@ -654,9 +657,9 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
     }
 
 
-    public function testAddEvent() {
+    public function testAddEvent($process = false) {
         try {
-            $processUid = $this->testAddProcess();
+            ($process == false) ? $processUid = $this->testAddProcess() : $processUid = $process;
             $eventAttr = new EventAttributes();
             $eventAttr->setName('Event name');
             $eventAttr->setType('START');
@@ -783,6 +786,80 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         try {
             $result = $this->apiInstance->deleteGateway($array_ids['process_uid'],$array_ids['gateway_uid']);
             $this->assertEquals('1751', $result->getMeta()->getCode(), 'Result code expected');
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    public function testAddFlow() {
+        try {
+            $processUid = $this->testAddProcess();
+            /*Creating 2 objects for Flow under the same Process Id */
+            $task = $this->testAddTask($processUid);
+            $event = $this->testAddEvent($processUid);
+            $flowAttr= new FlowAttributes();
+            $flowAttr->setName('Flow name');
+            $flowAttr->setType('SEQUENTIAL');
+            $flowAttr->setProcessId($processUid);
+            $flowAttr->setFromObjectUid($task['task_uid']);
+            $flowAttr->setFromObjectType('task');
+            $flowAttr->setToObjectUid($event['event_uid']);
+            $flowAttr->setToObjectType('event');
+            $flowAttr->setDefault(false);
+            $flowAttr->setOptional(false);
+            /** @var GroupItem $result */
+            $result = $this->apiInstance->addFlow(
+                $processUid,
+                new FlowCreateItem(
+                    [
+                        'data' => new Flow(['attributes' => $flowAttr])
+                    ]
+                )
+            );
+
+            $this->assertNotNull($result->getData()->getId());
+            $this->assertEquals('Flow name', $result->getData()->getAttributes()->getName());
+            //print_r($result->getData());
+            return ['flow_uid'=>$result->getData()->getId(),'process_uid'=>$processUid];
+
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+
+    }
+
+
+
+    public function testFindFlow()
+    {
+        try {
+            $result = $this->apiInstance->findFlows($this->testAddFlow()['process_uid'])->getData();
+            $this->assertGreaterThan(0, count($result));
+            //print_r($result);
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    public function testFindFlowById()
+    {
+        $array_ids = $this->testAddFlow();
+        try {
+
+            $result = $this->apiInstance->findFlowById($array_ids['process_uid'],$array_ids['flow_uid'])->getData()->getAttributes();
+            $this->assertNotEmpty($result);
+
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    public function testDeleteFlow()
+    {
+        $array_ids = $this->testAddFlow();
+        try {
+            $result = $this->apiInstance->deleteFlow($array_ids['process_uid'],$array_ids['flow_uid']);
+            $this->assertEquals('1761', $result->getMeta()->getCode(), 'Result code expected');
         } catch (ApiException $e) {
             $this->dumpError($e, __METHOD__);
         }
