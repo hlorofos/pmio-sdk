@@ -48,6 +48,7 @@ use Swagger\Client\Model\GroupAttributes;
 use Swagger\Client\Model\GroupCreateItem;
 use Swagger\Client\Model\GroupItem;
 use Swagger\Client\Model\GroupRemoveUsersItem;
+use Swagger\Client\Model\InstanceUpdateItem;
 use Swagger\Client\Model\MetaResult;
 use Swagger\Client\Model\ResultSuccess;
 use Swagger\Client\Model\User;
@@ -108,6 +109,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         $this->apiInstance = new Api\ProcessmakerApi();
         if (in_array('--debug', $_SERVER['argv'])) {
             $this->apiInstance->getApiClient()->getConfig()->setDebug(true);
+            /** Try to set accessToken to get Process */
             $this->apiInstance->getApiClient()->getConfig()->setAccessToken('eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6Ijg5ZjhjOGIzNzQ1Y2E2YjlhYTAyNzRlNDVmZmM3Nzk0MzYwNTE5MzVmYjkwYWYyMzhmZWRmMWI1NTQxYjY3MGZjOTJhZjljOTgxZWM0N2YxIn0.eyJhdWQiOiI0IiwianRpIjoiODlmOGM4YjM3NDVjYTZiOWFhMDI3NGU0NWZmYzc3OTQzNjA1MTkzNWZiOTBhZjIzOGZlZGYxYjU1NDFiNjcwZmM5MmFmOWM5ODFlYzQ3ZjEiLCJpYXQiOjE0ODIxNjgxNzAsIm5iZiI6MTQ4MjE2ODE3MCwiZXhwIjoxNTEzNzA0MTcwLCJzdWIiOiIzNSIsInNjb3BlcyI6W119.S2dCO3jVXKX3a-k4lQqpmnEcxcb5EHaZ-94sO5iE6OZSK0b44IRRAIgTfLtaziFOiaIBT1Nj3bCYrijh5Um2ipQuJ1mIur3aOoszHGV7XFuaMU4oPXEpsMGRZjRAQoi3YuvZmBjg4yhqC9JRy-Q672gAdxHAD9IL0d0taYV8eCoDbYzcxz4TBYPkxIv6M3W9wA9o8b91l6HmQQ4iEqIX07Awu1U-2hHBdB8OlFao6_31y-O9FZPUgNByvqtKZ76o2PbaRTm4BQ7nFWF7JHz8jfaOtQVFp32TATc7DzW8Sec4RkXMsvlJC03ETutIijrEGP8dH2NP_ZjVg1Lnajw8nxkUboBcdRO9ATM0LixjUxCrXNi7q3376WPLE1da0YqsUjqekaAM2cnw5HIOXw4kS-kE6tPF_PnOjrzteKXPCWNOF5Ksewp8ezLUpeIyzstsFHslRvzY9G_H2bn2n8QevMypP7g54h-9C8peFLSEEcuTISNiFD6GsmLQDXgwaH4taJ_xnLHrttIx15tHvSV0xb2SaBxmkQWeomKneX09E6tg9mFeKFQnnS9kyOz1dO2KQ1qtF9DyAa3DhN4_ikkRyqTcCQUVjkOS_WtIgt7lIQYDp2e1c8DzFa7AhYNkuI0k_vBUUz51HomWS5__KFL3raN6W6PJEMkw_74sIQZjglc');
         }
     }
@@ -315,8 +317,6 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
     /**
      * Test case for findGroups
      *
-     * .
-     *
      */
     public function testFindGroups()
     {
@@ -333,8 +333,6 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
     /**
      * Test case for findUserById
      *
-     * .
-     *
      */
     public function testFindUserById()
     {
@@ -343,8 +341,6 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test case for findUsers
-     *
-     * .
      *
      */
     public function testFindUsers()
@@ -355,8 +351,6 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
     /**
      * Test case for updateGroup
      *
-     * .
-     *
      */
     public function testUpdateGroup()
     {
@@ -365,9 +359,6 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test case for updateUser
-     *
-     * .
-     *
      */
     public function testUpdateUser()
     {
@@ -376,8 +367,6 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test case for deleteUser
-     *
-     * .
      *
      */
     public function testDeleteUser()
@@ -398,9 +387,6 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test case for deleteGroup
-     *
-     * .
-     *
      */
     public function testDeleteGroup()
     {
@@ -426,6 +412,11 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             print_r($errorArray);
         }
     }
+
+    /**
+     * Test case for addProcess
+     *
+     */
 
     public function testAddProcess() {
         try {
@@ -457,33 +448,10 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
     }
 
-    public function testFindProcesses()
-    {
-        $this->markTestIncomplete();
-        try {
-            $result = $this->apiInstance->findProcesses()->getData();
-            $this->assertGreaterThan(0, count($result));
-            print_r($result);
-        } catch (ApiException $e) {
-            $this->dumpError($e, __METHOD__);
-        }
-    }
-
-    public function testDeleteProcess()
-    {
-        $this->markTestIncomplete();
-        /** @var string $userIdId */
-        $processId = $this->testAddProcess();
-        $this->assertNotNull($processId, 'Process should be created');
-
-        try {
-            /** @var ResultSuccess $result */
-            $result = $this->apiInstance->deleteProcess($processId);
-            $this->assertEquals('1202', $result->getMeta()->getCode(), 'Result code expected');
-        } catch (ApiException $e) {
-            $this->dumpError($e, __METHOD__);
-        }
-    }
+    /**
+     * Test case for findProcessById
+     *
+     */
 
     public function testFindProcessById()
     {
@@ -499,6 +467,51 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             $this->dumpError($e, __METHOD__);
         }
     }
+
+    /**
+     * Test case for findProcesses
+     *
+     */
+
+    public function testFindProcesses()
+    {
+        $this->markTestIncomplete();
+        try {
+            $this->testAddProcess();
+            $result = $this->apiInstance->findProcesses()->getData();
+            $this->assertGreaterThan(0, count($result));
+            print_r($result);
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    /**
+     * Test case for deleteProcess
+     *
+     */
+
+    public function testDeleteProcess()
+    {
+        $this->markTestIncomplete();
+        $processId = $this->testAddProcess();
+        $this->assertNotNull($processId, 'Process should be created');
+
+        try {
+            /** @var ResultSuccess $result */
+            $result = $this->apiInstance->deleteProcess($processId);
+            $this->assertEquals('1202', $result->getMeta()->getCode(), 'Result code expected');
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+
+    /**
+     * Test case for addTask
+     * @param boolean $process
+     * @return array of IDs
+     */
 
     public function testAddTask($process = false) {
         try {
@@ -516,7 +529,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             $taskAttr->setSendLastEmail(true);
             $taskAttr->setSelfserviceTimeout(10);
 
-            /** @var GroupItem $result */
+            /** @var TaskItem $result */
             $result = $this->apiInstance->addTask(
                 $processUid,
                 new TaskCreateItem(
@@ -537,6 +550,11 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
     }
 
+    /**
+     * Test case for findTasks
+     *
+     */
+
     public function testFindTasks()
     {
         try {
@@ -548,11 +566,15 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * Test case for findTaskById
+     *
+     */
+
     public function testFindTaskById()
     {
         $array_ids = $this->testAddTask();
         try {
-
             $result = $this->apiInstance->findTaskById($array_ids['process_uid'],$array_ids['task_uid'])->getData()->getAttributes();
             $this->assertNotEmpty($result);
 
@@ -560,6 +582,11 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             $this->dumpError($e, __METHOD__);
         }
     }
+
+    /**
+     * Test case for deleteTask
+     *
+     */
 
     public function testDeleteTask()
     {
@@ -571,6 +598,11 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             $this->dumpError($e, __METHOD__);
         }
     }
+
+    /**
+     * Test case for addGroupsToTask
+     *
+     */
 
     public function testAddGroupsToTask()
     {
@@ -604,6 +636,11 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * Test case for syncGroupsToTask
+     *
+     */
+
     public function testSyncGroupsToTask()
     {
         /** @var string $groupId */
@@ -634,6 +671,11 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * Test case for removeGroupsFromTask
+     *
+     */
+
     public function testRemoveGroupsFromTask()
     {
         /** @var array $array_ids of Process and Task and ID of attached group*/
@@ -659,6 +701,11 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * Test case for addEvent
+     *@param  boolean $process
+     *@return array of process ID and event ID
+     */
 
     public function testAddEvent($process = false) {
         try {
@@ -669,7 +716,6 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             $eventAttr->setProcessId($processUid);
             $eventAttr->setDefinition('MESSAGE');
 
-            /** @var GroupItem $result */
             $result = $this->apiInstance->addEvent(
                 $processUid,
                 new EventCreateItem(
@@ -690,7 +736,10 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
     }
 
-
+    /**
+     * Test case for findEvents
+     *
+     */
 
     public function testFindEvents()
     {
@@ -702,6 +751,11 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             $this->dumpError($e, __METHOD__);
         }
     }
+
+    /**
+     * Test case for findEventById
+     *
+     */
 
     public function testFindEventById()
     {
@@ -716,6 +770,11 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * Test case for DeleteEvent
+     *
+     */
+
     public function testDeleteEvent()
     {
         $array_ids = $this->testAddEvent();
@@ -727,6 +786,11 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * Test case for addGateway
+     *
+     */
+
     public function testAddGateway() {
         try {
             $processUid = $this->testAddProcess();
@@ -735,8 +799,6 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             $gatewayAttr->setType('EXCLUSIVE');
             $gatewayAttr->setProcessId($processUid);
 
-
-            /** @var GroupItem $result */
             $result = $this->apiInstance->addGateway(
                 $processUid,
                 new GatewayCreateItem(
@@ -757,7 +819,10 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
     }
 
-
+    /**
+     * Test case for findGateways
+     *
+     */
 
     public function testFindGateways()
     {
@@ -769,6 +834,11 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             $this->dumpError($e, __METHOD__);
         }
     }
+
+    /**
+     * Test case for findGatewayById
+     *
+     */
 
     public function testFindGatewayById()
     {
@@ -783,6 +853,11 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * Test case for deleteGateway
+     *
+     */
+
     public function testDeleteGateway()
     {
         $array_ids = $this->testAddGateway();
@@ -793,6 +868,11 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             $this->dumpError($e, __METHOD__);
         }
     }
+
+    /**
+     * Test case for addFlow
+     *
+     */
 
     public function testAddFlow() {
         try {
@@ -810,7 +890,6 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             $flowAttr->setToObjectType('event');
             $flowAttr->setDefault(false);
             $flowAttr->setOptional(false);
-
             $result = $this->apiInstance->addFlow(
                 $processUid,
                 new FlowCreateItem(
@@ -831,9 +910,12 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
     }
 
+    /**
+     * Test case for findFlows
+     *
+     */
 
-
-    public function testFindFlow()
+    public function testFindFlows()
     {
         try {
             $result = $this->apiInstance->findFlows($this->testAddFlow()['process_uid'])->getData();
@@ -843,6 +925,11 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             $this->dumpError($e, __METHOD__);
         }
     }
+
+    /**
+     * Test case for findFlowById
+     *
+     */
 
     public function testFindFlowById()
     {
@@ -857,6 +944,11 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * Test case for deleteFlow
+     *
+     */
+
     public function testDeleteFlow()
     {
         $array_ids = $this->testAddFlow();
@@ -868,6 +960,11 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * Test case for addInstance
+     *
+     */
+
     public function testAddInstance() {
         try {
             $processUid = $this->testAddProcess();
@@ -876,9 +973,6 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             $instanceAttr->setStatus('TODO');
             $instanceAttr->setPin('123456');
             $instanceAttr->setProcessId($processUid);
-
-
-
             $result = $this->apiInstance->addInstance(
                 $processUid,
                 new InstanceCreateItem(
@@ -899,9 +993,12 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
     }
 
+    /**
+     * Test case for findInstances
+     *
+     */
 
-
-    public function testFindInstance()
+    public function testFindInstances()
     {
         try {
             $result = $this->apiInstance->findInstances($this->testAddInstance()['process_uid'])->getData();
@@ -912,11 +1009,15 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * Test case for findInstanceById
+     *
+     */
+
     public function testFindInstanceById()
     {
         $array_ids = $this->testAddInstance();
         try {
-
             $result = $this->apiInstance->findInstanceById($array_ids['process_uid'],$array_ids['instance_uid'])->getData()->getAttributes();
             $this->assertNotEmpty($result);
 
@@ -924,6 +1025,11 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             $this->dumpError($e, __METHOD__);
         }
     }
+
+    /**
+     * Test case for updateInstance
+     *
+     */
 
     public function testUpdateInstance()
     {
@@ -934,16 +1040,16 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         $result = $this->apiInstance->updateInstance(
             $array_ids['process_uid'],
             $array_ids['instance_uid'],
-            new InstanceCreateItem(
-                [
-                    'data' => new Instance(['attributes' => $itemData])
-                ]
-            )
+            new InstanceUpdateItem(['data' => new Instance(['attributes' => $itemData])])
         );
         $this->assertEquals('New Instance name', $result->getData()->getAttributes()->getName(), 'Name should be updated');
         $this->assertEquals('DRAFT', $result->getData()->getAttributes()->getStatus(), 'Status should be updated');
-
     }
+
+    /**
+     * Test case for deleteInstance
+     *
+     */
 
     public function testDeleteInstance()
     {
