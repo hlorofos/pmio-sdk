@@ -667,7 +667,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             $eventAttr->setName('Event name');
             $eventAttr->setType('START');
             $eventAttr->setProcessId($processUid);
-            $eventAttr->setBehavior('THROW');
+            $eventAttr->setDefinition('MESSAGE');
 
             /** @var GroupItem $result */
             $result = $this->apiInstance->addEvent(
