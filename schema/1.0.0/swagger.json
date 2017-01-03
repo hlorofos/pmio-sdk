@@ -3003,7 +3003,7 @@
             "name",
             "process_id",
             "type",
-            "behavior"
+            "definition"
           ],
           "type": "object",
           "properties": {
@@ -3019,24 +3019,37 @@
               "type": "string",
               "example": "9d705617-cc29-482a-85ff-7f7292f72b11"
             },
+            "message_id": {
+              "type": "integer"
+            },
             "type": {
               "type": "string",
               "enum": [
                 "START",
-                "MESSAGE",
-                "TIMER",
-                "CONDITIONAL",
-                "ERROR",
-                "CANCEL",
-                "TERMINATE"
+                "END",
+                "INTERMEDIATE_CATCH",
+                "INTERMEDIATE_THROW",
+                "BOUNDARY",
+                "IMPLICIT_THROW"
               ]
             },
-            "behavior": {
+            "definition": {
               "type": "string",
               "enum": [
-                "THROW",
-                "CATCH"
+                "NONE",
+                "CANCEL",
+                "COMPENSATION",
+                "ERROR",
+                "ESCALATION",
+                "MESSAGE",
+                "LINK",
+                "SIGNAL",
+                "TERMINATE",
+                "TIMER"
               ]
+            },
+            "interrupting": {
+              "type": "boolean"
             },
             "condition": {
               "type": "string"
@@ -3049,6 +3062,9 @@
             },
             "cycle": {
               "type": "string"
+            },
+            "attached_to_task_id": {
+              "type": "integer"
             },
             "created_at": {
               "$ref": "#/definitions/dateTime"
