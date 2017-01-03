@@ -810,7 +810,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             $flowAttr->setToObjectType('event');
             $flowAttr->setDefault(false);
             $flowAttr->setOptional(false);
-            /** @var GroupItem $result */
+
             $result = $this->apiInstance->addFlow(
                 $processUid,
                 new FlowCreateItem(
@@ -878,7 +878,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             $instanceAttr->setProcessId($processUid);
 
 
-            /** @var GroupItem $result */
+
             $result = $this->apiInstance->addInstance(
                 $processUid,
                 new InstanceCreateItem(
@@ -923,6 +923,26 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         } catch (ApiException $e) {
             $this->dumpError($e, __METHOD__);
         }
+    }
+
+    public function testUpdateInstance()
+    {
+        $array_ids = $this->testAddInstance();
+        $itemData = new InstanceAttributes();
+        $itemData->setName('New Instance name');
+        $itemData->setStatus('DRAFT');
+        $result = $this->apiInstance->updateInstance(
+            $array_ids['process_uid'],
+            $array_ids['instance_uid'],
+            new InstanceCreateItem(
+                [
+                    'data' => new Instance(['attributes' => $itemData])
+                ]
+            )
+        );
+        $this->assertEquals('New Instance name', $result->getData()->getAttributes()->getName(), 'Name should be updated');
+        $this->assertEquals('DRAFT', $result->getData()->getAttributes()->getStatus(), 'Status should be updated');
+
     }
 
     public function testDeleteInstance()
