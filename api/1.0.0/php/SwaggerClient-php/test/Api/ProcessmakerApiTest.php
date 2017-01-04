@@ -48,6 +48,7 @@ use Swagger\Client\Model\GroupAttributes;
 use Swagger\Client\Model\GroupCreateItem;
 use Swagger\Client\Model\GroupItem;
 use Swagger\Client\Model\GroupRemoveUsersItem;
+use Swagger\Client\Model\GroupUpdateItem;
 use Swagger\Client\Model\InstanceUpdateItem;
 use Swagger\Client\Model\MetaResult;
 use Swagger\Client\Model\ResultSuccess;
@@ -56,6 +57,7 @@ use Swagger\Client\Model\UserAttributes;
 use Swagger\Client\Model\UserCreateItem;
 use Swagger\Client\Model\UserIds;
 use Swagger\Client\Model\UserItem;
+use Swagger\Client\Model\UserUpdateItem;
 use Swagger\Client\Model\Process;
 use Swagger\Client\Model\ProcessCreateItem;
 use Swagger\Client\Model\ProcessItem;
@@ -66,15 +68,19 @@ use Swagger\Client\Model\TaskAttributes;
 use Swagger\Client\Model\TaskAddGroupsItem;
 use Swagger\Client\Model\TaskSyncGroupsItem;
 use Swagger\Client\Model\TaskRemoveGroupsItem;
+use Swagger\Client\Model\TaskUpdateItem;
 use Swagger\Client\Model\GroupIds;
 use Swagger\Client\Model\Event;
 use Swagger\Client\Model\EventCreateItem;
 use Swagger\Client\Model\EventAttributes;
+use Swagger\Client\Model\EventUpdateItem;
 use Swagger\Client\Model\Gateway;
 use Swagger\Client\Model\GatewayCreateItem;
 use Swagger\Client\Model\GatewayAttributes;
+use Swagger\Client\Model\GatewayUpdateItem;
 use Swagger\Client\Model\Flow;
 use Swagger\Client\Model\FlowCreateItem;
+use Swagger\Client\Model\FlowUpdateItem;
 use Swagger\Client\Model\FlowAttributes;
 use Swagger\Client\Model\Instance;
 use Swagger\Client\Model\InstanceCreateItem;
@@ -336,7 +342,14 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
      */
     public function testFindUserById()
     {
+        $userId= $this->testAddUser();
+        try {
+            $result = $this->apiInstance->findUserById($userId)->getData()->getAttributes();
+            $this->assertNotEmpty($result);
 
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
     }
 
     /**
@@ -345,6 +358,14 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
      */
     public function testFindUsers()
     {
+        try {
+            $this->testAddUser();
+            $result = $this->apiInstance->findUsers()->getData();
+            $this->assertGreaterThan(0, count($result));
+            //print_r($result);
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
 
     }
 
@@ -354,7 +375,14 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
      */
     public function testUpdateGroup()
     {
-
+        $groupId = $this->testAddGroup();
+        $itemData = new GroupAttributes();
+        $itemData->setTitle('New Group title');
+        $result = $this->apiInstance->updateGroup(
+            $groupId,
+            new GroupUpdateItem(['data' => new Group(['attributes' => $itemData])])
+        );
+        $this->assertEquals('New Group title', $result->getData()->getAttributes()->getTitle(), 'Title should be updated');
     }
 
     /**
@@ -362,7 +390,14 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
      */
     public function testUpdateUser()
     {
-
+        $userId = $this->testAddUser();
+        $itemData = new UserAttributes();
+        $itemData->setUsername('Some new username');
+        $result = $this->apiInstance->updateUser(
+            $userId,
+            new UserUpdateItem(['data' => new User(['attributes' => $itemData])])
+        );
+        $this->assertEquals('Some new username', $result->getData()->getAttributes()->getUsername(), 'Username should be updated');
     }
 
     /**
@@ -584,6 +619,24 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test case for updateTask
+     *
+     */
+
+    public function testUpdateTask()
+    {
+        $array_ids = $this->testAddTask();
+        $itemData = new TaskAttributes();
+        $itemData->setName('New Task name');
+        $result = $this->apiInstance->updateTask(
+            $array_ids['process_uid'],
+            $array_ids['task_uid'],
+            new TaskUpdateItem(['data' => new Task(['attributes' => $itemData])])
+        );
+        $this->assertEquals('New Task name', $result->getData()->getAttributes()->getName(), 'Name should be updated');
+    }
+
+    /**
      * Test case for deleteTask
      *
      */
@@ -601,7 +654,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test case for addGroupsToTask
-     *
+     * @return array of IDs
      */
 
     public function testAddGroupsToTask()
@@ -703,8 +756,8 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test case for addEvent
-     *@param  boolean $process
-     *@return array of process ID and event ID
+     * @param  boolean $process
+     * @return array IDs
      */
 
     public function testAddEvent($process = false) {
@@ -771,6 +824,24 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test case for updateEvent
+     *
+     */
+
+    public function testUpdateEvent()
+    {
+        $array_ids = $this->testAddEvent();
+        $itemData = new EventAttributes();
+        $itemData->setName('New Event name');
+        $result = $this->apiInstance->updateEvent(
+            $array_ids['process_uid'],
+            $array_ids['event_uid'],
+            new EventUpdateItem(['data' => new Event(['attributes' => $itemData])])
+        );
+        $this->assertEquals('New Event name', $result->getData()->getAttributes()->getName(), 'Name should be updated');
+    }
+
+    /**
      * Test case for DeleteEvent
      *
      */
@@ -788,7 +859,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test case for addGateway
-     *
+     * @return array of IDs
      */
 
     public function testAddGateway() {
@@ -854,6 +925,24 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test case for updateGateway
+     *
+     */
+
+    public function testUpdateGateway()
+    {
+        $array_ids = $this->testAddGateway();
+        $itemData = new GatewayAttributes();
+        $itemData->setName('New Gateway name');
+        $result = $this->apiInstance->updateGateway(
+            $array_ids['process_uid'],
+            $array_ids['gateway_uid'],
+            new GatewayUpdateItem(['data' => new Gateway(['attributes' => $itemData])])
+        );
+        $this->assertEquals('New Gateway name', $result->getData()->getAttributes()->getName(), 'Name should be updated');
+    }
+
+    /**
      * Test case for deleteGateway
      *
      */
@@ -871,7 +960,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test case for addFlow
-     *
+     * @return array of IDs
      */
 
     public function testAddFlow() {
@@ -945,6 +1034,25 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test case for updateFlow
+     *
+     */
+
+    public function testUpdateFlow()
+    {
+        $array_ids = $this->testAddFlow();
+        print_r($array_ids);
+        $itemData = new FlowAttributes();
+        $itemData->setName('New Flow name');
+        $result = $this->apiInstance->updateFlow(
+            $array_ids['process_uid'],
+            $array_ids['flow_uid'],
+            new FlowUpdateItem(['data' => new Flow(['attributes' => $itemData])])
+        );
+        $this->assertEquals('New Flow name', $result->getData()->getAttributes()->getName(), 'Name should be updated');
+    }
+
+    /**
      * Test case for deleteFlow
      *
      */
@@ -962,7 +1070,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test case for addInstance
-     *
+     * @return array of IDs
      */
 
     public function testAddInstance() {
