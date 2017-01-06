@@ -1041,7 +1041,6 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
     public function testUpdateFlow()
     {
         $array_ids = $this->testAddFlow();
-        print_r($array_ids);
         $itemData = new FlowAttributes();
         $itemData->setName('New Flow name');
         $result = $this->apiInstance->updateFlow(
