@@ -175,10 +175,10 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
     {
         try {
             $userAtt = new UserAttributes();
-            $userAtt->setFirstname('Jonny');
+            $userAtt->setFirstname('Johnny');
             $userAtt->setLastname('Doe');
             $userAtt->setPassword('password');
-            $userAtt->setUsername('Username' . mt_rand(100000,999999));
+            $userAtt->setUsername('Username ' . mt_rand(10000000,99999999));
             $userAtt->setEmail('email@at.com');
 
             /** @var UserItem $result */
@@ -187,7 +187,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             ]));
 
             $this->assertNotNull($result->getData()->getId());
-            $this->assertEquals('Jonny', $result->getData()->getAttributes()->getFirstname());
+            $this->assertEquals('Johnny', $result->getData()->getAttributes()->getFirstname());
             //print_r($result->getData());
             return $result->getData()->getId();
         } catch (ApiException $e) {
@@ -390,14 +390,15 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
      */
     public function testUpdateUser()
     {
+        $newUsername = 'New ' . mt_rand(10000000,99999999);
         $userId = $this->testAddUser();
         $itemData = new UserAttributes();
-        $itemData->setUsername('Some new username');
+        $itemData->setUsername($newUsername);
         $result = $this->apiInstance->updateUser(
             $userId,
             new UserUpdateItem(['data' => new User(['attributes' => $itemData])])
         );
-        $this->assertEquals('Some new username', $result->getData()->getAttributes()->getUsername(), 'Username should be updated');
+        $this->assertEquals($newUsername, $result->getData()->getAttributes()->getUsername(), 'Username should be updated');
     }
 
     /**
@@ -446,6 +447,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             $errorArray = $e->getResponseObject()->getErrors();
             print_r($errorArray);
         }
+        $this->assertNull(true, "Exception when calling $methodName, ". $e->getMessage());
     }
 
     /**
@@ -555,7 +557,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             $taskAttr->setName('Task name');
             $taskAttr->setType('NORMAL');
             $taskAttr->setProcessId($processUid);
-            $taskAttr->setAssignType('BALANCED');
+            $taskAttr->setAssignType('CYCLIC');
             $taskAttr->setTransferFly(true);
             $taskAttr->setCanUpload(true);
             $taskAttr->setViewUpload(true);
@@ -973,9 +975,9 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             $flowAttr->setName('Flow name');
             $flowAttr->setType('SEQUENTIAL');
             $flowAttr->setProcessId($processUid);
-            $flowAttr->setFromObjectUid($task['task_uid']);
+            $flowAttr->setFromObjectId($task['task_uid']);
             $flowAttr->setFromObjectType('task');
-            $flowAttr->setToObjectUid($event['event_uid']);
+            $flowAttr->setToObjectId($event['event_uid']);
             $flowAttr->setToObjectType('event');
             $flowAttr->setDefault(false);
             $flowAttr->setOptional(false);
@@ -996,7 +998,6 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         } catch (ApiException $e) {
             $this->dumpError($e, __METHOD__);
         }
-
     }
 
     /**
@@ -1040,15 +1041,19 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
     public function testUpdateFlow()
     {
-        $array_ids = $this->testAddFlow();
-        $itemData = new FlowAttributes();
-        $itemData->setName('New Flow name');
-        $result = $this->apiInstance->updateFlow(
-            $array_ids['process_uid'],
-            $array_ids['flow_uid'],
-            new FlowUpdateItem(['data' => new Flow(['attributes' => $itemData])])
-        );
-        $this->assertEquals('New Flow name', $result->getData()->getAttributes()->getName(), 'Name should be updated');
+        try {
+            $array_ids = $this->testAddFlow();
+            $itemData = new FlowAttributes();
+            $itemData->setName('New Flow name');
+            $result = $this->apiInstance->updateFlow(
+                $array_ids['process_uid'],
+                $array_ids['flow_uid'],
+                new FlowUpdateItem(['data' => new Flow(['attributes' => $itemData])])
+            );
+            $this->assertEquals('New Flow name', $result->getData()->getAttributes()->getName(), 'Name should be updated');
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
     }
 
     /**

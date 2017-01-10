@@ -2846,9 +2846,9 @@
         "attributes": {
           "required": [
             "process_id",
-            "from_object_uid",
+            "from_object_id",
             "from_object_type",
-            "to_object_uid",
+            "to_object_id",
             "to_object_type",
             "type",
             "default",
@@ -2869,24 +2869,23 @@
               "example": "9d705617-cc29-482a-85ff-7f7292f72b11"
             },
             "from_object_id": {
-              "type": "integer"
-              },
-            "from_object_uid": {
               "type": "string",
               "example": "9d705617-cc29-482a-85ff-7f7292f72b25"
-            },
+              },
             "from_object_type": {
-              "type": "string"
+              "type": "string",
+              "example": "task"
             },
             "to_object_id": {
               "type": "integer"
             },
-            "to_object_uid": {
+            "to_object_id": {
               "type": "string",
               "example": "9d705617-cc29-482a-85ff-7f7292f72b25"
             },
             "to_object_type": {
-              "type": "string"
+              "type": "string",
+              "example": "event"
             },
             "type": {
               "type": "string",
@@ -3141,10 +3140,10 @@
               ]
             },
             "assign_type": {
-              "default": "BALANCED",
+              "default": "CYCLIC",
               "type": "string",
               "enum": [
-                "BALANCED",
+                "CYCLIC",
                 "MANUAL",
                 "EVALUATE",
                 "REPORT_TO",
@@ -3677,6 +3676,9 @@
           "type": "string"
         },
         "detail": {
+          "type": "string"
+        },
+        "message": {
           "type": "string"
         }
       }
