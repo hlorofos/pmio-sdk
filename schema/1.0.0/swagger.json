@@ -35,7 +35,7 @@
     }
   ],
   "paths": {
-    "/processes/{id}/instances": {
+    "/processes/{process_id}/instances": {
       "get": {
         "tags": [
           "processmaker"
@@ -44,7 +44,7 @@
         "operationId": "findInstances",
         "parameters": [
           {
-            "name": "id",
+            "name": "process_id",
             "in": "path",
             "description": "ID of Process relative to instance",
             "required": true,
@@ -103,7 +103,7 @@
         "operationId": "addInstance",
         "parameters": [
           {
-            "name": "id",
+            "name": "process_id",
             "in": "path",
             "description": "ID of Process relative to instance",
             "required": true,
@@ -170,7 +170,7 @@
         }
       }
     },
-    "/processes/{id}/instances/{instance_id}": {
+    "/processes/{process_id}/instances/{instance_id}": {
       "get": {
         "tags": [
           "processmaker"
@@ -179,7 +179,7 @@
         "operationId": "findInstanceById",
         "parameters": [
           {
-            "name": "id",
+            "name": "process_id",
             "in": "path",
             "description": "ID of Process to fetch",
             "required": true,
@@ -230,7 +230,7 @@
         "operationId": "updateInstance",
         "parameters": [
           {
-            "name": "id",
+            "name": "process_id",
             "in": "path",
             "description": "ID of Process to fetch",
             "required": true,
@@ -298,7 +298,7 @@
         "operationId": "deleteInstance",
         "parameters": [
           {
-            "name": "id",
+            "name": "process_id",
             "in": "path",
             "description": "ID of of Process item",
             "required": true,
@@ -340,7 +340,7 @@
         }
       }
     },
-    "/processes/{id}/flows": {
+    "/processes/{process_id}/flows": {
       "get": {
         "tags": [
           "processmaker"
@@ -349,7 +349,7 @@
         "operationId": "findFlows",
         "parameters": [
           {
-            "name": "id",
+            "name": "process_id",
             "in": "path",
             "description": "ID of Process relative to flow",
             "required": true,
@@ -408,7 +408,7 @@
         "operationId": "addFlow",
         "parameters": [
           {
-            "name": "id",
+            "name": "process_id",
             "in": "path",
             "description": "ID of Process relative to flow",
             "required": true,
@@ -475,7 +475,7 @@
         }
       }
     },
-    "/processes/{id}/flows/{flow_id}": {
+    "/processes/{process_id}/flows/{flow_id}": {
       "get": {
         "tags": [
           "processmaker"
@@ -484,7 +484,7 @@
         "operationId": "findFlowById",
         "parameters": [
           {
-            "name": "id",
+            "name": "process_id",
             "in": "path",
             "description": "ID of Process to fetch",
             "required": true,
@@ -535,7 +535,7 @@
         "operationId": "updateFlow",
         "parameters": [
           {
-            "name": "id",
+            "name": "process_id",
             "in": "path",
             "description": "ID of Process to fetch",
             "required": true,
@@ -603,7 +603,7 @@
         "operationId": "deleteFlow",
         "parameters": [
           {
-            "name": "id",
+            "name": "process_id",
             "in": "path",
             "description": "ID of of Process item",
             "required": true,
@@ -645,7 +645,7 @@
         }
       }
     },
-    "/processes/{id}/gateways": {
+    "/processes/{process_id}/gateways": {
       "get": {
         "tags": [
           "processmaker"
@@ -654,7 +654,7 @@
         "operationId": "findGateways",
         "parameters": [
           {
-            "name": "id",
+            "name": "process_id",
             "in": "path",
             "description": "ID of Process relative to gateway",
             "required": true,
@@ -713,7 +713,7 @@
         "operationId": "addGateway",
         "parameters": [
           {
-            "name": "id",
+            "name": "process_id",
             "in": "path",
             "description": "ID of Process relative to task",
             "required": true,
@@ -780,7 +780,7 @@
         }
       }
     },
-    "/processes/{id}/gateways/{gateway_id}": {
+    "/processes/{process_id}/gateways/{gateway_id}": {
       "get": {
         "tags": [
           "processmaker"
@@ -789,7 +789,7 @@
         "operationId": "findGatewayById",
         "parameters": [
           {
-            "name": "id",
+            "name": "process_id",
             "in": "path",
             "description": "ID of Process to fetch",
             "required": true,
@@ -840,7 +840,7 @@
         "operationId": "updateGateway",
         "parameters": [
           {
-            "name": "id",
+            "name": "process_id",
             "in": "path",
             "description": "ID of Process to fetch",
             "required": true,
@@ -908,7 +908,7 @@
         "operationId": "deleteGateway",
         "parameters": [
           {
-            "name": "id",
+            "name": "process_id",
             "in": "path",
             "description": "ID of of Process item",
             "required": true,
@@ -950,7 +950,7 @@
         }
       }
     },
-    "/processes/{id}/events": {
+    "/processes/{process_id}/events": {
       "get": {
         "tags": [
           "processmaker"
@@ -959,7 +959,7 @@
         "operationId": "findEvents",
         "parameters": [
           {
-            "name": "id",
+            "name": "process_id",
             "in": "path",
             "description": "ID of Process relative to event",
             "required": true,
@@ -1018,7 +1018,7 @@
         "operationId": "addEvent",
         "parameters": [
           {
-            "name": "id",
+            "name": "process_id",
             "in": "path",
             "description": "ID of Process relative to task",
             "required": true,
@@ -1085,7 +1085,7 @@
         }
       }
     },
-    "/processes/{id}/events/{event_id}": {
+    "/processes/{process_id}/events/{event_id}": {
       "get": {
         "tags": [
           "processmaker"
@@ -1094,7 +1094,7 @@
         "operationId": "findEventById",
         "parameters": [
           {
-            "name": "id",
+            "name": "process_id",
             "in": "path",
             "description": "ID of Process to fetch",
             "required": true,
@@ -1145,7 +1145,7 @@
         "operationId": "updateEvent",
         "parameters": [
           {
-            "name": "id",
+            "name": "process_id",
             "in": "path",
             "description": "ID of Process to fetch",
             "required": true,
@@ -1213,7 +1213,7 @@
         "operationId": "deleteEvent",
         "parameters": [
           {
-            "name": "id",
+            "name": "process_id",
             "in": "path",
             "description": "ID of of Process item",
             "required": true,
@@ -1255,7 +1255,7 @@
         }
       }
     },
-    "/processes/{id}/tasks": {
+    "/processes/{process_id}/tasks": {
       "get": {
         "tags": [
           "processmaker"
@@ -1264,7 +1264,7 @@
         "operationId": "findTasks",
         "parameters": [
           {
-            "name": "id",
+            "name": "process_id",
             "in": "path",
             "description": "ID of Process relative to task",
             "required": true,
@@ -1323,7 +1323,7 @@
         "operationId": "addTask",
         "parameters": [
           {
-            "name": "id",
+            "name": "process_id",
             "in": "path",
             "description": "ID of Process relative to task",
             "required": true,
@@ -1390,7 +1390,7 @@
         }
       }
     },
-    "/processes/{id}/tasks/{task_id}": {
+    "/processes/{process_id}/tasks/{task_id}": {
       "get": {
         "tags": [
           "processmaker"
@@ -1399,7 +1399,7 @@
         "operationId": "findTaskById",
         "parameters": [
           {
-            "name": "id",
+            "name": "process_id",
             "in": "path",
             "description": "ID of Process to fetch",
             "required": true,
@@ -1450,7 +1450,7 @@
         "operationId": "updateTask",
         "parameters": [
           {
-            "name": "id",
+            "name": "process_id",
             "in": "path",
             "description": "ID of Process to fetch",
             "required": true,
@@ -1518,7 +1518,7 @@
         "operationId": "deleteTask",
         "parameters": [
           {
-            "name": "id",
+            "name": "process_id",
             "in": "path",
             "description": "ID of of Process item",
             "required": true,
@@ -1560,7 +1560,7 @@
         }
       }
     },
-    "/processes/{id}/tasks/{task_id}/groups": {
+    "/processes/{process_id}/tasks/{task_id}/groups": {
       "put": {
         "tags": [
           "processmaker"
@@ -1569,7 +1569,7 @@
         "operationId": "addGroupsToTask",
         "parameters": [
           {
-            "name": "id",
+            "name": "process_id",
             "in": "path",
             "description": "ID of Process",
             "required": true,
@@ -1641,7 +1641,7 @@
         "operationId": "removeGroupsFromTask",
         "parameters": [
           {
-            "name": "id",
+            "name": "process_id",
             "in": "path",
             "description": "ID of Process",
             "required": true,
@@ -1713,7 +1713,7 @@
         "operationId": "syncGroupsToTask",
         "parameters": [
           {
-            "name": "id",
+            "name": "process_id",
             "in": "path",
             "description": "ID of Process",
             "required": true,
