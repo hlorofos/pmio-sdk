@@ -1254,6 +1254,89 @@
           }
         }
       }
+     },
+    "/processes/{process_id}/events/{event_id}/trigger": {
+      "post": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Trigger an Event",
+        "operationId": "EventTrigger",
+        "parameters": [
+          {
+            "name": "process_id",
+            "in": "path",
+            "description": "ID of Process relative to task",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "event_id",
+            "in": "path",
+            "description": "ID of Event to trigger",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "dataModel",
+            "in": "body",
+            "description": "DataModel object",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/DataModel"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created Event response",
+            "schema": {
+              "type": "object",
+              "title": "EventItem",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Event"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "404": {
+            "description": "Not found item",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      }
     },
     "/processes/{process_id}/tasks": {
       "get": {
@@ -2758,6 +2841,41 @@
     }
   },
   "definitions": {
+    "DataModel": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "9d705617-cc29-482a-85ff-7f7292f72b31"
+        },
+        "type": {
+          "default": "data_model",
+          "type": "string",
+          "example": "data_model"
+        },
+        "attributes": {
+          "required": [
+            "content"
+          ],
+          "type": "object",
+          "properties": {
+            "content": {
+              "type": "string",
+              "example": "Some json data"
+            },
+            "created_at": {
+              "$ref": "#/definitions/dateTime"
+            },
+            "updated_at": {
+              "$ref": "#/definitions/dateTime"
+            }
+          }
+        }
+      }
+    },
     "Instance": {
       "type": "object",
       "required": [
