@@ -742,7 +742,7 @@
             "description": "Created Gateway response",
             "schema": {
               "type": "object",
-              "title": "EventItem",
+              "title": "GatewayItem",
               "required": [
                 "data"
               ],
@@ -1266,7 +1266,7 @@
           {
             "name": "process_id",
             "in": "path",
-            "description": "ID of Process relative to task",
+            "description": "ID of Process relative to event",
             "required": true,
             "type": "string"
           },
@@ -1278,9 +1278,9 @@
             "type": "string"
           },
           {
-            "name": "dataModel",
+            "name": "TriggerEventCreateItem",
             "in": "body",
-            "description": "DataModel object",
+            "description": "Json with some parameters",
             "required": true,
             "schema": {
               "type": "object",
@@ -1297,16 +1297,16 @@
         ],
         "responses": {
           "201": {
-            "description": "Created Event response",
+            "description": "Trigger Event and response with DataModel item",
             "schema": {
               "type": "object",
-              "title": "EventItem",
+              "title": "DataModelItem",
               "required": [
                 "data"
               ],
               "properties": {
                 "data": {
-                  "$ref": "#/definitions/Event"
+                  "$ref": "#/definitions/DataModel"
                 }
               }
             }
@@ -1319,12 +1319,6 @@
           },
           "404": {
             "description": "Not found item",
-            "schema": {
-              "$ref": "#/definitions/errorArray"
-            }
-          },
-          "400": {
-            "description": "Invalid parameters",
             "schema": {
               "$ref": "#/definitions/errorArray"
             }
@@ -2847,10 +2841,6 @@
         "type"
       ],
       "properties": {
-        "id": {
-          "type": "string",
-          "example": "9d705617-cc29-482a-85ff-7f7292f72b31"
-        },
         "type": {
           "default": "data_model",
           "type": "string",
@@ -2864,7 +2854,7 @@
           "properties": {
             "content": {
               "type": "string",
-              "example": "Some json data"
+              "example": "Some parameters in json format"
             },
             "created_at": {
               "$ref": "#/definitions/dateTime"
@@ -3365,7 +3355,6 @@
             "duration_by",
             "type",
             "design_access",
-            "create_user_id",
             "name"
           ],
           "type": "object",

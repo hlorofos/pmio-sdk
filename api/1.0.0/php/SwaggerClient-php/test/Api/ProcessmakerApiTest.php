@@ -85,6 +85,9 @@ use Swagger\Client\Model\FlowAttributes;
 use Swagger\Client\Model\Instance;
 use Swagger\Client\Model\InstanceCreateItem;
 use Swagger\Client\Model\InstanceAttributes;
+use Swagger\Client\Model\DataModel;
+use Swagger\Client\Model\DataModelAttributes;
+use Swagger\Client\Model\TriggerEventCreateItem;
 /**
  * ProcessmakerApiTest Class Doc Comment
  *
@@ -115,9 +118,11 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         $this->apiInstance = new Api\ProcessmakerApi();
         if (in_array('--debug', $_SERVER['argv'])) {
             $this->apiInstance->getApiClient()->getConfig()->setDebug(true);
-            /** Try to set accessToken to get Process */
-            $this->apiInstance->getApiClient()->getConfig()->setAccessToken('eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6Ijg5ZjhjOGIzNzQ1Y2E2YjlhYTAyNzRlNDVmZmM3Nzk0MzYwNTE5MzVmYjkwYWYyMzhmZWRmMWI1NTQxYjY3MGZjOTJhZjljOTgxZWM0N2YxIn0.eyJhdWQiOiI0IiwianRpIjoiODlmOGM4YjM3NDVjYTZiOWFhMDI3NGU0NWZmYzc3OTQzNjA1MTkzNWZiOTBhZjIzOGZlZGYxYjU1NDFiNjcwZmM5MmFmOWM5ODFlYzQ3ZjEiLCJpYXQiOjE0ODIxNjgxNzAsIm5iZiI6MTQ4MjE2ODE3MCwiZXhwIjoxNTEzNzA0MTcwLCJzdWIiOiIzNSIsInNjb3BlcyI6W119.S2dCO3jVXKX3a-k4lQqpmnEcxcb5EHaZ-94sO5iE6OZSK0b44IRRAIgTfLtaziFOiaIBT1Nj3bCYrijh5Um2ipQuJ1mIur3aOoszHGV7XFuaMU4oPXEpsMGRZjRAQoi3YuvZmBjg4yhqC9JRy-Q672gAdxHAD9IL0d0taYV8eCoDbYzcxz4TBYPkxIv6M3W9wA9o8b91l6HmQQ4iEqIX07Awu1U-2hHBdB8OlFao6_31y-O9FZPUgNByvqtKZ76o2PbaRTm4BQ7nFWF7JHz8jfaOtQVFp32TATc7DzW8Sec4RkXMsvlJC03ETutIijrEGP8dH2NP_ZjVg1Lnajw8nxkUboBcdRO9ATM0LixjUxCrXNi7q3376WPLE1da0YqsUjqekaAM2cnw5HIOXw4kS-kE6tPF_PnOjrzteKXPCWNOF5Ksewp8ezLUpeIyzstsFHslRvzY9G_H2bn2n8QevMypP7g54h-9C8peFLSEEcuTISNiFD6GsmLQDXgwaH4taJ_xnLHrttIx15tHvSV0xb2SaBxmkQWeomKneX09E6tg9mFeKFQnnS9kyOz1dO2KQ1qtF9DyAa3DhN4_ikkRyqTcCQUVjkOS_WtIgt7lIQYDp2e1c8DzFa7AhYNkuI0k_vBUUz51HomWS5__KFL3raN6W6PJEMkw_74sIQZjglc');
+            $this->apiInstance->getApiClient()->getConfig()->setDebugFile('mydebug.log');
+
         }
+        /** Try to set accessToken to get Process */
+        $this->apiInstance->getApiClient()->getConfig()->setAccessToken('eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjkyMTIwNWJlNGI1YmVjMzYwNzIxMWQyYzgwMDViNzI1MTAwNTU5OWI1ODMwMjM3Yzg4MzY2MDU3YzAwMDdhMGI3MDMwOGZiZDhhMzFjMmNjIn0.eyJhdWQiOiIxIiwianRpIjoiOTIxMjA1YmU0YjViZWMzNjA3MjExZDJjODAwNWI3MjUxMDA1NTk5YjU4MzAyMzdjODgzNjYwNTdjMDAwN2EwYjcwMzA4ZmJkOGEzMWMyY2MiLCJpYXQiOjE0ODQzMDQzNjgsIm5iZiI6MTQ4NDMwNDM2OCwiZXhwIjoxNTE1ODQwMzY4LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.Dd3GlOkn7OkcOuG-suVb0PQiBLQbp_SnMlbsjdc6hT93o8uWePo3euv4Yu4yjswpqDeouqLuach9b5hJX5T5tKmUr__lClG7TWGXhqYwxFSXelpOA6yzbteJGcyR6_qjvAYEs_YBkD9RMmWu8dZyj_Vrs9LpyPfN0YMPHaIYtxLDlsMyhV5Jt1xpJxIscMYpKhQ9Bru47UliytdiJCtf072TTTAk7ukELZOyHNSEQDF4tad3Ev2dMfe11GijTXY-Rzy3aEwlIBrGgkODq0-ISaYqIdkoVhaFE8hUH3UiiHYfLNUVb5g0yJc1vye7I6tVY3S2348j9gvYj6fHqxnWdagt26onzRdAwKNbbIQA1ISAzPFvmPejlpoKzcVJlqtKBs2jRzrPQIfaTp684GPFYg9RjjRASlSnkm-8WNA1g_F1rpJJ91zqbipaeOiJ7iN6TQDSSHa8Msn157oP1x2oanIy5b9IgjhxyEfeiQ6FbRI-Bma6Z70KFd3BjKzDJl64elqrtfQumkJgS2FkX1lM_u_-W3qpZ8bsb3Shz_jWFJpOo5Lw_U7NVoZnB4a5x9LrpiddRzMZATt_CXw5tyXOmhLYiffuyN80Jx_eLE88w0X1RoKdpvpwWmzBVin9lLBp10J2qlrXh3zYvJYlR7U_rKjfSRkbN81bwiHETrqyxq8');
     }
 
     /**
@@ -464,7 +469,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             $processAtt->setDurationBy('WORKING_DAYS');
             $processAtt->setType('NORMAL');
             $processAtt->setDesignAccess('PUBLIC');
-            $processAtt->setCreateUserId($this->testAddUser());
+            //$processAtt->setCreateUserId($this->testAddUser());
 
             /** @var ProcessItem $result */
             $result = $this->apiInstance->addProcess(new ProcessCreateItem(
@@ -492,7 +497,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
     public function testFindProcessById()
     {
-        $this->markTestIncomplete();
+
         $processId = $this->testAddProcess();
 
         try {
@@ -512,7 +517,6 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
     public function testFindProcesses()
     {
-        $this->markTestIncomplete();
         try {
             $this->testAddProcess();
             $result = $this->apiInstance->findProcesses()->getData();
@@ -530,7 +534,6 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
     public function testDeleteProcess()
     {
-        $this->markTestIncomplete();
         $processId = $this->testAddProcess();
         $this->assertNotNull($processId, 'Process should be created');
 
@@ -788,6 +791,31 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         } catch (ApiException $e) {
             $this->dumpError($e, __METHOD__);
         }
+
+    }
+
+    /**
+     * Test case for triggerEvents
+     *
+     */
+    public function testTriggerEvent()
+    {
+        $arrayUids = $this->testAddEvent();
+        $dataModelattr = new DataModelAttributes();
+        $dataModelattr->setContent(json_encode(['some_key'=>10]));
+        var_dump(new DataModel(['attributes' => $dataModelattr]));
+        $result = $this->apiInstance->eventTrigger(
+            $arrayUids['process_uid'],
+            $arrayUids['event_uid'],
+                new TriggerEventCreateItem(
+                    [
+                        'data' => new DataModel(['attributes' => $dataModelattr])
+                    ]
+                )
+        );
+
+        $this->assertNotNull($result->getData()->getId());
+        //var_dump($result->getData()->getAttributes()->getContent());
 
     }
 
