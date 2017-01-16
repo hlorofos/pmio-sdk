@@ -122,7 +122,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
         }
         /** Try to set accessToken to get Process */
-        $this->apiInstance->getApiClient()->getConfig()->setAccessToken('eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjkyMTIwNWJlNGI1YmVjMzYwNzIxMWQyYzgwMDViNzI1MTAwNTU5OWI1ODMwMjM3Yzg4MzY2MDU3YzAwMDdhMGI3MDMwOGZiZDhhMzFjMmNjIn0.eyJhdWQiOiIxIiwianRpIjoiOTIxMjA1YmU0YjViZWMzNjA3MjExZDJjODAwNWI3MjUxMDA1NTk5YjU4MzAyMzdjODgzNjYwNTdjMDAwN2EwYjcwMzA4ZmJkOGEzMWMyY2MiLCJpYXQiOjE0ODQzMDQzNjgsIm5iZiI6MTQ4NDMwNDM2OCwiZXhwIjoxNTE1ODQwMzY4LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.Dd3GlOkn7OkcOuG-suVb0PQiBLQbp_SnMlbsjdc6hT93o8uWePo3euv4Yu4yjswpqDeouqLuach9b5hJX5T5tKmUr__lClG7TWGXhqYwxFSXelpOA6yzbteJGcyR6_qjvAYEs_YBkD9RMmWu8dZyj_Vrs9LpyPfN0YMPHaIYtxLDlsMyhV5Jt1xpJxIscMYpKhQ9Bru47UliytdiJCtf072TTTAk7ukELZOyHNSEQDF4tad3Ev2dMfe11GijTXY-Rzy3aEwlIBrGgkODq0-ISaYqIdkoVhaFE8hUH3UiiHYfLNUVb5g0yJc1vye7I6tVY3S2348j9gvYj6fHqxnWdagt26onzRdAwKNbbIQA1ISAzPFvmPejlpoKzcVJlqtKBs2jRzrPQIfaTp684GPFYg9RjjRASlSnkm-8WNA1g_F1rpJJ91zqbipaeOiJ7iN6TQDSSHa8Msn157oP1x2oanIy5b9IgjhxyEfeiQ6FbRI-Bma6Z70KFd3BjKzDJl64elqrtfQumkJgS2FkX1lM_u_-W3qpZ8bsb3Shz_jWFJpOo5Lw_U7NVoZnB4a5x9LrpiddRzMZATt_CXw5tyXOmhLYiffuyN80Jx_eLE88w0X1RoKdpvpwWmzBVin9lLBp10J2qlrXh3zYvJYlR7U_rKjfSRkbN81bwiHETrqyxq8');
+        $this->apiInstance->getApiClient()->getConfig()->setAccessToken('eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImQ1NmEzMjYxYzBhMjI2ZDNiOTJmNmUyZWQ0OTM3N2FkNDExYjExZjE1OGIwZTM2MDczNDY1NmY0ZGUzZWUzNGFjY2MzYTZmNjIyNmI2ZmNmIn0.eyJhdWQiOiIxIiwianRpIjoiZDU2YTMyNjFjMGEyMjZkM2I5MmY2ZTJlZDQ5Mzc3YWQ0MTFiMTFmMTU4YjBlMzYwNzM0NjU2ZjRkZTNlZTM0YWNjYzNhNmY2MjI2YjZmY2YiLCJpYXQiOjE0ODQ1NzQ2ODIsIm5iZiI6MTQ4NDU3NDY4MiwiZXhwIjoxNTE2MTEwNjgyLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.R0M-hlhgF06-qusOJuX7kJ1Us2hJwSHjIVjrGzzheQCe4aubpJRI7I_LnUxdYgxA5-W4nKlUjfNYgJBNH1Gk2XXLv1iGR9F5w9FL-2kp7d7kwp5WJFJFJw-EC9vi7X5O2QM9rHCi0_8TUpyrzgJo2riQ4FfLe9VKEhD5odaO5BHTnngX6ENaSbM-ZV5Wh8nDeC2kAKsYDmzl52JmrTYXX0rNLBmT2FAFw3LgsSKlrShayVYVIewQnyVV4dKwCmYGUil_a8AYhRuwMGJfxehGyuIUYDXSIkSTrre7ybz75gof5ooNl2pLKbZGl8GL6g0MN-NdX73UePzTeXcH0bWezb2huL2KAkShW6I-cOp5YTOZANSdZ2wm7blIKFs4VRXRPITS_QVFQlCXaSiM-F0tbBgO42wVd-OUDC3RwdfEtvtWHl-849zXFAFomoikH40itJ9_w-9QfW8zVbZwooeBFpm906bG3f070fVHhdRjL4GuAYCzcrsDsknZIplD-T-nEtwI52GcQnJYTKKOfM3PNy7PSNJwTBGBZvPeYIVFwtF5aNzjSkYLnaYD4O1g9y9fFf7eZ5LWRpw_ePzCLnwmZRC0esWGNMN9MUCPbRFhNJC-SvoNnKxUxsZwZlBF2PR0oTvRcItxtUjXGUEElIRMDQqHd1pzAb4c-IXmku-WFq0');
     }
 
     /**
@@ -800,10 +800,10 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
      */
     public function testTriggerEvent()
     {
+        $arrayToSend = ['some_key'=>10,'one_more_key'=>5];
         $arrayUids = $this->testAddEvent();
         $dataModelattr = new DataModelAttributes();
-        $dataModelattr->setContent(json_encode(['some_key'=>10]));
-        var_dump(new DataModel(['attributes' => $dataModelattr]));
+        $dataModelattr->setContent(json_encode($arrayToSend));
         $result = $this->apiInstance->eventTrigger(
             $arrayUids['process_uid'],
             $arrayUids['event_uid'],
@@ -813,9 +813,16 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
                     ]
                 )
         );
+        $this->assertNotEmpty($result->getData()->getAttributes()->getContent());
 
-        $this->assertNotNull($result->getData()->getId());
-        //var_dump($result->getData()->getAttributes()->getContent());
+        $respContent = $result->getData()->getAttributes()->getContent();
+        /** Try to check our array responded */
+        foreach ($arrayToSend as $key => $value) {
+            $this->assertEquals($value,$respContent[$key],"Key $key should be equaled to $value");
+        }
+
+
+
 
     }
 

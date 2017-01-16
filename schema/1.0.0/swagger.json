@@ -1306,7 +1306,7 @@
               ],
               "properties": {
                 "data": {
-                  "$ref": "#/definitions/DataModel"
+                  "$ref": "#/definitions/DataModelItem"
                 }
               }
             }
@@ -2835,6 +2835,30 @@
     }
   },
   "definitions": {
+    "DataModelItem": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "default": "data_model",
+          "type": "string",
+          "example": "data_model"
+        },
+        "attributes": {
+          "required": [
+            "content"
+          ],
+          "type": "object",
+          "properties": {
+            "content": {
+              "type": "object"
+              }
+          }
+        }
+      }
+    },
     "DataModel": {
       "type": "object",
       "required": [
