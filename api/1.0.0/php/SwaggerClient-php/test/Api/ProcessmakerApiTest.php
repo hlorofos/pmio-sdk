@@ -1224,7 +1224,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             ($process == false) ? $processUid = $this->testAddProcess() : $processUid = $process;
             /*Creating 2 objects for Flow under the same Process Id */
             $flowAttr= new FlowAttributes();
-            $flowAttr->setName('Events flow');
+            $flowAttr->setName('Flow Event with Event');
             $flowAttr->setType('SEQUENTIAL');
             $flowAttr->setProcessId($processUid);
             $flowAttr->setFromObjectId($eventUid1);
@@ -1243,7 +1243,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             );
 
             $this->assertNotNull($result->getData()->getId());
-            $this->assertEquals('Events flow', $result->getData()->getAttributes()->getName());
+            $this->assertEquals('Flow Event with Event', $result->getData()->getAttributes()->getName());
             //print_r($result->getData());
             return ['flow_uid'=>$result->getData()->getId(),'process_uid'=>$processUid];
 
@@ -1258,7 +1258,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             ($process == false) ? $processUid = $this->testAddProcess() : $processUid = $process;
             /*Creating 2 objects for Flow under the same Process Id */
             $flowAttr= new FlowAttributes();
-            $flowAttr->setName('Events flow');
+            $flowAttr->setName('Flow Task with Event');
             $flowAttr->setType('SEQUENTIAL');
             $flowAttr->setProcessId($processUid);
             $flowAttr->setFromObjectId($startEventUid);
@@ -1277,7 +1277,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             );
 
             $this->assertNotNull($result->getData()->getId());
-            $this->assertEquals('Events flow', $result->getData()->getAttributes()->getName());
+            $this->assertEquals('Flow Task with Event', $result->getData()->getAttributes()->getName());
             //print_r($result->getData());
             return ['flow_uid'=>$result->getData()->getId(),'process_uid'=>$processUid];
 
