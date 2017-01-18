@@ -35,6 +35,114 @@
     }
   ],
   "paths": {
+    "/task_instances/started":{
+      "get": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Make TaskInstance started",
+        "operationId": "startTaskInstance",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page Nr to fetch",
+            "required": false,
+            "default": 1,
+            "type": "integer"
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "Amount of Items per Page",
+            "required": false,
+            "default": 15,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TaskInstances list",
+            "schema": {
+              "title": "TaskInstanceCollection",
+              "description": "Json Api Response with collection of Items in array",
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/TaskInstance"
+                  }
+                },
+                "meta": {
+                  "$ref": "#/definitions/Meta"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      }
+    },
+    "/task_instances/delegated":{
+      "get": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Make TaskInstance delegated",
+        "operationId": "delegateTaskInstance",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page Nr to fetch",
+            "required": false,
+            "default": 1,
+            "type": "integer"
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "Amount of Items per Page",
+            "required": false,
+            "default": 15,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TaskInstances list",
+            "schema": {
+              "title": "TaskInstanceCollection",
+              "description": "Json Api Response with collection of Items in array",
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/TaskInstance"
+                  }
+                },
+                "meta": {
+                  "$ref": "#/definitions/Meta"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      }
+    },
     "/processes/{process_id}/instances": {
       "get": {
         "tags": [
@@ -2835,6 +2943,105 @@
     }
   },
   "definitions": {
+    "TaskInstance": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "9d705617-cc29-482a-85ff-7f7292f72b31"
+        },
+        "type": {
+          "default": "task_instance",
+          "type": "string",
+          "example": "task_instance"
+        },
+        "attributes": {
+          "required": [
+            "task_id",
+            "instance_id",
+            "status",
+            "priority"
+          ],
+          "type": "object",
+          "properties": {
+            "task_id": {
+              "type": "string",
+              "example": "9d705617-cc29-482a-85ff-7f7292f72b11"
+            },
+            "instance_id": {
+              "type": "string",
+              "example": "9d705617-cc29-482a-85ff-7f7292f72b11"
+            },
+            "group_id": {
+              "type": "string",
+              "example": "9d705617-cc29-482a-85ff-7f7292f72b11"
+            },
+            "user_id": {
+              "type": "string",
+              "example": "9d705617-cc29-482a-85ff-7f7292f72b11"
+            },
+            "status":{
+              "type":"string",
+              "default":"INITIAL",
+              "enum": [
+                "INITIAL",
+                "DELEGATED",
+                "STARTED",
+                "CANCELLED",
+                "FINISHED",
+                "COMPLETE",
+                "PAUSED"
+              ]
+            },
+            "priority":{
+              "type":"string",
+              "default":"3",
+              "enum": [
+                "1",
+                "2",
+                "3",
+                "4",
+                "5"
+              ]
+            },
+            "delegate_date": {
+              "$ref": "#/definitions/dateTime"
+            },
+            "start_date": {
+              "$ref": "#/definitions/dateTime"
+            },
+            "finish_date": {
+              "$ref": "#/definitions/dateTime"
+            },
+            "task_due_date": {
+              "$ref": "#/definitions/dateTime"
+            },
+            "risk_date": {
+              "$ref": "#/definitions/dateTime"
+            },
+            "duration": {
+              "type": "integer"
+            },
+            "instance_overdue_percentage": {
+              "type": "number",
+              "format":"double"
+            },
+            "data": {
+              "type": "string"
+            },
+            "created_at": {
+              "$ref": "#/definitions/dateTime"
+            },
+            "updated_at": {
+              "$ref": "#/definitions/dateTime"
+            }
+          }
+        }
+      }
+    },
     "DataModelItem": {
       "type": "object",
       "required": [

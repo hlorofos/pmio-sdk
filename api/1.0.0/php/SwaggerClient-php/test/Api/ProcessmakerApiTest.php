@@ -800,10 +800,10 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
      */
     public function testTriggerEvent()
     {
-        $arrayToSend = ['some_key'=>10,'one_more_key'=>5];
+        $arrayContent = ['some_key'=>10,'one_more_key'=>5];
         $arrayUids = $this->testAddEvent();
         $dataModelattr = new DataModelAttributes();
-        $dataModelattr->setContent(json_encode($arrayToSend));
+        $dataModelattr->setContent(json_encode($arrayContent));
         $result = $this->apiInstance->eventTrigger(
             $arrayUids['process_uid'],
             $arrayUids['event_uid'],
@@ -814,17 +814,14 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
                 )
         );
         $this->assertNotEmpty($result->getData()->getAttributes()->getContent());
-
         $respContent = $result->getData()->getAttributes()->getContent();
         /** Try to check our array responded */
-        foreach ($arrayToSend as $key => $value) {
+        foreach ($arrayContent as $key => $value) {
             $this->assertEquals($value,$respContent[$key],"Key $key should be equaled to $value");
         }
-
-
-
-
     }
+
+
 
     /**
      * Test case for findEvents
@@ -1000,9 +997,9 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
      * @return array of IDs
      */
 
-    public function testAddFlow() {
+    public function testAddFlow($process = false) {
         try {
-            $processUid = $this->testAddProcess();
+            ($process == false) ? $processUid = $this->testAddProcess() : $processUid = $process;
             /*Creating 2 objects for Flow under the same Process Id */
             $task = $this->testAddTask($processUid);
             $event = $this->testAddEvent($processUid);
@@ -1207,6 +1204,118 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         } catch (ApiException $e) {
             $this->dumpError($e, __METHOD__);
         }
+    }
+
+
+
+    public function testTaskInstanceShowIndex()
+    {
+        $processUid = $this->testAddProcess();
+        $startEvent = $this->testAddEvent($processUid);
+        $task =  $this->testAddTask($processUid);
+        $endEvent = $this->AddEvent($processUid);
+        $this->addFlowForTask($processUid,$startEvent['event_uid'],$task['task_uid']);
+        $this->addFlowEvents($processUid,$startEvent['event_uid'],$endEvent['event_uid']);
+
+    }
+
+    private function addFlowEvents($process = false, $eventUid1, $eventUid2) {
+        try {
+            ($process == false) ? $processUid = $this->testAddProcess() : $processUid = $process;
+            /*Creating 2 objects for Flow under the same Process Id */
+            $flowAttr= new FlowAttributes();
+            $flowAttr->setName('Events flow');
+            $flowAttr->setType('SEQUENTIAL');
+            $flowAttr->setProcessId($processUid);
+            $flowAttr->setFromObjectId($eventUid1);
+            $flowAttr->setFromObjectType('event');
+            $flowAttr->setToObjectId($eventUid2);
+            $flowAttr->setToObjectType('event');
+            $flowAttr->setDefault(false);
+            $flowAttr->setOptional(false);
+            $result = $this->apiInstance->addFlow(
+                $processUid,
+                new FlowCreateItem(
+                    [
+                        'data' => new Flow(['attributes' => $flowAttr])
+                    ]
+                )
+            );
+
+            $this->assertNotNull($result->getData()->getId());
+            $this->assertEquals('Events flow', $result->getData()->getAttributes()->getName());
+            //print_r($result->getData());
+            return ['flow_uid'=>$result->getData()->getId(),'process_uid'=>$processUid];
+
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+
+    private function addFlowForTask($process = false, $startEventUid, $userTaskUid) {
+        try {
+            ($process == false) ? $processUid = $this->testAddProcess() : $processUid = $process;
+            /*Creating 2 objects for Flow under the same Process Id */
+            $flowAttr= new FlowAttributes();
+            $flowAttr->setName('Events flow');
+            $flowAttr->setType('SEQUENTIAL');
+            $flowAttr->setProcessId($processUid);
+            $flowAttr->setFromObjectId($startEventUid);
+            $flowAttr->setFromObjectType('event');
+            $flowAttr->setToObjectId($userTaskUid);
+            $flowAttr->setToObjectType('task');
+            $flowAttr->setDefault(false);
+            $flowAttr->setOptional(false);
+            $result = $this->apiInstance->addFlow(
+                $processUid,
+                new FlowCreateItem(
+                    [
+                        'data' => new Flow(['attributes' => $flowAttr])
+                    ]
+                )
+            );
+
+            $this->assertNotNull($result->getData()->getId());
+            $this->assertEquals('Events flow', $result->getData()->getAttributes()->getName());
+            //print_r($result->getData());
+            return ['flow_uid'=>$result->getData()->getId(),'process_uid'=>$processUid];
+
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+
+
+
+    private function addEvent($process = false) {
+        try {
+            ($process == false) ? $processUid = $this->testAddProcess() : $processUid = $process;
+            $eventAttr = new EventAttributes();
+            $eventAttr->setName('End Event');
+            $eventAttr->setType('END');
+            $eventAttr->setProcessId($processUid);
+            $eventAttr->setDefinition('MESSAGE');
+
+            $result = $this->apiInstance->addEvent(
+                $processUid,
+                new EventCreateItem(
+                    [
+                        'data' => new Event(['attributes' => $eventAttr])
+                    ]
+                )
+            );
+
+            $this->assertNotNull($result->getData()->getId());
+            $this->assertEquals('End Event', $result->getData()->getAttributes()->getName());
+            //print_r($result->getData());
+            return ['event_uid'=>$result->getData()->getId(),'process_uid'=>$processUid];
+
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+
     }
 
 
