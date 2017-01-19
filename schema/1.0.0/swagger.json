@@ -35,14 +35,21 @@
     }
   ],
   "paths": {
-    "/task_instances/started":{
+    "/task_instances/{task_instance_id}":{
       "get": {
         "tags": [
           "processmaker"
         ],
-        "description": "Make TaskInstance started",
-        "operationId": "startTaskInstance",
+        "description": "Returns TaskInstance based on a single ID",
+        "operationId": "findTaskInstanceById",
         "parameters": [
+          {
+            "name": "task_instance_id",
+            "in": "path",
+            "description": "ID of TaskInstance to fetch",
+            "required": true,
+            "type": "string"
+          },
           {
             "name": "page",
             "in": "query",
@@ -62,22 +69,23 @@
         ],
         "responses": {
           "200": {
-            "description": "TaskInstances list",
+            "description": "TaskInstance Item response",
             "schema": {
-              "title": "TaskInstanceCollection",
-              "description": "Json Api Response with collection of Items in array",
               "type": "object",
+              "required": [
+                "data"
+              ],
               "properties": {
                 "data": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/definitions/TaskInstance"
-                  }
-                },
-                "meta": {
-                  "$ref": "#/definitions/Meta"
+                  "$ref": "#/definitions/TaskInstance"
                 }
               }
+            }
+          },
+          "404": {
+            "description": "Item not found",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
             }
           },
           "default": {
@@ -87,15 +95,76 @@
             }
           }
         }
+      },
+      "patch": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Update existing TaskInstance",
+        "operationId": "updateTaskInstance",
+        "parameters": [
+          {
+            "name": "task_instance_id",
+            "in": "path",
+            "description": "ID of TaskInstance to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "TaskInstanceUpdateItem",
+            "in": "body",
+            "description": "TaskInstance object to update",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/TaskInstance"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "JsonApi response with updated TaskInstance object",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/TaskInstance"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
       }
     },
-    "/task_instances/delegated":{
+    "/task_instances":{
       "get": {
         "tags": [
           "processmaker"
         ],
-        "description": "Make TaskInstance delegated",
-        "operationId": "delegateTaskInstance",
+        "description": "Returns all TaskInstances",
+        "operationId": "findTaskInstances",
         "parameters": [
           {
             "name": "page",
@@ -3472,6 +3541,7 @@
                 "INTERMEDIATE-THROW-MESSAGE-EVENT",
                 "INTERMEDIATE-CATCH-MESSAGE-EVENT",
                 "SCRIPT-TASK",
+                "USER-TASK",
                 "START-TIMER-EVENT",
                 "INTERMEDIATE-CATCH-TIMER-EVENT",
                 "END-EMAIL-EVENT",

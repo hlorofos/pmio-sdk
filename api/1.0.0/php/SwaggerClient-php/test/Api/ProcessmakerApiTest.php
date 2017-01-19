@@ -88,6 +88,10 @@ use Swagger\Client\Model\InstanceAttributes;
 use Swagger\Client\Model\DataModel;
 use Swagger\Client\Model\DataModelAttributes;
 use Swagger\Client\Model\TriggerEventCreateItem;
+use Swagger\Client\Model\TaskInstance;
+use Swagger\Client\Model\TaskInstanceAttributes;
+use Swagger\Client\Model\TaskInstanceUpdateItem;
+
 /**
  * ProcessmakerApiTest Class Doc Comment
  *
@@ -101,6 +105,9 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 {
     /** @var ProcessmakerApi $apiInstance */
     private $apiInstance;
+
+    /** @var  User uid for TaskInstance tests */
+    private $testUserUid;
 
     /**
      * Setup before running any test cases
@@ -121,8 +128,9 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             $this->apiInstance->getApiClient()->getConfig()->setDebugFile('mydebug.log');
 
         }
-        /** Try to set accessToken to get Process */
-        $this->apiInstance->getApiClient()->getConfig()->setAccessToken('eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImQ1NmEzMjYxYzBhMjI2ZDNiOTJmNmUyZWQ0OTM3N2FkNDExYjExZjE1OGIwZTM2MDczNDY1NmY0ZGUzZWUzNGFjY2MzYTZmNjIyNmI2ZmNmIn0.eyJhdWQiOiIxIiwianRpIjoiZDU2YTMyNjFjMGEyMjZkM2I5MmY2ZTJlZDQ5Mzc3YWQ0MTFiMTFmMTU4YjBlMzYwNzM0NjU2ZjRkZTNlZTM0YWNjYzNhNmY2MjI2YjZmY2YiLCJpYXQiOjE0ODQ1NzQ2ODIsIm5iZiI6MTQ4NDU3NDY4MiwiZXhwIjoxNTE2MTEwNjgyLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.R0M-hlhgF06-qusOJuX7kJ1Us2hJwSHjIVjrGzzheQCe4aubpJRI7I_LnUxdYgxA5-W4nKlUjfNYgJBNH1Gk2XXLv1iGR9F5w9FL-2kp7d7kwp5WJFJFJw-EC9vi7X5O2QM9rHCi0_8TUpyrzgJo2riQ4FfLe9VKEhD5odaO5BHTnngX6ENaSbM-ZV5Wh8nDeC2kAKsYDmzl52JmrTYXX0rNLBmT2FAFw3LgsSKlrShayVYVIewQnyVV4dKwCmYGUil_a8AYhRuwMGJfxehGyuIUYDXSIkSTrre7ybz75gof5ooNl2pLKbZGl8GL6g0MN-NdX73UePzTeXcH0bWezb2huL2KAkShW6I-cOp5YTOZANSdZ2wm7blIKFs4VRXRPITS_QVFQlCXaSiM-F0tbBgO42wVd-OUDC3RwdfEtvtWHl-849zXFAFomoikH40itJ9_w-9QfW8zVbZwooeBFpm906bG3f070fVHhdRjL4GuAYCzcrsDsknZIplD-T-nEtwI52GcQnJYTKKOfM3PNy7PSNJwTBGBZvPeYIVFwtF5aNzjSkYLnaYD4O1g9y9fFf7eZ5LWRpw_ePzCLnwmZRC0esWGNMN9MUCPbRFhNJC-SvoNnKxUxsZwZlBF2PR0oTvRcItxtUjXGUEElIRMDQqHd1pzAb4c-IXmku-WFq0');
+        /** Try to set accessToken to get Process for test user*/
+        $this->apiInstance->getApiClient()->getConfig()->setAccessToken('eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjBlMmZhNmMxMDZkOTY4NGEzZTdhNzJhNjJkZjgxMDIyZDM1NWQzMzZiOTU5NjEzZTVjZDdlMzNjZjY2OWNjYmU1MjJlNzg2M2YxMGNiNTQzIn0.eyJhdWQiOiIxIiwianRpIjoiMGUyZmE2YzEwNmQ5Njg0YTNlN2E3MmE2MmRmODEwMjJkMzU1ZDMzNmI5NTk2MTNlNWNkN2UzM2NmNjY5Y2NiZTUyMmU3ODYzZjEwY2I1NDMiLCJpYXQiOjE0ODQ4MzkyNDcsIm5iZiI6MTQ4NDgzOTI0NywiZXhwIjoxNTE2Mzc1MjQ3LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.mTsendVVYn7Sc2Aiv3qo-t26WPS9dEehOlMWHW3vqODVQer-Vh8lOq7y5BK6AnxKfoW6KZ3dZP9-5Xp6ET7i-oUtxeEmOrgKkqyHBqXqE5-J6W0NHfZU0K37AmJEIqvf7BtMRItnHG6evCY6VWkZLuXI0dxXBY0h7o0dzYa9fH91SVH-elA6J1MmZiz6OcyS01DpfIET8XBG3S_ae2ps3eGHfxRzHiNfBkBiXjkp0AIh7SQfiDljhF0pc18oWvODTrvrvnxRY5tnj27HGbdBccBS2GuFAtLoVqEhMsjrEl5h6EBkE4m-dend7mbMIOUj9NAzuTJmEsYZcOBfRHVvDVLiZ2hGl1CrDNOGjOnrwex0YPzrXmf2fHawmD24_OmEbtHu5QxpNID1ejlJGZH_grG2LuD3r1GRaQFVj6LobH8jI7dsl6g6LpEl0QpeBGdgRwx4m5iiLlLyIpSFnOe1CxSGLCZaUwBYnmEmAtWc1-XDvOUYmWJtnXEGDGcCWQaVClYORMP0HdYSDIfUIeAkoXE31hyv9sOuuBv7wHfUUEBrQtxUvWIkz5Lip8JGJTLPIpMuWEgJg2OK8AzIX8huvnogyg32VXURYh6fKPCp2K_93lnTE1nRhqBCG80B_bTrtsVURmnKvfM3IAS0CijCCDzj3aLMhP34WwEEHIra1ws');
+        $this->testUserUid = '4780a63f-6967-45cc-ad11-92a565636d5b';
     }
 
     /**
@@ -204,19 +212,15 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
     /**
      * Test case for addUsersToGroup
      *
-     * .
-     *
      */
-    public function testAddUsersToGroup()
+    public function testAddUsersToGroup($user = false)
     {
         /** @var string $groupId */
         $groupId = $this->testAddGroup();
         $this->assertNotNull($groupId, 'Group should be created');
 
         /** @var string $userIdId */
-        $userId = $this->testAddUser();
-        $this->assertNotNull($userId, 'User should be created');
-
+        (!$user) ? $userId = $this->testAddUser() : $userId = $user;
         $GroupAddUsersItem = new GroupAddUsersItem([
             'data' => new UserIds([
                 'users' => [$userId]
@@ -228,6 +232,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             $result = $this->apiInstance->addUsersToGroup($groupId, $GroupAddUsersItem);
             //print_r($result->getMeta());
             $this->assertEquals('1021', $result->getMeta()->getCode(), 'User should be attached to the Group');
+            return $groupId;
         } catch (ApiException $e) {
             $this->dumpError($e, __METHOD__);
         }
@@ -521,7 +526,6 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             $this->testAddProcess();
             $result = $this->apiInstance->findProcesses()->getData();
             $this->assertGreaterThan(0, count($result));
-            print_r($result);
         } catch (ApiException $e) {
             $this->dumpError($e, __METHOD__);
         }
@@ -536,7 +540,6 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
     {
         $processId = $this->testAddProcess();
         $this->assertNotNull($processId, 'Process should be created');
-
         try {
             /** @var ResultSuccess $result */
             $result = $this->apiInstance->deleteProcess($processId);
@@ -558,7 +561,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             ($process == false) ? $processUid = $this->testAddProcess() : $processUid = $process;
             $taskAttr = new TaskAttributes();
             $taskAttr->setName('Task name');
-            $taskAttr->setType('NORMAL');
+            $taskAttr->setType('USER-TASK');
             $taskAttr->setProcessId($processUid);
             $taskAttr->setAssignType('CYCLIC');
             $taskAttr->setTransferFly(true);
@@ -662,11 +665,11 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
      * @return array of IDs
      */
 
-    public function testAddGroupsToTask()
+    public function testAddGroupsToTask($group = false)
     {
         /** @var string $groupId */
-        $groupId = $this->testAddGroup();
-        $this->assertNotNull($groupId, 'Group should be created');
+        (!$group) ? $groupId = $this->testAddGroup() : $groupId = $group ;
+
 
         /** @var array $array_ids of Process and Task*/
         $array_ids = $this->testAddTask();
@@ -1210,16 +1213,47 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
     public function testTaskInstanceShowIndex()
     {
-        $processUid = $this->testAddProcess();
-        $startEvent = $this->testAddEvent($processUid);
-        $task =  $this->testAddTask($processUid);
-        $endEvent = $this->AddEvent($processUid);
-        $this->addFlowForTask($processUid,$startEvent['event_uid'],$task['task_uid']);
-        $this->addFlowEvents($processUid,$startEvent['event_uid'],$endEvent['event_uid']);
+        /** Here we try to add our user to group.
+         * Uid of  user should be the same with Token that we use in setup */
+        $group = $this->testAddUsersToGroup($this->testUserUid);
+        /** Next we initiate creation of Group to task and get Process and Task Group*/
+        $arrayUids = $this->testAddGroupsToTask($group);
+
+        $startEvent = $this->testAddEvent($arrayUids['process_uid']);
+        $endEvent = $this->AddEvent($arrayUids['process_uid']);
+
+        $this->addFlowEventToTask($arrayUids['process_uid'],$startEvent['event_uid'],$arrayUids['task_uid']);
+        $this->addFlowForTaskToEndEvent($arrayUids['process_uid'],$arrayUids['task_uid'],$endEvent['event_uid']);
+
+        /** Try to trigger startevent */
+        $this->TriggerStartEvent($startEvent['event_uid'],$arrayUids['process_uid']);
 
     }
 
-    private function addFlowEvents($process = false, $eventUid1, $eventUid2) {
+
+    private function TriggerStartEvent($startEvent,$processUid)
+    {
+        $arrayContent = ['some_key'=>10,'one_more_key'=>5];
+        $dataModelattr = new DataModelAttributes();
+        $dataModelattr->setContent(json_encode($arrayContent));
+        $result = $this->apiInstance->eventTrigger(
+            $processUid,
+            $startEvent,
+            new TriggerEventCreateItem(
+                [
+                    'data' => new DataModel(['attributes' => $dataModelattr])
+                ]
+            )
+        );
+        $this->assertNotEmpty($result->getData()->getAttributes()->getContent());
+        $respContent = $result->getData()->getAttributes()->getContent();
+        /** Try to check our array responded */
+        foreach ($arrayContent as $key => $value) {
+            $this->assertEquals($value,$respContent[$key],"Key $key should be equaled to $value");
+        }
+    }
+
+    private function addFlowForTaskToEndEvent($process = false, $taskUid, $eventUid) {
         try {
             ($process == false) ? $processUid = $this->testAddProcess() : $processUid = $process;
             /*Creating 2 objects for Flow under the same Process Id */
@@ -1227,9 +1261,9 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             $flowAttr->setName('Flow Event with Event');
             $flowAttr->setType('SEQUENTIAL');
             $flowAttr->setProcessId($processUid);
-            $flowAttr->setFromObjectId($eventUid1);
-            $flowAttr->setFromObjectType('event');
-            $flowAttr->setToObjectId($eventUid2);
+            $flowAttr->setFromObjectId($taskUid);
+            $flowAttr->setFromObjectType('task');
+            $flowAttr->setToObjectId($eventUid);
             $flowAttr->setToObjectType('event');
             $flowAttr->setDefault(false);
             $flowAttr->setOptional(false);
@@ -1253,7 +1287,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
     }
 
 
-    private function addFlowForTask($process = false, $startEventUid, $userTaskUid) {
+    private function addFlowEventToTask($process = false, $startEventUid, $userTaskUid) {
         try {
             ($process == false) ? $processUid = $this->testAddProcess() : $processUid = $process;
             /*Creating 2 objects for Flow under the same Process Id */
@@ -1316,6 +1350,45 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             $this->dumpError($e, __METHOD__);
         }
 
+    }
+
+    public function testFindTaskInstances()
+    {
+        try {
+            $result = $this->apiInstance->findTaskInstances()->getData();
+            $this->assertGreaterThan(0, count($result));
+            return $result[0]->getId();
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    public function testFindTaskInstanceById()
+    {
+        try {
+            $result = $this->apiInstance->findTaskInstanceById($this->testFindTaskInstances())->getData()->getAttributes();
+            $this->assertNotEmpty($result);
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    public function testUpdateTaskInstance()
+    {
+        $itemData = new TaskInstanceAttributes();
+        $itemData->setStatus('STARTED');
+        $result = $this->apiInstance->updateTaskInstance(
+            $this->testFindTaskInstances(),
+            new TaskInstanceUpdateItem(['data' => new TaskInstance(['attributes' => $itemData])])
+        );
+        $this->assertEquals('STARTED', $result->getData()->getAttributes()->getStatus(), 'Status should be updated');
+        /** Try to complete TaskInstance */
+        $itemData->setStatus('COMPLETE');
+        $result = $this->apiInstance->updateTaskInstance(
+            $this->testFindTaskInstances(),
+            new TaskInstanceUpdateItem(['data' => new TaskInstance(['attributes' => $itemData])])
+        );
+        $this->assertEquals('COMPLETE', $result->getData()->getAttributes()->getStatus(), 'Status should be updated');
     }
 
 
