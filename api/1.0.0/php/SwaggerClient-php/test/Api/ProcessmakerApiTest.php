@@ -129,8 +129,8 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
         }
         /** Try to set accessToken to get Process for test user*/
-        $this->apiInstance->getApiClient()->getConfig()->setAccessToken('eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjBlMmZhNmMxMDZkOTY4NGEzZTdhNzJhNjJkZjgxMDIyZDM1NWQzMzZiOTU5NjEzZTVjZDdlMzNjZjY2OWNjYmU1MjJlNzg2M2YxMGNiNTQzIn0.eyJhdWQiOiIxIiwianRpIjoiMGUyZmE2YzEwNmQ5Njg0YTNlN2E3MmE2MmRmODEwMjJkMzU1ZDMzNmI5NTk2MTNlNWNkN2UzM2NmNjY5Y2NiZTUyMmU3ODYzZjEwY2I1NDMiLCJpYXQiOjE0ODQ4MzkyNDcsIm5iZiI6MTQ4NDgzOTI0NywiZXhwIjoxNTE2Mzc1MjQ3LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.mTsendVVYn7Sc2Aiv3qo-t26WPS9dEehOlMWHW3vqODVQer-Vh8lOq7y5BK6AnxKfoW6KZ3dZP9-5Xp6ET7i-oUtxeEmOrgKkqyHBqXqE5-J6W0NHfZU0K37AmJEIqvf7BtMRItnHG6evCY6VWkZLuXI0dxXBY0h7o0dzYa9fH91SVH-elA6J1MmZiz6OcyS01DpfIET8XBG3S_ae2ps3eGHfxRzHiNfBkBiXjkp0AIh7SQfiDljhF0pc18oWvODTrvrvnxRY5tnj27HGbdBccBS2GuFAtLoVqEhMsjrEl5h6EBkE4m-dend7mbMIOUj9NAzuTJmEsYZcOBfRHVvDVLiZ2hGl1CrDNOGjOnrwex0YPzrXmf2fHawmD24_OmEbtHu5QxpNID1ejlJGZH_grG2LuD3r1GRaQFVj6LobH8jI7dsl6g6LpEl0QpeBGdgRwx4m5iiLlLyIpSFnOe1CxSGLCZaUwBYnmEmAtWc1-XDvOUYmWJtnXEGDGcCWQaVClYORMP0HdYSDIfUIeAkoXE31hyv9sOuuBv7wHfUUEBrQtxUvWIkz5Lip8JGJTLPIpMuWEgJg2OK8AzIX8huvnogyg32VXURYh6fKPCp2K_93lnTE1nRhqBCG80B_bTrtsVURmnKvfM3IAS0CijCCDzj3aLMhP34WwEEHIra1ws');
-        $this->testUserUid = '4780a63f-6967-45cc-ad11-92a565636d5b';
+        $this->apiInstance->getApiClient()->getConfig()->setAccessToken('eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImUxYmEyOTViYzBiMzA5ZWI2MDhkNzVlYzdkYzE4NjZmMzJjNmE4MzNhOWM0MWVkNWE3NTA5OWQ5NDBmZGM0NDZjMzk4ODE4MmFhY2JiNWI0In0.eyJhdWQiOiIxIiwianRpIjoiZTFiYTI5NWJjMGIzMDllYjYwOGQ3NWVjN2RjMTg2NmYzMmM2YTgzM2E5YzQxZWQ1YTc1MDk5ZDk0MGZkYzQ0NmMzOTg4MTgyYWFjYmI1YjQiLCJpYXQiOjE0ODQ4NTAxMDAsIm5iZiI6MTQ4NDg1MDEwMCwiZXhwIjoxNTE2Mzg2MTAwLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.sbfsw6eOamjVqfq1flrLqGGDNR17nYduMM4PvVH5Z3d2OilmmEYSc031ZQMv8zRgICo8SV_7JlkruEZlGwkK7V9MOmRRcIGqrZGbuY5SFzrezAyZAnTOLEJz9nxO3sAVL0gxgED7W0OZbio7dWQ8ZcHDoF-gPm-ka_om7kBVoslRwd1wZmQfrSmHJ_GdY5-qv79NpLnGAdruSYid-zWEoTmXXNWX5U_8RjNoffqSSUFpdLm8QeT5I4GIZ8GRNJCZP7swEDwSjEfxP_ZM_kr_RmpIFSxtzog4xwNdmeIyt7xM_oLBZh2pz1a1KAKV1apCJOKqhqKTVnb7KY8Xz8EcgMpOeJNK9Kt85-PpQl-kwbx3t3gFl45_ccrXYft36K8WHm-yRUvZ9_22Ghu1Lg60VnmmmU46I6v3pWPuwHt_tF7jP3q5xSGJJh9XBPQF65XGryD6Er5scxhqMnimeVDOlecOsavmh5PfyzB65bsPq23cVxlZObT2Uh3wW5gNPR-XUB5AzR2yyYk-aAEwIeQhY-7rq1q3lonlCJLMqEWGmSiau80Xo9o3DFv4S-3C4IPCbfQCaYcnscuMvy7e_Z2J2_LtAwp1gtlwKnftTUM-BV02H275x_8sDGqXO4w16WJnh8vGPgz-P2ikr9q8T5c4y8Gtrv95PHZwgvpLWkuGdFA');
+        $this->testUserUid = '0bb47aa7-0321-4ffa-9dfe-a6115eb769e9';
     }
 
     /**
@@ -1233,7 +1233,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
     private function TriggerStartEvent($startEvent,$processUid)
     {
-        $arrayContent = ['some_key'=>10,'one_more_key'=>5];
+        $arrayContent = ['key' => 6, 'add' => 15, 'confirm' => false];
         $dataModelattr = new DataModelAttributes();
         $dataModelattr->setContent(json_encode($arrayContent));
         $result = $this->apiInstance->eventTrigger(
@@ -1377,6 +1377,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
     {
         $itemData = new TaskInstanceAttributes();
         $itemData->setStatus('STARTED');
+        $itemData->setContent(['key' => 1, 'add' => 1, 'confirm' => true]);
         $result = $this->apiInstance->updateTaskInstance(
             $this->testFindTaskInstances(),
             new TaskInstanceUpdateItem(['data' => new TaskInstance(['attributes' => $itemData])])

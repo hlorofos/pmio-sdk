@@ -3101,6 +3101,9 @@
             "data": {
               "type": "string"
             },
+            "content": {
+              "type": "string"
+            },
             "created_at": {
               "$ref": "#/definitions/dateTime"
             },
