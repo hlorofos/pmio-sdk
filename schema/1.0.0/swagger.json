@@ -2739,6 +2739,61 @@
         }
       }
     },
+    "/users/myself":{
+      "get": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Returns User based on Token",
+        "operationId": "myselfUser",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page Nr to fetch",
+            "required": false,
+            "default": 1,
+            "type": "integer"
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "Amount of Items per Page",
+            "required": false,
+            "default": 15,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/User"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized access",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      }
+    },
     "/users": {
       "get": {
         "tags": [
