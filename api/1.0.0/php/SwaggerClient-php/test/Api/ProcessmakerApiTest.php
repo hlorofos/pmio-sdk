@@ -48,6 +48,8 @@ use Swagger\Client\Model\GroupAttributes;
 use Swagger\Client\Model\GroupCreateItem;
 use Swagger\Client\Model\GroupItem;
 use Swagger\Client\Model\GroupRemoveUsersItem;
+use Swagger\Client\Model\GroupUpdateItem;
+use Swagger\Client\Model\InstanceUpdateItem;
 use Swagger\Client\Model\MetaResult;
 use Swagger\Client\Model\ResultSuccess;
 use Swagger\Client\Model\User;
@@ -55,6 +57,40 @@ use Swagger\Client\Model\UserAttributes;
 use Swagger\Client\Model\UserCreateItem;
 use Swagger\Client\Model\UserIds;
 use Swagger\Client\Model\UserItem;
+use Swagger\Client\Model\UserUpdateItem;
+use Swagger\Client\Model\Process;
+use Swagger\Client\Model\ProcessCreateItem;
+use Swagger\Client\Model\ProcessItem;
+use Swagger\Client\Model\ProcessAttributes;
+use Swagger\Client\Model\Task;
+use Swagger\Client\Model\TaskCreateItem;
+use Swagger\Client\Model\TaskAttributes;
+use Swagger\Client\Model\TaskAddGroupsItem;
+use Swagger\Client\Model\TaskSyncGroupsItem;
+use Swagger\Client\Model\TaskRemoveGroupsItem;
+use Swagger\Client\Model\TaskUpdateItem;
+use Swagger\Client\Model\GroupIds;
+use Swagger\Client\Model\Event;
+use Swagger\Client\Model\EventCreateItem;
+use Swagger\Client\Model\EventAttributes;
+use Swagger\Client\Model\EventUpdateItem;
+use Swagger\Client\Model\Gateway;
+use Swagger\Client\Model\GatewayCreateItem;
+use Swagger\Client\Model\GatewayAttributes;
+use Swagger\Client\Model\GatewayUpdateItem;
+use Swagger\Client\Model\Flow;
+use Swagger\Client\Model\FlowCreateItem;
+use Swagger\Client\Model\FlowUpdateItem;
+use Swagger\Client\Model\FlowAttributes;
+use Swagger\Client\Model\Instance;
+use Swagger\Client\Model\InstanceCreateItem;
+use Swagger\Client\Model\InstanceAttributes;
+use Swagger\Client\Model\DataModel;
+use Swagger\Client\Model\DataModelAttributes;
+use Swagger\Client\Model\TriggerEventCreateItem;
+use Swagger\Client\Model\TaskInstance;
+use Swagger\Client\Model\TaskInstanceAttributes;
+use Swagger\Client\Model\TaskInstanceUpdateItem;
 
 /**
  * ProcessmakerApiTest Class Doc Comment
@@ -69,6 +105,9 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 {
     /** @var ProcessmakerApi $apiInstance */
     private $apiInstance;
+
+    /** @var  User uid for TaskInstance tests */
+    private $testUserUid;
 
     /**
      * Setup before running any test cases
@@ -86,7 +125,13 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         $this->apiInstance = new Api\ProcessmakerApi();
         if (in_array('--debug', $_SERVER['argv'])) {
             $this->apiInstance->getApiClient()->getConfig()->setDebug(true);
+            $this->apiInstance->getApiClient()->getConfig()->setDebugFile('mydebug.log');
+
         }
+        /** Try to set accessToken to get Process for test user*/
+        $this->apiInstance->getApiClient()->getConfig()->setAccessToken('eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImUxYmEyOTViYzBiMzA5ZWI2MDhkNzVlYzdkYzE4NjZmMzJjNmE4MzNhOWM0MWVkNWE3NTA5OWQ5NDBmZGM0NDZjMzk4ODE4MmFhY2JiNWI0In0.eyJhdWQiOiIxIiwianRpIjoiZTFiYTI5NWJjMGIzMDllYjYwOGQ3NWVjN2RjMTg2NmYzMmM2YTgzM2E5YzQxZWQ1YTc1MDk5ZDk0MGZkYzQ0NmMzOTg4MTgyYWFjYmI1YjQiLCJpYXQiOjE0ODQ4NTAxMDAsIm5iZiI6MTQ4NDg1MDEwMCwiZXhwIjoxNTE2Mzg2MTAwLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.sbfsw6eOamjVqfq1flrLqGGDNR17nYduMM4PvVH5Z3d2OilmmEYSc031ZQMv8zRgICo8SV_7JlkruEZlGwkK7V9MOmRRcIGqrZGbuY5SFzrezAyZAnTOLEJz9nxO3sAVL0gxgED7W0OZbio7dWQ8ZcHDoF-gPm-ka_om7kBVoslRwd1wZmQfrSmHJ_GdY5-qv79NpLnGAdruSYid-zWEoTmXXNWX5U_8RjNoffqSSUFpdLm8QeT5I4GIZ8GRNJCZP7swEDwSjEfxP_ZM_kr_RmpIFSxtzog4xwNdmeIyt7xM_oLBZh2pz1a1KAKV1apCJOKqhqKTVnb7KY8Xz8EcgMpOeJNK9Kt85-PpQl-kwbx3t3gFl45_ccrXYft36K8WHm-yRUvZ9_22Ghu1Lg60VnmmmU46I6v3pWPuwHt_tF7jP3q5xSGJJh9XBPQF65XGryD6Er5scxhqMnimeVDOlecOsavmh5PfyzB65bsPq23cVxlZObT2Uh3wW5gNPR-XUB5AzR2yyYk-aAEwIeQhY-7rq1q3lonlCJLMqEWGmSiau80Xo9o3DFv4S-3C4IPCbfQCaYcnscuMvy7e_Z2J2_LtAwp1gtlwKnftTUM-BV02H275x_8sDGqXO4w16WJnh8vGPgz-P2ikr9q8T5c4y8Gtrv95PHZwgvpLWkuGdFA');
+        $this->testUserUid = $this->apiInstance->myselfUser()->getData()->getId();
+        //'0bb47aa7-0321-4ffa-9dfe-a6115eb769e9';
     }
 
     /**
@@ -144,10 +189,10 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
     {
         try {
             $userAtt = new UserAttributes();
-            $userAtt->setFirstname('Jonny');
+            $userAtt->setFirstname('Johnny');
             $userAtt->setLastname('Doe');
             $userAtt->setPassword('password');
-            $userAtt->setUsername('Username' . mt_rand(100000,999999));
+            $userAtt->setUsername('Username ' . mt_rand(10000000,99999999));
             $userAtt->setEmail('email@at.com');
 
             /** @var UserItem $result */
@@ -156,7 +201,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             ]));
 
             $this->assertNotNull($result->getData()->getId());
-            $this->assertEquals('Jonny', $result->getData()->getAttributes()->getFirstname());
+            $this->assertEquals('Johnny', $result->getData()->getAttributes()->getFirstname());
             //print_r($result->getData());
             return $result->getData()->getId();
         } catch (ApiException $e) {
@@ -168,19 +213,15 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
     /**
      * Test case for addUsersToGroup
      *
-     * .
-     *
      */
-    public function testAddUsersToGroup()
+    public function testAddUsersToGroup($user = false)
     {
         /** @var string $groupId */
         $groupId = $this->testAddGroup();
         $this->assertNotNull($groupId, 'Group should be created');
 
         /** @var string $userIdId */
-        $userId = $this->testAddUser();
-        $this->assertNotNull($userId, 'User should be created');
-
+        (!$user) ? $userId = $this->testAddUser() : $userId = $user;
         $GroupAddUsersItem = new GroupAddUsersItem([
             'data' => new UserIds([
                 'users' => [$userId]
@@ -192,6 +233,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             $result = $this->apiInstance->addUsersToGroup($groupId, $GroupAddUsersItem);
             //print_r($result->getMeta());
             $this->assertEquals('1021', $result->getMeta()->getCode(), 'User should be attached to the Group');
+            return $groupId;
         } catch (ApiException $e) {
             $this->dumpError($e, __METHOD__);
         }
@@ -263,7 +305,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
     /**
      * Test case for findGroupById
      *
-     * .
+     *
      *
      */
     public function testFindGroupById()
@@ -292,8 +334,6 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
     /**
      * Test case for findGroups
      *
-     * .
-     *
      */
     public function testFindGroups()
     {
@@ -310,56 +350,75 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
     /**
      * Test case for findUserById
      *
-     * .
-     *
      */
     public function testFindUserById()
     {
+        $userId= $this->testAddUser();
+        try {
+            $result = $this->apiInstance->findUserById($userId)->getData()->getAttributes();
+            $this->assertNotEmpty($result);
 
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
     }
 
     /**
      * Test case for findUsers
      *
-     * .
-     *
      */
     public function testFindUsers()
     {
+        try {
+            $this->testAddUser();
+            $result = $this->apiInstance->findUsers()->getData();
+            $this->assertGreaterThan(0, count($result));
+            //print_r($result);
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
 
     }
 
     /**
      * Test case for updateGroup
      *
-     * .
-     *
      */
     public function testUpdateGroup()
     {
-
+        $groupId = $this->testAddGroup();
+        $itemData = new GroupAttributes();
+        $itemData->setTitle('New Group title');
+        $result = $this->apiInstance->updateGroup(
+            $groupId,
+            new GroupUpdateItem(['data' => new Group(['attributes' => $itemData])])
+        );
+        $this->assertEquals('New Group title', $result->getData()->getAttributes()->getTitle(), 'Title should be updated');
     }
 
     /**
      * Test case for updateUser
-     *
-     * .
-     *
      */
     public function testUpdateUser()
     {
-
+        $newUsername = 'New ' . mt_rand(10000000,99999999);
+        $userId = $this->testAddUser();
+        $itemData = new UserAttributes();
+        $itemData->setUsername($newUsername);
+        $result = $this->apiInstance->updateUser(
+            $userId,
+            new UserUpdateItem(['data' => new User(['attributes' => $itemData])])
+        );
+        $this->assertEquals($newUsername, $result->getData()->getAttributes()->getUsername(), 'Username should be updated');
     }
 
     /**
      * Test case for deleteUser
      *
-     * .
-     *
      */
     public function testDeleteUser()
     {
-        /** @var string $userIdId */
+        /** @var string $userId */
         $userId = $this->testAddUser();
         $this->assertNotNull($userId, 'User should be created');
 
@@ -367,6 +426,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             /** @var ResultSuccess $result */
             $result = $this->apiInstance->deleteUser($userId);
             $this->assertEquals('1002', $result->getMeta()->getCode(), 'Result code expected');
+            //return $result->getData()->getId();
         } catch (ApiException $e) {
             $this->dumpError($e, __METHOD__);
         }
@@ -374,13 +434,10 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test case for deleteGroup
-     *
-     * .
-     *
      */
     public function testDeleteGroup()
     {
-        /** @var string $userIdId */
+        /** @var string $userId */
         $userId = $this->testAddGroup();
         $this->assertNotNull($userId, 'Group should be created');
 
@@ -401,5 +458,941 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             $errorArray = $e->getResponseObject()->getErrors();
             print_r($errorArray);
         }
+        $this->assertNull(true, "Exception when calling $methodName, ". $e->getMessage());
     }
+
+    /**
+     * Test case for addProcess
+     *
+     */
+
+    public function testAddProcess() {
+        try {
+
+            $processAtt = new ProcessAttributes();
+            $processAtt->setStatus('ACTIVE');
+            $processAtt->setName('Process name');
+            $processAtt->setDurationBy('WORKING_DAYS');
+            $processAtt->setType('NORMAL');
+            $processAtt->setDesignAccess('PUBLIC');
+            //$processAtt->setCreateUserId($this->testAddUser());
+
+            /** @var ProcessItem $result */
+            $result = $this->apiInstance->addProcess(new ProcessCreateItem(
+                    [
+                        'data' => new Process(['attributes' => $processAtt])
+                    ]
+                )
+            );
+
+            $this->assertNotNull($result->getData()->getId());
+            $this->assertEquals('Process name', $result->getData()->getAttributes()->getName());
+            //print_r($result->getData());
+            return $result->getData()->getId();
+
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+
+    }
+
+    /**
+     * Test case for findProcessById
+     *
+     */
+
+    public function testFindProcessById()
+    {
+
+        $processId = $this->testAddProcess();
+
+        try {
+            /** @var ProcessAttributes $result */
+            $result = $this->apiInstance->findProcessById($processId)->getData()->getAttributes();
+            $this->assertNotEmpty($result);
+
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    /**
+     * Test case for findProcesses
+     *
+     */
+
+    public function testFindProcesses()
+    {
+        try {
+            $this->testAddProcess();
+            $result = $this->apiInstance->findProcesses()->getData();
+            $this->assertGreaterThan(0, count($result));
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    /**
+     * Test case for deleteProcess
+     *
+     */
+
+    public function testDeleteProcess()
+    {
+        $processId = $this->testAddProcess();
+        $this->assertNotNull($processId, 'Process should be created');
+        try {
+            /** @var ResultSuccess $result */
+            $result = $this->apiInstance->deleteProcess($processId);
+            $this->assertEquals('1202', $result->getMeta()->getCode(), 'Result code expected');
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+
+    /**
+     * Test case for addTask
+     * @param boolean $process
+     * @return array of IDs
+     */
+
+    public function testAddTask($process = false) {
+        try {
+            ($process == false) ? $processUid = $this->testAddProcess() : $processUid = $process;
+            $taskAttr = new TaskAttributes();
+            $taskAttr->setName('Task name');
+            $taskAttr->setType('USER-TASK');
+            $taskAttr->setProcessId($processUid);
+            $taskAttr->setAssignType('CYCLIC');
+            $taskAttr->setTransferFly(true);
+            $taskAttr->setCanUpload(true);
+            $taskAttr->setViewUpload(true);
+            $taskAttr->setViewAdditionalDocumentation(true);
+            $taskAttr->setStart(false);
+            $taskAttr->setSendLastEmail(true);
+            $taskAttr->setSelfserviceTimeout(10);
+
+            /** @var TaskItem $result */
+            $result = $this->apiInstance->addTask(
+                $processUid,
+                new TaskCreateItem(
+                    [
+                        'data' => new Task(['attributes' => $taskAttr])
+                    ]
+                )
+            );
+
+            $this->assertNotNull($result->getData()->getId());
+            $this->assertEquals('Task name', $result->getData()->getAttributes()->getName());
+            //print_r($result->getData());
+            return ['task_uid'=>$result->getData()->getId(),'process_uid'=>$processUid];
+
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+
+    }
+
+    /**
+     * Test case for findTasks
+     *
+     */
+
+    public function testFindTasks()
+    {
+        try {
+            $result = $this->apiInstance->findTasks($this->testAddTask()['process_uid'])->getData();
+            $this->assertGreaterThan(0, count($result));
+            //print_r($result);
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    /**
+     * Test case for findTaskById
+     *
+     */
+
+    public function testFindTaskById()
+    {
+        $array_ids = $this->testAddTask();
+        try {
+            $result = $this->apiInstance->findTaskById($array_ids['process_uid'],$array_ids['task_uid'])->getData()->getAttributes();
+            $this->assertNotEmpty($result);
+
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    /**
+     * Test case for updateTask
+     *
+     */
+
+    public function testUpdateTask()
+    {
+        $array_ids = $this->testAddTask();
+        $itemData = new TaskAttributes();
+        $itemData->setName('New Task name');
+        $result = $this->apiInstance->updateTask(
+            $array_ids['process_uid'],
+            $array_ids['task_uid'],
+            new TaskUpdateItem(['data' => new Task(['attributes' => $itemData])])
+        );
+        $this->assertEquals('New Task name', $result->getData()->getAttributes()->getName(), 'Name should be updated');
+    }
+
+    /**
+     * Test case for deleteTask
+     *
+     */
+
+    public function testDeleteTask()
+    {
+        $array_ids = $this->testAddTask();
+        try {
+            $result = $this->apiInstance->deleteTask($array_ids['process_uid'],$array_ids['task_uid']);
+            $this->assertEquals('1122', $result->getMeta()->getCode(), 'Result code expected');
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    /**
+     * Test case for addGroupsToTask
+     * @return array of IDs
+     */
+
+    public function testAddGroupsToTask($group = false)
+    {
+        /** @var string $groupId */
+        (!$group) ? $groupId = $this->testAddGroup() : $groupId = $group ;
+
+
+        /** @var array $array_ids of Process and Task*/
+        $array_ids = $this->testAddTask();
+        $this->assertEquals(2,count($array_ids), 'We should get Process UID and Task UID');
+
+        $taskAddGroupsItem = new TaskAddGroupsItem([
+            'data' => new GroupIds([
+                'groups' => [$groupId]
+            ])
+        ]);
+
+        try {
+            /** @var ResultSuccess $result */
+            $result = $this->apiInstance->addGroupsToTask(
+                $array_ids['process_uid'],
+                $array_ids['task_uid'],
+                $taskAddGroupsItem
+            );
+            //print_r($result->getMeta());
+            $this->assertEquals('1126', $result->getMeta()->getCode(), 'User should be attached to the Group');
+            $array_ids['group_uid'] = $groupId;
+            return $array_ids;
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    /**
+     * Test case for syncGroupsToTask
+     *
+     */
+
+    public function testSyncGroupsToTask()
+    {
+        /** @var string $groupId */
+        $groupId = $this->testAddGroup();
+        $this->assertNotNull($groupId, 'Group should be created');
+
+        /** @var array $array_ids of Process and Task*/
+        $array_ids = $this->testAddTask();
+        $this->assertEquals(2, count($array_ids), 'We should get Process UID and Task UID');
+
+
+        $groupItems = new TaskSyncGroupsItem([
+            'data' => new GroupIds([
+                'groups' => [$groupId]
+            ])
+        ]);
+
+        try {
+            /** @var ResultSuccess $result */
+            $result = $this->apiInstance->syncGroupsToTask(
+                $array_ids['process_uid'],
+                $array_ids['task_uid'],
+                $groupItems
+            );
+            $this->assertEquals('1126', $result->getMeta()->getCode(), 'User should be attached with Group');
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    /**
+     * Test case for removeGroupsFromTask
+     *
+     */
+
+    public function testRemoveGroupsFromTask()
+    {
+        /** @var array $array_ids of Process and Task and ID of attached group*/
+        $array_ids = $this->testAddGroupsToTask();
+
+        $groupItems = new TaskRemoveGroupsItem([
+            'data' => new GroupIds([
+                'groups' => [$array_ids['group_uid']]
+            ])
+        ]);
+
+        try {
+
+            /** @var MetaResult $result */
+            $result = $this->apiInstance->removeGroupsFromTask(
+                $array_ids['process_uid'],
+                $array_ids['task_uid'],
+                $groupItems);
+            //print_r($result->getMeta());
+            $this->assertEquals('1128', $result->getMeta()->getCode(), 'User should be detached from the Group');
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    /**
+     * Test case for addEvent
+     * @param  boolean $process
+     * @return array IDs
+     */
+
+    public function testAddEvent($process = false) {
+        try {
+            ($process == false) ? $processUid = $this->testAddProcess() : $processUid = $process;
+            $eventAttr = new EventAttributes();
+            $eventAttr->setName('Event name');
+            $eventAttr->setType('START');
+            $eventAttr->setProcessId($processUid);
+            $eventAttr->setDefinition('MESSAGE');
+
+            $result = $this->apiInstance->addEvent(
+                $processUid,
+                new EventCreateItem(
+                    [
+                        'data' => new Event(['attributes' => $eventAttr])
+                    ]
+                )
+            );
+
+            $this->assertNotNull($result->getData()->getId());
+            $this->assertEquals('Event name', $result->getData()->getAttributes()->getName());
+            //print_r($result->getData());
+            return ['event_uid'=>$result->getData()->getId(),'process_uid'=>$processUid];
+
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+
+    }
+
+    /**
+     * Test case for triggerEvents
+     *
+     */
+    public function testTriggerEvent()
+    {
+        $arrayContent = ['some_key'=>10,'one_more_key'=>5];
+        $arrayUids = $this->testAddEvent();
+        $dataModelattr = new DataModelAttributes();
+        $dataModelattr->setContent(json_encode($arrayContent));
+        $result = $this->apiInstance->eventTrigger(
+            $arrayUids['process_uid'],
+            $arrayUids['event_uid'],
+                new TriggerEventCreateItem(
+                    [
+                        'data' => new DataModel(['attributes' => $dataModelattr])
+                    ]
+                )
+        );
+        $this->assertNotEmpty($result->getData()->getAttributes()->getContent());
+        $respContent = $result->getData()->getAttributes()->getContent();
+        /** Try to check our array responded */
+        foreach ($arrayContent as $key => $value) {
+            $this->assertEquals($value,$respContent[$key],"Key $key should be equaled to $value");
+        }
+    }
+
+
+
+    /**
+     * Test case for findEvents
+     *
+     */
+
+    public function testFindEvents()
+    {
+        try {
+            $result = $this->apiInstance->findEvents($this->testAddEvent()['process_uid'])->getData();
+            $this->assertGreaterThan(0, count($result));
+            //print_r($result);
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    /**
+     * Test case for findEventById
+     *
+     */
+
+    public function testFindEventById()
+    {
+        $array_ids = $this->testAddEvent();
+        try {
+
+            $result = $this->apiInstance->findEventById($array_ids['process_uid'],$array_ids['event_uid'])->getData()->getAttributes();
+            $this->assertNotEmpty($result);
+
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    /**
+     * Test case for updateEvent
+     *
+     */
+
+    public function testUpdateEvent()
+    {
+        $array_ids = $this->testAddEvent();
+        $itemData = new EventAttributes();
+        $itemData->setName('New Event name');
+        $result = $this->apiInstance->updateEvent(
+            $array_ids['process_uid'],
+            $array_ids['event_uid'],
+            new EventUpdateItem(['data' => new Event(['attributes' => $itemData])])
+        );
+        $this->assertEquals('New Event name', $result->getData()->getAttributes()->getName(), 'Name should be updated');
+    }
+
+    /**
+     * Test case for DeleteEvent
+     *
+     */
+
+    public function testDeleteEvent()
+    {
+        $array_ids = $this->testAddEvent();
+        try {
+            $result = $this->apiInstance->deleteEvent($array_ids['process_uid'],$array_ids['event_uid']);
+            $this->assertEquals('1770', $result->getMeta()->getCode(), 'Result code expected');
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    /**
+     * Test case for addGateway
+     * @return array of IDs
+     */
+
+    public function testAddGateway() {
+        try {
+            $processUid = $this->testAddProcess();
+            $gatewayAttr = new GatewayAttributes();
+            $gatewayAttr->setName('Gateway name');
+            $gatewayAttr->setType('EXCLUSIVE');
+            $gatewayAttr->setProcessId($processUid);
+
+            $result = $this->apiInstance->addGateway(
+                $processUid,
+                new GatewayCreateItem(
+                    [
+                        'data' => new Gateway(['attributes' => $gatewayAttr])
+                    ]
+                )
+            );
+
+            $this->assertNotNull($result->getData()->getId());
+            $this->assertEquals('Gateway name', $result->getData()->getAttributes()->getName());
+            //print_r($result->getData());
+            return ['gateway_uid'=>$result->getData()->getId(),'process_uid'=>$processUid];
+
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+
+    }
+
+    /**
+     * Test case for findGateways
+     *
+     */
+
+    public function testFindGateways()
+    {
+        try {
+            $result = $this->apiInstance->findGateways($this->testAddGateway()['process_uid'])->getData();
+            $this->assertGreaterThan(0, count($result));
+            //print_r($result);
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    /**
+     * Test case for findGatewayById
+     *
+     */
+
+    public function testFindGatewayById()
+    {
+        $array_ids = $this->testAddGateway();
+        try {
+
+            $result = $this->apiInstance->findGatewayById($array_ids['process_uid'],$array_ids['gateway_uid'])->getData()->getAttributes();
+            $this->assertNotEmpty($result);
+
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    /**
+     * Test case for updateGateway
+     *
+     */
+
+    public function testUpdateGateway()
+    {
+        $array_ids = $this->testAddGateway();
+        $itemData = new GatewayAttributes();
+        $itemData->setName('New Gateway name');
+        $result = $this->apiInstance->updateGateway(
+            $array_ids['process_uid'],
+            $array_ids['gateway_uid'],
+            new GatewayUpdateItem(['data' => new Gateway(['attributes' => $itemData])])
+        );
+        $this->assertEquals('New Gateway name', $result->getData()->getAttributes()->getName(), 'Name should be updated');
+    }
+
+    /**
+     * Test case for deleteGateway
+     *
+     */
+
+    public function testDeleteGateway()
+    {
+        $array_ids = $this->testAddGateway();
+        try {
+            $result = $this->apiInstance->deleteGateway($array_ids['process_uid'],$array_ids['gateway_uid']);
+            $this->assertEquals('1751', $result->getMeta()->getCode(), 'Result code expected');
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    /**
+     * Test case for addFlow
+     * @return array of IDs
+     */
+
+    public function testAddFlow($process = false) {
+        try {
+            ($process == false) ? $processUid = $this->testAddProcess() : $processUid = $process;
+            /*Creating 2 objects for Flow under the same Process Id */
+            $task = $this->testAddTask($processUid);
+            $event = $this->testAddEvent($processUid);
+            $flowAttr= new FlowAttributes();
+            $flowAttr->setName('Flow name');
+            $flowAttr->setType('SEQUENTIAL');
+            $flowAttr->setProcessId($processUid);
+            $flowAttr->setFromObjectId($task['task_uid']);
+            $flowAttr->setFromObjectType('task');
+            $flowAttr->setToObjectId($event['event_uid']);
+            $flowAttr->setToObjectType('event');
+            $flowAttr->setDefault(false);
+            $flowAttr->setOptional(false);
+            $result = $this->apiInstance->addFlow(
+                $processUid,
+                new FlowCreateItem(
+                    [
+                        'data' => new Flow(['attributes' => $flowAttr])
+                    ]
+                )
+            );
+
+            $this->assertNotNull($result->getData()->getId());
+            $this->assertEquals('Flow name', $result->getData()->getAttributes()->getName());
+            //print_r($result->getData());
+            return ['flow_uid'=>$result->getData()->getId(),'process_uid'=>$processUid];
+
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    /**
+     * Test case for findFlows
+     *
+     */
+
+    public function testFindFlows()
+    {
+        try {
+            $result = $this->apiInstance->findFlows($this->testAddFlow()['process_uid'])->getData();
+            $this->assertGreaterThan(0, count($result));
+            //print_r($result);
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    /**
+     * Test case for findFlowById
+     *
+     */
+
+    public function testFindFlowById()
+    {
+        $array_ids = $this->testAddFlow();
+        try {
+
+            $result = $this->apiInstance->findFlowById($array_ids['process_uid'],$array_ids['flow_uid'])->getData()->getAttributes();
+            $this->assertNotEmpty($result);
+
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    /**
+     * Test case for updateFlow
+     *
+     */
+
+    public function testUpdateFlow()
+    {
+        try {
+            $array_ids = $this->testAddFlow();
+            $itemData = new FlowAttributes();
+            $itemData->setName('New Flow name');
+            $result = $this->apiInstance->updateFlow(
+                $array_ids['process_uid'],
+                $array_ids['flow_uid'],
+                new FlowUpdateItem(['data' => new Flow(['attributes' => $itemData])])
+            );
+            $this->assertEquals('New Flow name', $result->getData()->getAttributes()->getName(), 'Name should be updated');
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    /**
+     * Test case for deleteFlow
+     *
+     */
+
+    public function testDeleteFlow()
+    {
+        $array_ids = $this->testAddFlow();
+        try {
+            $result = $this->apiInstance->deleteFlow($array_ids['process_uid'],$array_ids['flow_uid']);
+            $this->assertEquals('1761', $result->getMeta()->getCode(), 'Result code expected');
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    /**
+     * Test case for addInstance
+     * @return array of IDs
+     */
+
+    public function testAddInstance() {
+        try {
+            $processUid = $this->testAddProcess();
+            $instanceAttr = new InstanceAttributes();
+            $instanceAttr->setName('Instance name');
+            $instanceAttr->setStatus('TODO');
+            $instanceAttr->setPin('123456');
+            $instanceAttr->setProcessId($processUid);
+            $result = $this->apiInstance->addInstance(
+                $processUid,
+                new InstanceCreateItem(
+                    [
+                        'data' => new Instance(['attributes' => $instanceAttr])
+                    ]
+                )
+            );
+
+            $this->assertNotNull($result->getData()->getId());
+            $this->assertEquals('Instance name', $result->getData()->getAttributes()->getName());
+            //print_r($result->getData());
+            return ['instance_uid'=>$result->getData()->getId(),'process_uid'=>$processUid];
+
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+
+    }
+
+    /**
+     * Test case for findInstances
+     *
+     */
+
+    public function testFindInstances()
+    {
+        try {
+            $result = $this->apiInstance->findInstances($this->testAddInstance()['process_uid'])->getData();
+            $this->assertGreaterThan(0, count($result));
+            //print_r($result);
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    /**
+     * Test case for findInstanceById
+     *
+     */
+
+    public function testFindInstanceById()
+    {
+        $array_ids = $this->testAddInstance();
+        try {
+            $result = $this->apiInstance->findInstanceById($array_ids['process_uid'],$array_ids['instance_uid'])->getData()->getAttributes();
+            $this->assertNotEmpty($result);
+
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    /**
+     * Test case for updateInstance
+     *
+     */
+
+    public function testUpdateInstance()
+    {
+        $array_ids = $this->testAddInstance();
+        $itemData = new InstanceAttributes();
+        $itemData->setName('New Instance name');
+        $itemData->setStatus('DRAFT');
+        $result = $this->apiInstance->updateInstance(
+            $array_ids['process_uid'],
+            $array_ids['instance_uid'],
+            new InstanceUpdateItem(['data' => new Instance(['attributes' => $itemData])])
+        );
+        $this->assertEquals('New Instance name', $result->getData()->getAttributes()->getName(), 'Name should be updated');
+        $this->assertEquals('DRAFT', $result->getData()->getAttributes()->getStatus(), 'Status should be updated');
+    }
+
+    /**
+     * Test case for deleteInstance
+     *
+     */
+
+    public function testDeleteInstance()
+    {
+        $array_ids = $this->testAddInstance();
+        try {
+            $result = $this->apiInstance->deleteInstance($array_ids['process_uid'],$array_ids['instance_uid']);
+            $this->assertEquals('1756', $result->getMeta()->getCode(), 'Result code expected');
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+
+
+    public function testTaskInstanceShowIndex()
+    {
+        /** Here we try to add our user to group.
+         * Uid of  user should be the same with Token that we use in setup */
+        $group = $this->testAddUsersToGroup($this->testUserUid);
+        /** Next we initiate creation of Group to task and get Process and Task Group*/
+        $arrayUids = $this->testAddGroupsToTask($group);
+
+        $startEvent = $this->testAddEvent($arrayUids['process_uid']);
+        $endEvent = $this->AddEvent($arrayUids['process_uid']);
+
+        $this->addFlowEventToTask($arrayUids['process_uid'],$startEvent['event_uid'],$arrayUids['task_uid']);
+        $this->addFlowForTaskToEndEvent($arrayUids['process_uid'],$arrayUids['task_uid'],$endEvent['event_uid']);
+
+        /** Try to trigger startevent */
+        $this->TriggerStartEvent($startEvent['event_uid'],$arrayUids['process_uid']);
+
+    }
+
+
+    private function TriggerStartEvent($startEvent,$processUid)
+    {
+        $arrayContent = ['key' => 6, 'add' => 15, 'confirm' => false];
+        $dataModelattr = new DataModelAttributes();
+        $dataModelattr->setContent(json_encode($arrayContent));
+        $result = $this->apiInstance->eventTrigger(
+            $processUid,
+            $startEvent,
+            new TriggerEventCreateItem(
+                [
+                    'data' => new DataModel(['attributes' => $dataModelattr])
+                ]
+            )
+        );
+        $this->assertNotEmpty($result->getData()->getAttributes()->getContent());
+        $respContent = $result->getData()->getAttributes()->getContent();
+        /** Try to check our array responded */
+        foreach ($arrayContent as $key => $value) {
+            $this->assertEquals($value,$respContent[$key],"Key $key should be equaled to $value");
+        }
+    }
+
+    private function addFlowForTaskToEndEvent($process = false, $taskUid, $eventUid) {
+        try {
+            ($process == false) ? $processUid = $this->testAddProcess() : $processUid = $process;
+            /*Creating 2 objects for Flow under the same Process Id */
+            $flowAttr= new FlowAttributes();
+            $flowAttr->setName('Flow Event with Event');
+            $flowAttr->setType('SEQUENTIAL');
+            $flowAttr->setProcessId($processUid);
+            $flowAttr->setFromObjectId($taskUid);
+            $flowAttr->setFromObjectType('task');
+            $flowAttr->setToObjectId($eventUid);
+            $flowAttr->setToObjectType('event');
+            $flowAttr->setDefault(false);
+            $flowAttr->setOptional(false);
+            $result = $this->apiInstance->addFlow(
+                $processUid,
+                new FlowCreateItem(
+                    [
+                        'data' => new Flow(['attributes' => $flowAttr])
+                    ]
+                )
+            );
+
+            $this->assertNotNull($result->getData()->getId());
+            $this->assertEquals('Flow Event with Event', $result->getData()->getAttributes()->getName());
+            //print_r($result->getData());
+            return ['flow_uid'=>$result->getData()->getId(),'process_uid'=>$processUid];
+
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+
+    private function addFlowEventToTask($process = false, $startEventUid, $userTaskUid) {
+        try {
+            ($process == false) ? $processUid = $this->testAddProcess() : $processUid = $process;
+            /*Creating 2 objects for Flow under the same Process Id */
+            $flowAttr= new FlowAttributes();
+            $flowAttr->setName('Flow Task with Event');
+            $flowAttr->setType('SEQUENTIAL');
+            $flowAttr->setProcessId($processUid);
+            $flowAttr->setFromObjectId($startEventUid);
+            $flowAttr->setFromObjectType('event');
+            $flowAttr->setToObjectId($userTaskUid);
+            $flowAttr->setToObjectType('task');
+            $flowAttr->setDefault(false);
+            $flowAttr->setOptional(false);
+            $result = $this->apiInstance->addFlow(
+                $processUid,
+                new FlowCreateItem(
+                    [
+                        'data' => new Flow(['attributes' => $flowAttr])
+                    ]
+                )
+            );
+
+            $this->assertNotNull($result->getData()->getId());
+            $this->assertEquals('Flow Task with Event', $result->getData()->getAttributes()->getName());
+            //print_r($result->getData());
+            return ['flow_uid'=>$result->getData()->getId(),'process_uid'=>$processUid];
+
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+
+
+
+    private function addEvent($process = false) {
+        try {
+            ($process == false) ? $processUid = $this->testAddProcess() : $processUid = $process;
+            $eventAttr = new EventAttributes();
+            $eventAttr->setName('End Event');
+            $eventAttr->setType('END');
+            $eventAttr->setProcessId($processUid);
+            $eventAttr->setDefinition('MESSAGE');
+
+            $result = $this->apiInstance->addEvent(
+                $processUid,
+                new EventCreateItem(
+                    [
+                        'data' => new Event(['attributes' => $eventAttr])
+                    ]
+                )
+            );
+
+            $this->assertNotNull($result->getData()->getId());
+            $this->assertEquals('End Event', $result->getData()->getAttributes()->getName());
+            //print_r($result->getData());
+            return ['event_uid'=>$result->getData()->getId(),'process_uid'=>$processUid];
+
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+
+    }
+
+    public function testFindTaskInstances()
+    {
+        try {
+            $result = $this->apiInstance->findTaskInstances()->getData();
+            $this->assertGreaterThan(0, count($result));
+            return $result[0]->getId();
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    public function testFindTaskInstanceById()
+    {
+        try {
+            $result = $this->apiInstance->findTaskInstanceById($this->testFindTaskInstances())->getData()->getAttributes();
+            $this->assertNotEmpty($result);
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    public function testUpdateTaskInstance()
+    {
+        $itemData = new TaskInstanceAttributes();
+        $itemData->setStatus('STARTED');
+        $itemData->setContent(['key' => 1, 'add' => 1, 'confirm' => true]);
+        $result = $this->apiInstance->updateTaskInstance(
+            $this->testFindTaskInstances(),
+            new TaskInstanceUpdateItem(['data' => new TaskInstance(['attributes' => $itemData])])
+        );
+        $this->assertEquals('STARTED', $result->getData()->getAttributes()->getStatus(), 'Status should be updated');
+        /** Try to complete TaskInstance */
+        $itemData->setStatus('COMPLETE');
+        $result = $this->apiInstance->updateTaskInstance(
+            $this->testFindTaskInstances(),
+            new TaskInstanceUpdateItem(['data' => new TaskInstance(['attributes' => $itemData])])
+        );
+        $this->assertEquals('COMPLETE', $result->getData()->getAttributes()->getStatus(), 'Status should be updated');
+    }
+
+
+
 }

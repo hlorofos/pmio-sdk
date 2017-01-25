@@ -1,6 +1,6 @@
 {
   "swagger": "2.0",
-  "info": {
+  "info":{
     "version": "1.0.0",
     "title": "ProcessMaker API",
     "description": "An API to access ProcessMaker core functionality",
@@ -35,6 +35,2279 @@
     }
   ],
   "paths": {
+    "/task_instances/{task_instance_id}":{
+      "get": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Returns TaskInstance based on a single ID",
+        "operationId": "findTaskInstanceById",
+        "parameters": [
+          {
+            "name": "task_instance_id",
+            "in": "path",
+            "description": "ID of TaskInstance to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page Nr to fetch",
+            "required": false,
+            "default": 1,
+            "type": "integer"
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "Amount of Items per Page",
+            "required": false,
+            "default": 15,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TaskInstance Item response",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/TaskInstance"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Item not found",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Update existing TaskInstance",
+        "operationId": "updateTaskInstance",
+        "parameters": [
+          {
+            "name": "task_instance_id",
+            "in": "path",
+            "description": "ID of TaskInstance to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "TaskInstanceUpdateItem",
+            "in": "body",
+            "description": "TaskInstance object to update",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/TaskInstance"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "JsonApi response with updated TaskInstance object",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/TaskInstance"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      }
+    },
+    "/task_instances":{
+      "get": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Returns all TaskInstances",
+        "operationId": "findTaskInstances",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page Nr to fetch",
+            "required": false,
+            "default": 1,
+            "type": "integer"
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "Amount of Items per Page",
+            "required": false,
+            "default": 15,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TaskInstances list",
+            "schema": {
+              "title": "TaskInstanceCollection",
+              "description": "Json Api Response with collection of Items in array",
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/TaskInstance"
+                  }
+                },
+                "meta": {
+                  "$ref": "#/definitions/Meta"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      }
+    },
+    "/processes/{process_id}/instances": {
+      "get": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Returns all Instances",
+        "operationId": "findInstances",
+        "parameters": [
+          {
+            "name": "process_id",
+            "in": "path",
+            "description": "ID of Process relative to instance",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page Nr to fetch",
+            "required": false,
+            "default": 1,
+            "type": "integer"
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "Amount of Items per Page",
+            "required": false,
+            "default": 15,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Instances list",
+            "schema": {
+              "title": "InstanceCollection",
+              "description": "Json Api Response with collection of Items in array",
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Instance"
+                  }
+                },
+                "meta": {
+                  "$ref": "#/definitions/Meta"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Creates a new instance",
+        "operationId": "addInstance",
+        "parameters": [
+          {
+            "name": "process_id",
+            "in": "path",
+            "description": "ID of Process relative to instance",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "InstanceCreateItem",
+            "in": "body",
+            "description": "JsonApi with the Instance object to add",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Instance"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created Instance response",
+            "schema": {
+              "type": "object",
+              "title": "InstanceItem",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Instance"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "404": {
+            "description": "Not found item",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      }
+    },
+    "/processes/{process_id}/instances/{instance_id}": {
+      "get": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Returns instance based on a single ID",
+        "operationId": "findInstanceById",
+        "parameters": [
+          {
+            "name": "process_id",
+            "in": "path",
+            "description": "ID of Process to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "instance_id",
+            "in": "path",
+            "description": "ID of Instance to fetch",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Instance Item response",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Instance"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Item not found",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Update existing Instance",
+        "operationId": "updateInstance",
+        "parameters": [
+          {
+            "name": "process_id",
+            "in": "path",
+            "description": "ID of Process to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "instance_id",
+            "in": "path",
+            "description": "ID of Instance to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "InstanceUpdateItem",
+            "in": "body",
+            "description": "Instance object to edit",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Instance"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "JsonApi response with updated Instance object",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Instance"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Deletes a single item based on the instance_id supplied and Process ID",
+        "operationId": "deleteInstance",
+        "parameters": [
+          {
+            "name": "process_id",
+            "in": "path",
+            "description": "ID of of Process item",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "instance_id",
+            "in": "path",
+            "description": "ID of item to delete",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Item successfully deleted",
+            "schema": {
+              "$ref": "#/definitions/ResultSuccess"
+            }
+          },
+          "404": {
+            "description": "Item not found",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "500": {
+            "description": "Deletion error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      }
+    },
+    "/processes/{process_id}/flows": {
+      "get": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Returns all Flows",
+        "operationId": "findFlows",
+        "parameters": [
+          {
+            "name": "process_id",
+            "in": "path",
+            "description": "ID of Process relative to flow",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page Nr to fetch",
+            "required": false,
+            "default": 1,
+            "type": "integer"
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "Amount of Items per Page",
+            "required": false,
+            "default": 15,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Flows list",
+            "schema": {
+              "title": "FlowCollection",
+              "description": "Json Api Response with collection of Items in array",
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Flow"
+                  }
+                },
+                "meta": {
+                  "$ref": "#/definitions/Meta"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Creates a new flow",
+        "operationId": "addFlow",
+        "parameters": [
+          {
+            "name": "process_id",
+            "in": "path",
+            "description": "ID of Process relative to flow",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "FlowCreateItem",
+            "in": "body",
+            "description": "JsonApi with the Flow object to add",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Flow"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created Flow response",
+            "schema": {
+              "type": "object",
+              "title": "FlowItem",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Flow"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "404": {
+            "description": "Not found item",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      }
+    },
+    "/processes/{process_id}/flows/{flow_id}": {
+      "get": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Returns flow based on a single ID",
+        "operationId": "findFlowById",
+        "parameters": [
+          {
+            "name": "process_id",
+            "in": "path",
+            "description": "ID of Process to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "flow_id",
+            "in": "path",
+            "description": "ID of Flow to fetch",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Flow Item response",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Flow"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Item not found",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Update existing Flow",
+        "operationId": "updateFlow",
+        "parameters": [
+          {
+            "name": "process_id",
+            "in": "path",
+            "description": "ID of Process to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "flow_id",
+            "in": "path",
+            "description": "ID of Flow to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "FlowUpdateItem",
+            "in": "body",
+            "description": "Flow object to edit",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Flow"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "JsonApi response with updated Flow object",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Flow"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Deletes a single item based on the flow_id supplied and Process ID",
+        "operationId": "deleteFlow",
+        "parameters": [
+          {
+            "name": "process_id",
+            "in": "path",
+            "description": "ID of of Process item",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "flow_id",
+            "in": "path",
+            "description": "ID of item to delete",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Item successfully deleted",
+            "schema": {
+              "$ref": "#/definitions/ResultSuccess"
+            }
+          },
+          "404": {
+            "description": "Item not found",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "500": {
+            "description": "Deletion error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      }
+    },
+    "/processes/{process_id}/gateways": {
+      "get": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Returns all Gateways",
+        "operationId": "findGateways",
+        "parameters": [
+          {
+            "name": "process_id",
+            "in": "path",
+            "description": "ID of Process relative to gateway",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page Nr to fetch",
+            "required": false,
+            "default": 1,
+            "type": "integer"
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "Amount of Items per Page",
+            "required": false,
+            "default": 15,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Gateways list",
+            "schema": {
+              "title": "GatewayCollection",
+              "description": "Json Api Response with collection of Items in array",
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Gateway"
+                  }
+                },
+                "meta": {
+                  "$ref": "#/definitions/Meta"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Creates a new gateway",
+        "operationId": "addGateway",
+        "parameters": [
+          {
+            "name": "process_id",
+            "in": "path",
+            "description": "ID of Process relative to task",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "GatewayCreateItem",
+            "in": "body",
+            "description": "JsonApi with the Gateway object to add",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Gateway"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created Gateway response",
+            "schema": {
+              "type": "object",
+              "title": "GatewayItem",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Gateway"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "404": {
+            "description": "Not found item",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      }
+    },
+    "/processes/{process_id}/gateways/{gateway_id}": {
+      "get": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Returns gateway based on a single ID",
+        "operationId": "findGatewayById",
+        "parameters": [
+          {
+            "name": "process_id",
+            "in": "path",
+            "description": "ID of Process to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "gateway_id",
+            "in": "path",
+            "description": "ID of Gateway to fetch",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Gateway Item response",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Gateway"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Item not found",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Update existing Gateway",
+        "operationId": "updateGateway",
+        "parameters": [
+          {
+            "name": "process_id",
+            "in": "path",
+            "description": "ID of Process to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "gateway_id",
+            "in": "path",
+            "description": "ID of Gateway to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "GatewayUpdateItem",
+            "in": "body",
+            "description": "Gateway object to edit",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Gateway"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "JsonApi response with updated Gateway object",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Gateway"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Deletes a single item based on the gateway_id supplied and Process ID",
+        "operationId": "deleteGateway",
+        "parameters": [
+          {
+            "name": "process_id",
+            "in": "path",
+            "description": "ID of of Process item",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "gateway_id",
+            "in": "path",
+            "description": "ID of item to delete",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Item successfully deleted",
+            "schema": {
+              "$ref": "#/definitions/ResultSuccess"
+            }
+          },
+          "404": {
+            "description": "Item not found",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "500": {
+            "description": "Deletion error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      }
+    },
+    "/processes/{process_id}/events": {
+      "get": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Returns all Events",
+        "operationId": "findEvents",
+        "parameters": [
+          {
+            "name": "process_id",
+            "in": "path",
+            "description": "ID of Process relative to event",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page Nr to fetch",
+            "required": false,
+            "default": 1,
+            "type": "integer"
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "Amount of Items per Page",
+            "required": false,
+            "default": 15,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Events list",
+            "schema": {
+              "title": "EventCollection",
+              "description": "Json Api Response with collection of Items in array",
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Event"
+                  }
+                },
+                "meta": {
+                  "$ref": "#/definitions/Meta"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Creates a new event",
+        "operationId": "addEvent",
+        "parameters": [
+          {
+            "name": "process_id",
+            "in": "path",
+            "description": "ID of Process relative to task",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "EventCreateItem",
+            "in": "body",
+            "description": "JsonApi with the Event object to add",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Event"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created Event response",
+            "schema": {
+              "type": "object",
+              "title": "EventItem",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Event"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "404": {
+            "description": "Not found item",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      }
+    },
+    "/processes/{process_id}/events/{event_id}": {
+      "get": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Returns the event based on a single ID",
+        "operationId": "findEventById",
+        "parameters": [
+          {
+            "name": "process_id",
+            "in": "path",
+            "description": "ID of Process to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "event_id",
+            "in": "path",
+            "description": "ID of Event to fetch",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Event Item response",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Event"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Item not found",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Update existing Event",
+        "operationId": "updateEvent",
+        "parameters": [
+          {
+            "name": "process_id",
+            "in": "path",
+            "description": "ID of Process to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "event_id",
+            "in": "path",
+            "description": "ID of Event to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "EventUpdateItem",
+            "in": "body",
+            "description": "Event object to edit",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Event"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "JsonApi response with updated Event object",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Event"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Deletes a single item based on the event_id supplied and Process ID",
+        "operationId": "deleteEvent",
+        "parameters": [
+          {
+            "name": "process_id",
+            "in": "path",
+            "description": "ID of of Process item",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "event_id",
+            "in": "path",
+            "description": "ID of item to delete",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Item successfully deleted",
+            "schema": {
+              "$ref": "#/definitions/ResultSuccess"
+            }
+          },
+          "404": {
+            "description": "Item not found",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "500": {
+            "description": "Deletion error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      }
+     },
+    "/processes/{process_id}/events/{event_id}/trigger": {
+      "post": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Trigger an Event",
+        "operationId": "EventTrigger",
+        "parameters": [
+          {
+            "name": "process_id",
+            "in": "path",
+            "description": "ID of Process relative to event",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "event_id",
+            "in": "path",
+            "description": "ID of Event to trigger",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "TriggerEventCreateItem",
+            "in": "body",
+            "description": "Json with some parameters",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/DataModel"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Trigger Event and response with DataModel item",
+            "schema": {
+              "type": "object",
+              "title": "DataModelItem",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/DataModelItem"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "404": {
+            "description": "Not found item",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      }
+    },
+    "/processes/{process_id}/tasks": {
+      "get": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Returns all Tasks",
+        "operationId": "findTasks",
+        "parameters": [
+          {
+            "name": "process_id",
+            "in": "path",
+            "description": "ID of Process relative to task",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page Nr to fetch",
+            "required": false,
+            "default": 1,
+            "type": "integer"
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "Amount of Items per Page",
+            "required": false,
+            "default": 15,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Tasks list",
+            "schema": {
+              "title": "TaskCollection",
+              "description": "Json Api Response with collection of Items in array",
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Task"
+                  }
+                },
+                "meta": {
+                  "$ref": "#/definitions/Meta"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Creates a new task",
+        "operationId": "addTask",
+        "parameters": [
+          {
+            "name": "process_id",
+            "in": "path",
+            "description": "ID of Process relative to task",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "TaskCreateItem",
+            "in": "body",
+            "description": "JsonApi with the Task object to add",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Task"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created Task response",
+            "schema": {
+              "type": "object",
+              "title": "TaskItem",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Task"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "404": {
+            "description": "Not item",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      }
+    },
+    "/processes/{process_id}/tasks/{task_id}": {
+      "get": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Returns the task based on a single ID",
+        "operationId": "findTaskById",
+        "parameters": [
+          {
+            "name": "process_id",
+            "in": "path",
+            "description": "ID of Process to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "task_id",
+            "in": "path",
+            "description": "ID of Task to fetch",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Task Item response",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Task"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Task not found",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Update existing Task",
+        "operationId": "updateTask",
+        "parameters": [
+          {
+            "name": "process_id",
+            "in": "path",
+            "description": "ID of Process to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "task_id",
+            "in": "path",
+            "description": "ID of Task to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "TaskUpdateItem",
+            "in": "body",
+            "description": "Task object to edit",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Task"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "JsonApi response with updated Task object",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Task"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Deletes a single item based on the task_id supplied and Process ID",
+        "operationId": "deleteTask",
+        "parameters": [
+          {
+            "name": "process_id",
+            "in": "path",
+            "description": "ID of of Process item",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "task_id",
+            "in": "path",
+            "description": "ID of item to delete",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Item successfully deleted",
+            "schema": {
+              "$ref": "#/definitions/ResultSuccess"
+            }
+          },
+          "404": {
+            "description": "Item not found",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "500": {
+            "description": "Deletion error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      }
+    },
+    "/processes/{process_id}/tasks/{task_id}/groups": {
+      "put": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Attach Group(s) to the given Task",
+        "operationId": "addGroupsToTask",
+        "parameters": [
+          {
+            "name": "process_id",
+            "in": "path",
+            "description": "ID of Process",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "task_id",
+            "in": "path",
+            "description": "ID of Task to modify",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "TaskAddGroupsItem",
+            "in": "body",
+            "description": "JsonApi with Groups ids to add",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/GroupIds"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "JsonApi response with result details",
+            "schema": {
+              "$ref": "#/definitions/ResultSuccess"
+            }
+          },
+          "422": {
+            "description": "Un-processable entity",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "404": {
+            "description": "Group(s) not found",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "500": {
+            "description": "Error adding Group(s)",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Remove Groups from given Task",
+        "operationId": "removeGroupsFromTask",
+        "parameters": [
+          {
+            "name": "process_id",
+            "in": "path",
+            "description": "ID of Process",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "task_id",
+            "in": "path",
+            "description": "ID of Task",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "TaskRemoveGroupsItem",
+            "in": "body",
+            "description": "JsonApi with Groups ids to remove",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/GroupIds"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "JsonApi response with result details",
+            "schema": {
+              "$ref": "#/definitions/ResultSuccess"
+            }
+          },
+          "422": {
+            "description": "Un-processable entity",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "404": {
+            "description": "Group(s) not found",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "500": {
+            "description": "Error removing Group(s)",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Sync Groups to Task",
+        "operationId": "syncGroupsToTask",
+        "parameters": [
+          {
+            "name": "process_id",
+            "in": "path",
+            "description": "ID of Process",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "task_id",
+            "in": "path",
+            "description": "ID of Task to modify",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "TaskSyncGroupsItem",
+            "in": "body",
+            "description": "JsonApi with Groups ids to sync",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/GroupIds"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "JsonApi response with result details",
+            "schema": {
+              "$ref": "#/definitions/ResultSuccess"
+            }
+          },
+          "404": {
+            "description": "Group(s) not found",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "500": {
+            "description": "Error sync Group(s)",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      }
+    },
+    "/processes": {
+      "get": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Returns all Processes",
+        "operationId": "findProcesses",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page Nr to fetch",
+            "required": false,
+            "default": 1,
+            "type": "integer"
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "Amount of Items per Page",
+            "required": false,
+            "default": 15,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Processes list",
+            "schema": {
+              "title": "ProcessCollection",
+              "description": "Json Api Response with collection of Items in array",
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Process"
+                  }
+                },
+                "meta": {
+                  "$ref": "#/definitions/Meta"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized access",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "403": {
+            "description": "Forbidden access",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Creates a new process",
+        "operationId": "addProcess",
+        "parameters": [
+          {
+            "name": "ProcessCreateItem",
+            "in": "body",
+            "description": "JsonApi with the Process object to add",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Process"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created Process response",
+            "schema": {
+              "type": "object",
+              "title": "ProcessItem",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Process"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      }
+    },
+    "/processes/{id}": {
+      "get": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Returns the process based on a single ID",
+        "operationId": "findProcessById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of Process to fetch",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Process Item response",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Process"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Process not found",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Update existing Process",
+        "operationId": "updateProcess",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of Process to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "ProcessUpdateItem",
+            "in": "body",
+            "description": "Process object to edit",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Process"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "JsonApi response with updated Process object",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Process"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Deletes a single item based on the ID supplied",
+        "operationId": "deleteProcess",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of item to delete",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Item successfully deleted",
+            "schema": {
+              "$ref": "#/definitions/ResultSuccess"
+            }
+          },
+          "404": {
+            "description": "Item not found",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "500": {
+            "description": "Deletion error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "401": {
+            "description": "Unauthorized access",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      }
+    },
     "/groups": {
       "get": {
         "tags": [
@@ -466,6 +2739,61 @@
         }
       }
     },
+    "/users/myself":{
+      "get": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "Returns User based on Token",
+        "operationId": "myselfUser",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page Nr to fetch",
+            "required": false,
+            "default": 1,
+            "type": "integer"
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "Amount of Items per Page",
+            "required": false,
+            "default": 15,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/User"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized access",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      }
+    },
     "/users": {
       "get": {
         "tags": [
@@ -739,6 +3067,752 @@
     }
   },
   "definitions": {
+    "TaskInstance": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "9d705617-cc29-482a-85ff-7f7292f72b31"
+        },
+        "type": {
+          "default": "task_instance",
+          "type": "string",
+          "example": "task_instance"
+        },
+        "attributes": {
+          "required": [
+            "task_id",
+            "instance_id",
+            "status",
+            "priority"
+          ],
+          "type": "object",
+          "properties": {
+            "task_id": {
+              "type": "string",
+              "example": "9d705617-cc29-482a-85ff-7f7292f72b11"
+            },
+            "instance_id": {
+              "type": "string",
+              "example": "9d705617-cc29-482a-85ff-7f7292f72b11"
+            },
+            "group_id": {
+              "type": "string",
+              "example": "9d705617-cc29-482a-85ff-7f7292f72b11"
+            },
+            "user_id": {
+              "type": "string",
+              "example": "9d705617-cc29-482a-85ff-7f7292f72b11"
+            },
+            "status":{
+              "type":"string",
+              "default":"INITIAL",
+              "enum": [
+                "INITIAL",
+                "DELEGATED",
+                "STARTED",
+                "CANCELLED",
+                "FINISHED",
+                "COMPLETE",
+                "PAUSED"
+              ]
+            },
+            "priority":{
+              "type":"string",
+              "default":"3",
+              "enum": [
+                "1",
+                "2",
+                "3",
+                "4",
+                "5"
+              ]
+            },
+            "delegate_date": {
+              "$ref": "#/definitions/dateTime"
+            },
+            "start_date": {
+              "$ref": "#/definitions/dateTime"
+            },
+            "finish_date": {
+              "$ref": "#/definitions/dateTime"
+            },
+            "task_due_date": {
+              "$ref": "#/definitions/dateTime"
+            },
+            "risk_date": {
+              "$ref": "#/definitions/dateTime"
+            },
+            "duration": {
+              "type": "integer"
+            },
+            "instance_overdue_percentage": {
+              "type": "number",
+              "format":"double"
+            },
+            "data": {
+              "type": "string"
+            },
+            "content": {
+              "type": "string"
+            },
+            "created_at": {
+              "$ref": "#/definitions/dateTime"
+            },
+            "updated_at": {
+              "$ref": "#/definitions/dateTime"
+            }
+          }
+        }
+      }
+    },
+    "DataModelItem": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "default": "data_model",
+          "type": "string",
+          "example": "data_model"
+        },
+        "attributes": {
+          "required": [
+            "content"
+          ],
+          "type": "object",
+          "properties": {
+            "content": {
+              "type": "object"
+              }
+          }
+        }
+      }
+    },
+    "DataModel": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "default": "data_model",
+          "type": "string",
+          "example": "data_model"
+        },
+        "attributes": {
+          "required": [
+            "content"
+          ],
+          "type": "object",
+          "properties": {
+            "content": {
+              "type": "string",
+              "example": "Some parameters in json format"
+            },
+            "created_at": {
+              "$ref": "#/definitions/dateTime"
+            },
+            "updated_at": {
+              "$ref": "#/definitions/dateTime"
+            }
+          }
+        }
+      }
+    },
+    "Instance": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "9d705617-cc29-482a-85ff-7f7292f72b31"
+        },
+        "type": {
+          "default": "instance",
+          "type": "string",
+          "example": "instance"
+        },
+        "attributes": {
+          "required": [
+            "name",
+            "process_id",
+            "status"
+          ],
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "example": "Instance Name"
+            },
+            "description": {
+              "type": "string",
+              "example": "Some description"
+            },
+            "process_id": {
+              "type": "string",
+              "example": "9d705617-cc29-482a-85ff-7f7292f72b11"
+            },
+            "parent_instance_id": {
+              "type": "string",
+              "example": "9d705617-cc29-482a-85ff-7f7292f72b12"
+            },
+            "init_user_id": {
+              "type": "string",
+              "example": "9d705617-cc29-482a-85ff-7f7292f72b14"
+            },
+            "pin": {
+              "type": "string"
+            },
+            "duration": {
+              "type": "integer"
+            },
+            "status": {
+              "type": "string",
+              "default": "DRAFT",
+              "enum": [
+                "DRAFT",
+                "TODO",
+                "PAUSED",
+                "COMPLETED",
+                "CANCELLED"
+              ]
+            },
+            "created_at": {
+              "$ref": "#/definitions/dateTime"
+            },
+            "updated_at": {
+              "$ref": "#/definitions/dateTime"
+            }
+          }
+        }
+      }
+    },
+    "Flow": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "9d705617-cc29-482a-85ff-7f7292f72b31"
+        },
+        "type": {
+          "default": "flow",
+          "type": "string",
+          "example": "flow"
+        },
+        "attributes": {
+          "required": [
+            "process_id",
+            "from_object_id",
+            "from_object_type",
+            "to_object_id",
+            "to_object_type",
+            "type",
+            "default",
+            "optional"
+          ],
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "example": "Flow name"
+            },
+            "description": {
+              "type": "string",
+              "example": "Some description"
+            },
+            "process_id": {
+              "type": "string",
+              "example": "9d705617-cc29-482a-85ff-7f7292f72b11"
+            },
+            "from_object_id": {
+              "type": "string",
+              "example": "9d705617-cc29-482a-85ff-7f7292f72b25"
+              },
+            "from_object_type": {
+              "type": "string",
+              "example": "task"
+            },
+            "to_object_id": {
+              "type": "integer"
+            },
+            "to_object_id": {
+              "type": "string",
+              "example": "9d705617-cc29-482a-85ff-7f7292f72b25"
+            },
+            "to_object_type": {
+              "type": "string",
+              "example": "event"
+            },
+            "type": {
+              "type": "string",
+              "default":"SEQUENTIAL",
+              "enum": [
+                "SEQUENTIAL",
+                "EVALUATE",
+                "SELECT",
+                "PARALLEL",
+                "PARALLEL-BY-EVALUATION",
+                "SEC-JOIN",
+                "DISCRIMINATOR"
+              ]
+            },
+            "condition": {
+              "type": "string"
+            },
+            "default": {
+              "type": "boolean",
+              "default": false
+            },
+            "optional": {
+              "type": "boolean",
+              "default": false
+            },
+            "created_at": {
+              "$ref": "#/definitions/dateTime"
+            },
+            "updated_at": {
+              "$ref": "#/definitions/dateTime"
+            }
+          }
+        }
+      }
+    },
+    "Gateway": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "9d705617-cc29-482a-85ff-7f7292f72b31"
+        },
+        "type": {
+          "default": "gateway",
+          "type": "string",
+          "example": "gateway"
+        },
+        "attributes": {
+          "required": [
+            "type",
+            "process_id"
+            ],
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "example": "Gateway Title"
+            },
+            "description": {
+              "type": "string",
+              "example": "Some description"
+            },
+            "process_id": {
+              "type": "string",
+              "example": "9d705617-cc29-482a-85ff-7f7292f72b11"
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "EXCLUSIVE",
+                "INCLUSIVE",
+                "PARALLEL",
+                "EVENT"
+              ]
+            },
+            "direction": {
+              "type": "string",
+              "enum": [
+                "DIVERGENT",
+                "CONVERGENT",
+                "MIXED"
+              ]
+            },
+            "created_at": {
+              "$ref": "#/definitions/dateTime"
+            },
+            "updated_at": {
+              "$ref": "#/definitions/dateTime"
+            }
+          }
+        }
+      }
+    },
+    "Event": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "9d705617-cc29-482a-85ff-7f7292f72b31"
+        },
+        "type": {
+          "default": "event",
+          "type": "string",
+          "example": "event"
+        },
+        "attributes": {
+          "required": [
+            "name",
+            "process_id",
+            "type",
+            "definition"
+          ],
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "example": "Event_Title"
+            },
+            "description": {
+              "type": "string",
+              "example": "Some description"
+            },
+            "process_id": {
+              "type": "string",
+              "example": "9d705617-cc29-482a-85ff-7f7292f72b11"
+            },
+            "message_id": {
+              "type": "integer"
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "START",
+                "END",
+                "INTERMEDIATE_CATCH",
+                "INTERMEDIATE_THROW",
+                "BOUNDARY",
+                "IMPLICIT_THROW"
+              ]
+            },
+            "definition": {
+              "type": "string",
+              "enum": [
+                "NONE",
+                "CANCEL",
+                "COMPENSATION",
+                "ERROR",
+                "ESCALATION",
+                "MESSAGE",
+                "LINK",
+                "SIGNAL",
+                "TERMINATE",
+                "TIMER"
+              ]
+            },
+            "interrupting": {
+              "type": "boolean"
+            },
+            "condition": {
+              "type": "string"
+            },
+            "time": {
+              "type": "string"
+            },
+            "duration": {
+              "type": "string"
+            },
+            "cycle": {
+              "type": "string"
+            },
+            "attached_to_task_id": {
+              "type": "integer"
+            },
+            "created_at": {
+              "$ref": "#/definitions/dateTime"
+            },
+            "updated_at": {
+              "$ref": "#/definitions/dateTime"
+            }
+          }
+        }
+      }
+    },
+    "Task": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "9d705617-cc29-482a-85ff-7f7292f72b31"
+        },
+        "type": {
+          "default": "task",
+          "type": "string",
+          "example": "task"
+        },
+        "attributes": {
+          "required": [
+            "type",
+            "process_id",
+            "assign_type",
+            "transfer_fly",
+            "can_upload",
+            "view_upload",
+            "view_additional_documentation",
+            "start",
+            "send_last_email",
+            "selfservice_timeout",
+            "name"
+          ],
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "example": "Task_Title"
+            },
+            "description": {
+              "type": "string",
+              "example": "Some description"
+            },
+            "process_id": {
+              "type": "string",
+              "example": "9d705617-cc29-482a-85ff-7f7292f72b11"
+            },
+            "type": {
+              "default": "NORMAL",
+              "type": "string",
+              "enum": [
+                "NORMAL",
+                "ADHOC",
+                "SUBPROCESS",
+                "HIDDEN",
+                "GATEWAYTOGATEWAY",
+                "WEBENTRYEVENT",
+                "END-MESSAGE-EVENT",
+                "START-MESSAGE-EVENT",
+                "INTERMEDIATE-THROW-MESSAGE-EVENT",
+                "INTERMEDIATE-CATCH-MESSAGE-EVENT",
+                "SCRIPT-TASK",
+                "USER-TASK",
+                "START-TIMER-EVENT",
+                "INTERMEDIATE-CATCH-TIMER-EVENT",
+                "END-EMAIL-EVENT",
+                "INTERMEDIATE-THROW-EMAIL-EVENT"
+              ]
+            },
+            "assign_type": {
+              "default": "CYCLIC",
+              "type": "string",
+              "enum": [
+                "CYCLIC",
+                "MANUAL",
+                "EVALUATE",
+                "REPORT_TO",
+                "SELF_SERVICE",
+                "STATIC_MI",
+                "CANCEL_MI",
+                "MULTIPLE_INSTANCE",
+                "MULTIPLE_INSTANCE_VALUE_BASED"
+              ]
+            },
+            "priority_variable": {
+              "type": "string"
+            },
+            "assign_variable": {
+              "type": "string"
+            },
+            "group_variable": {
+              "type": "string"
+            },
+            "mi_instance_variable": {
+              "type": "string"
+            },
+            "mi_complete_variable": {
+              "type": "string"
+            },
+            "transfer_fly": {
+              "default": false,
+              "type": "boolean"
+            },
+            "can_upload": {
+              "default": false,
+              "type": "boolean"
+            },
+            "view_upload": {
+              "default": false,
+              "type": "boolean"
+            },
+            "view_additional_documentation": {
+              "default": false,
+              "type": "boolean"
+            },
+            "start": {
+              "default": false,
+              "type": "boolean"
+            },
+            "send_last_email": {
+              "default": true,
+              "type": "boolean"
+            },
+            "derivation_screen_tpl": {
+              "type": "string"
+            },
+            "selfservice_timeout": {
+              "type": "integer",
+              "default":0
+            },
+            "selfservice_time": {
+              "type": "string"
+            },
+            "selfservice_time_unit": {
+              "type": "string"
+            },
+            "selfservice_execution": {
+              "type": "string"
+            },
+            "last_assigned_user_id": {
+              "type": "string",
+              "example": "9d705617-cc29-482a-85ff-7f7292f72b11"
+            },
+            "script": {
+              "type": "string"
+            },
+            "created_at": {
+              "$ref": "#/definitions/dateTime"
+            },
+            "updated_at": {
+              "$ref": "#/definitions/dateTime"
+            }
+          }
+        }
+      }
+    },
+    "Process": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "9d705617-cc29-482a-85ff-7f7292f72b31"
+        },
+        "type": {
+          "default": "process",
+          "type": "string",
+          "example": "process"
+        },
+        "attributes": {
+          "required": [
+            "status",
+            "duration_by",
+            "type",
+            "design_access",
+            "name"
+          ],
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "example": "Process_Title"
+            },
+            "description": {
+              "type": "string",
+              "example": "Some description"
+            },
+            "parent_process_id": {
+              "type": "string",
+              "example": "9d705617-cc29-482a-85ff-7f7292f72b11"
+            },
+            "status": {
+              "default": "ACTIVE",
+              "type": "string",
+              "enum": [
+                "ACTIVE",
+                "INACTIVE",
+                "DISABLED"
+              ]
+            },
+            "duration_by": {
+              "default": "WORKING_DAYS",
+              "type": "string",
+              "enum": [
+                "WORKING_DAYS",
+                "CALENDAR_DAYS"
+              ]
+            },
+            "type": {
+              "default": "NORMAL",
+              "type": "string",
+              "enum": [
+                "NORMAL",
+                "SUB_PROCESS"
+              ]
+            },
+            "assignment": {
+              "default": false,
+              "type": "boolean"
+            },
+            "design_access": {
+              "default": "PUBLIC",
+              "type": "string",
+              "enum": [
+                "PUBLIC",
+                "PRIVATE"
+              ]
+            },
+            "show_map": {
+              "default": true,
+              "type": "boolean"
+            },
+            "show_message": {
+              "default": true,
+              "type": "boolean"
+            },
+            "show_delegate": {
+              "default": true,
+              "type": "boolean"
+            },
+            "show_dynaform": {
+              "default": false,
+              "type": "boolean"
+            },
+            "category_id": {
+              "type": "string",
+              "example": "9d705617-cc29-482a-85ff-7f7292f72b22"
+            },
+            "sub_category_id": {
+              "type": "string",
+              "example": "9d705617-cc29-482a-85ff-7f7292f72b33"
+            },
+            "create_user_id":{
+              "type": "string",
+              "example": "9d705617-cc29-482a-85ff-7f7292f72b44"
+            },
+            "debug": {
+              "type":"boolean",
+              "default": false
+            },
+            "dynaform_summary_id": {
+              "type": "string",
+              "example": "9d705617-cc29-482a-85ff-7f7292f72b55"
+            },
+            "created_at": {
+              "$ref": "#/definitions/dateTime"
+            },
+            "updated_at": {
+              "$ref": "#/definitions/dateTime"
+            }
+          }
+        }
+      }
+    },
     "Group": {
       "type": "object",
       "required": [
@@ -809,6 +3883,22 @@
         "users": {
           "type": "array",
           "description": "User Ids array",
+          "items": {
+            "type": "string",
+            "example": "9d705617-cc29-482a-85ff-7f7292f72b31"
+          }
+        }
+      }
+    },
+    "GroupIds": {
+      "type": "object",
+      "required": [
+        "groups"
+      ],
+      "properties": {
+        "groups": {
+          "type": "array",
+          "description": "Group Ids array",
           "items": {
             "type": "string",
             "example": "9d705617-cc29-482a-85ff-7f7292f72b31"
@@ -1052,6 +4142,9 @@
           "type": "string"
         },
         "detail": {
+          "type": "string"
+        },
+        "message": {
           "type": "string"
         }
       }
