@@ -109,7 +109,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "Returns TaskInstance based on a single ID",
+        "description": "This method is responsible for retrieving TaskInstance based on it’s ID.",
         "operationId": "findTaskInstanceById",
         "parameters": [
           {
@@ -169,7 +169,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "Update existing TaskInstance",
+        "description": "This method is intended for updating an existing TaskInstance.",
         "operationId": "updateTaskInstance",
         "parameters": [
           {
@@ -345,7 +345,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "Creates a new instance",
+        "description": "This method is intended for creating a new instance.",
         "operationId": "addInstance",
         "parameters": [
           {
@@ -421,7 +421,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "Returns instance based on a single ID",
+        "description": "This method is responsible for retrieving an instance based on it’s ID.",
         "operationId": "findInstanceById",
         "parameters": [
           {
@@ -472,7 +472,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "Update existing Instance",
+        "description": "This method is intended for updating an existing Instance.",
         "operationId": "updateInstance",
         "parameters": [
           {
@@ -540,7 +540,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "Deletes a single item based on the instance_id supplied and Process ID",
+        "description": "This method is intended for deleting a single item based on the instance_id and Process ID.",
         "operationId": "deleteInstance",
         "parameters": [
           {
@@ -591,7 +591,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "Returns all Flows",
+        "description": "This method is intended for retrieving all existing flows.",
         "operationId": "findFlows",
         "parameters": [
           {
@@ -726,7 +726,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "Returns flow based on a single ID",
+        "description": "This method is intended for retrieving a flow based on it’s ID.",
         "operationId": "findFlowById",
         "parameters": [
           {
@@ -777,7 +777,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "Update existing Flow",
+        "description": "This method is intended for updating an existing flow.",
         "operationId": "updateFlow",
         "parameters": [
           {
@@ -845,7 +845,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "Deletes a single item based on the flow_id supplied and Process ID",
+        "description": "This method is intended for deleting a single item based on the flow_id and Process ID.",
         "operationId": "deleteFlow",
         "parameters": [
           {
@@ -896,7 +896,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "Returns all Gateways",
+        "description": "This method is intending for retrieving all existing gateways.",
         "operationId": "findGateways",
         "parameters": [
           {
@@ -955,13 +955,13 @@
         "tags": [
           "processmaker"
         ],
-        "description": "Creates a new gateway",
+        "description": "This method is intended for creating a new gateway.",
         "operationId": "addGateway",
         "parameters": [
           {
             "name": "process_id",
             "in": "path",
-            "description": "ID of Process relative to task",
+            "description": "ID of Process relative to gateway",
             "required": true,
             "type": "string"
           },
@@ -1031,7 +1031,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "Returns gateway based on a single ID",
+        "description": "This method is intended for retrieving a gateway based on it’s ID.",
         "operationId": "findGatewayById",
         "parameters": [
           {
@@ -1082,7 +1082,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "Update existing Gateway",
+        "description": "This method is intended for updating an existing gateway.",
         "operationId": "updateGateway",
         "parameters": [
           {
@@ -1150,7 +1150,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "Deletes a single item based on the gateway_id supplied and Process ID",
+        "description": "This method is intended for deleting a single item based on the gateway_id and Process ID.",
         "operationId": "deleteGateway",
         "parameters": [
           {
@@ -1260,7 +1260,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "Creates a new event",
+        "description": "This method is intended for creating a new event.",
         "operationId": "addEvent",
         "parameters": [
           {
@@ -1336,7 +1336,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "Returns the event based on a single ID",
+        "description": "This method is intended for retrieving an event based on it’s ID.",
         "operationId": "findEventById",
         "parameters": [
           {
@@ -1455,7 +1455,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "Deletes a single item based on the event_id supplied and Process ID",
+        "description": "This method is intended for deleting a single item based on event_id and Process ID.",
         "operationId": "deleteEvent",
         "parameters": [
           {
@@ -1506,7 +1506,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "Trigger an Event",
+        "description": "This method is intended for creating an event.",
         "operationId": "EventTrigger",
         "parameters": [
           {
@@ -1642,7 +1642,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "Creates a new task",
+        "description": "This method is intended for creating a new task.",
         "operationId": "addTask",
         "parameters": [
           {
@@ -1718,7 +1718,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "Returns the task based on a single ID",
+        "description": "This method is responsible for retrieving a task based on it’s ID.",
         "operationId": "findTaskById",
         "parameters": [
           {
@@ -1769,7 +1769,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "Update existing Task",
+        "description": "This method is intended for updating an existing task.",
         "operationId": "updateTask",
         "parameters": [
           {
@@ -1837,7 +1837,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "Deletes a single item based on the task_id supplied and Process ID",
+        "description": "This method is intended for deleting a single item based on task_id and Process ID.",
         "operationId": "deleteTask",
         "parameters": [
           {
@@ -1960,7 +1960,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "Remove Groups from given Task",
+        "description": "This method is intended for removing groups from a task",
         "operationId": "removeGroupsFromTask",
         "parameters": [
           {
@@ -2032,7 +2032,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "Sync Groups to Task",
+        "description": "This method is intended for synchronizing a one or more groups with a task.",
         "operationId": "syncGroupsToTask",
         "parameters": [
           {
@@ -2100,7 +2100,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "Returns all Processes",
+        "description": "This method is responsible for retrieving all existing processes.",
         "operationId": "findProcesses",
         "parameters": [
           {
@@ -2271,7 +2271,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "Update existing Process",
+        "description": "This method is intended for updating an existing process.",
         "operationId": "updateProcess",
         "parameters": [
           {
@@ -2332,7 +2332,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "Deletes a single item based on the ID supplied",
+        "description": "This method is intended for deleting a single item based on the item’s ID. ",
         "operationId": "deleteProcess",
         "parameters": [
           {
@@ -2382,7 +2382,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "Returns all Groups",
+        "description": "This method is responsible for retrieving all existing groups.",
         "operationId": "findGroups",
         "parameters": [
           {
@@ -2434,7 +2434,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "Creates a new group",
+        "description": "This method is intended for creating a new group.",
         "operationId": "addGroup",
         "parameters": [
           {
@@ -2491,7 +2491,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "Returns the group based on a single ID",
+        "description": "This method is responsible for retrieving a group based on a single ID.",
         "operationId": "findGroupById",
         "parameters": [
           {
@@ -2535,7 +2535,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "Update existing Group",
+        "description": "This method is intended for updating an existing group.",
         "operationId": "updateGroup",
         "parameters": [
           {
@@ -2596,7 +2596,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "Deletes a single item based on the ID supplied",
+        "description": "This method is intended for deleting a single item based on the item’s ID.",
         "operationId": "deleteGroup",
         "parameters": [
           {
@@ -2640,7 +2640,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "Add User(s) to Group",
+        "description": "This method is intended for adding one, or more new users to a group.",
         "operationId": "addUsersToGroup",
         "parameters": [
           {
@@ -2699,7 +2699,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "Remove User(s) from Group",
+        "description": "This method is intended for removing one or more users from a group.",
         "operationId": "removeUsersFromGroup",
         "parameters": [
           {
@@ -2758,7 +2758,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "Sync User(s) to Group",
+        "description": "This method is intended for synchronizing one or more users with a group.",
         "operationId": "syncUsersToGroup",
         "parameters": [
           {
@@ -2868,7 +2868,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "Returns all Users",
+        "description": "This method is intended for returning all existing users.",
         "operationId": "findUsers",
         "parameters": [
           {
@@ -2920,7 +2920,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "Creates a new user",
+        "description": "This method is intended for creating a a new user in the system.",
         "operationId": "addUser",
         "parameters": [
           {
@@ -2977,7 +2977,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "Returns the user based on a single ID",
+        "description": "This method is responsible for returning a user based on their ID.",
         "operationId": "findUserById",
         "parameters": [
           {
@@ -3021,7 +3021,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "Update existing User",
+        "description": "This method is intended for updating an existing user.",
         "operationId": "updateUser",
         "parameters": [
           {
@@ -3083,7 +3083,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "Deletes a single item based on the ID supplied",
+        "description": "This deletes a single item based on the item’s ID.",
         "operationId": "deleteUser",
         "parameters": [
           {
