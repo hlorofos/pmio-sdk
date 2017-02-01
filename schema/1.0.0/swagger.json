@@ -3239,15 +3239,15 @@
       }
     },
     "DataModelItem": {
-      "id": {
-        "type": "string",
-        "example": "9d705617-cc29-482a-85ff-7f7292f72b31"
-      },
       "type": "object",
       "required": [
         "type"
       ],
       "properties": {
+        "id": {
+          "type": "string",
+          "example": "9d705617-cc29-482a-85ff-7f7292f72b31"
+        },
         "type": {
           "default": "data_model",
           "type": "string",
