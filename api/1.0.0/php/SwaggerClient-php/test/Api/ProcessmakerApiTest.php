@@ -129,7 +129,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
         }
         /** Try to set accessToken to get Process for test user*/
-        $this->apiInstance->getApiClient()->getConfig()->setAccessToken('eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImUxYmEyOTViYzBiMzA5ZWI2MDhkNzVlYzdkYzE4NjZmMzJjNmE4MzNhOWM0MWVkNWE3NTA5OWQ5NDBmZGM0NDZjMzk4ODE4MmFhY2JiNWI0In0.eyJhdWQiOiIxIiwianRpIjoiZTFiYTI5NWJjMGIzMDllYjYwOGQ3NWVjN2RjMTg2NmYzMmM2YTgzM2E5YzQxZWQ1YTc1MDk5ZDk0MGZkYzQ0NmMzOTg4MTgyYWFjYmI1YjQiLCJpYXQiOjE0ODQ4NTAxMDAsIm5iZiI6MTQ4NDg1MDEwMCwiZXhwIjoxNTE2Mzg2MTAwLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.sbfsw6eOamjVqfq1flrLqGGDNR17nYduMM4PvVH5Z3d2OilmmEYSc031ZQMv8zRgICo8SV_7JlkruEZlGwkK7V9MOmRRcIGqrZGbuY5SFzrezAyZAnTOLEJz9nxO3sAVL0gxgED7W0OZbio7dWQ8ZcHDoF-gPm-ka_om7kBVoslRwd1wZmQfrSmHJ_GdY5-qv79NpLnGAdruSYid-zWEoTmXXNWX5U_8RjNoffqSSUFpdLm8QeT5I4GIZ8GRNJCZP7swEDwSjEfxP_ZM_kr_RmpIFSxtzog4xwNdmeIyt7xM_oLBZh2pz1a1KAKV1apCJOKqhqKTVnb7KY8Xz8EcgMpOeJNK9Kt85-PpQl-kwbx3t3gFl45_ccrXYft36K8WHm-yRUvZ9_22Ghu1Lg60VnmmmU46I6v3pWPuwHt_tF7jP3q5xSGJJh9XBPQF65XGryD6Er5scxhqMnimeVDOlecOsavmh5PfyzB65bsPq23cVxlZObT2Uh3wW5gNPR-XUB5AzR2yyYk-aAEwIeQhY-7rq1q3lonlCJLMqEWGmSiau80Xo9o3DFv4S-3C4IPCbfQCaYcnscuMvy7e_Z2J2_LtAwp1gtlwKnftTUM-BV02H275x_8sDGqXO4w16WJnh8vGPgz-P2ikr9q8T5c4y8Gtrv95PHZwgvpLWkuGdFA');
+        $this->apiInstance->getApiClient()->getConfig()->setAccessToken('eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImYwNmIzNTEwYWMwODJlNTdjYmRlZDViMDljMzQ1MmNkNjcxZmU2ZWMwN2Q1ZGQ4YjBhMWIwOGIxYjRiMWI2ZmI1M2JjNzExMjMzMWUwOGJiIn0.eyJhdWQiOiIxIiwianRpIjoiZjA2YjM1MTBhYzA4MmU1N2NiZGVkNWIwOWMzNDUyY2Q2NzFmZTZlYzA3ZDVkZDhiMGExYjA4YjFiNGIxYjZmYjUzYmM3MTEyMzMxZTA4YmIiLCJpYXQiOjE0ODU3NzU1MzUsIm5iZiI6MTQ4NTc3NTUzNSwiZXhwIjoxNTE3MzExNTM1LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.F-9YO88LilVFphbrB7-RhWBL9tgELVJQn92RQNpHdMCU-FKCEg3LYu34r8GRb2Qo5yx69PU1LuUBuiXqoyr2yxzEgL10bYNCMxnV05hBevthqjTD5Tnqd9Vrwujs2C2iF6OQwewdWgrEBDgPQ3LLE-GLpNqAUQdO20dIFfM6PGJBDv3ihFZgl1QhsCL0jMqnTDJwJbo0fKMusl1C8jIq9TXu4L_4FPqYOE9CP2ytPd40rj2xMMPb_7tDD0wPQMi6YHHn6cnc7blPMAJw4fZbKdPNHS--cd38LL0hfKR3juupni0XCTG03iNcWMTxBFEm0BeUrsyN0B6I40z383Yupg-e_qvQU6RMq-Re_FF_SCqKgW25sx-PP5z3qR0Fe_T-ZsIL-TIztsGsLe_f_54YBm8r84Injkcvx811ZTomSTvbARyktmm8qygnnJR7J3c4Jw2DJKVst2RUzNclzXC6tSC9koFaXpCCueWfqT0cpjizjYxe701Ajy3SdVUSolp6hhMhMAR-Fmx8v8rOTkcshMNoG1yNuJLffQnpfRNepZMav4auTPYULTZbPBWTxSdG9szEPrERmdS7nSBhZku0X0AeZcW4uwduQMPznquZu_RRTbwbz53i_r-CpWW6Lrvmql_vCPf9Kwm0wigJYhIaJLDXiwdO_nX_YSlDGfFKFFs');
         $this->testUserUid = $this->apiInstance->myselfUser()->getData()->getId();
         //'0bb47aa7-0321-4ffa-9dfe-a6115eb769e9';
     }
@@ -1146,11 +1146,14 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
      *
      */
 
-    public function testFindInstances()
+    public function testFindInstances($processUid = false)
     {
+        ( !$processUid ? $processUid = $this->testAddInstance()['process_uid'] : $processUid);
         try {
-            $result = $this->apiInstance->findInstances($this->testAddInstance()['process_uid'])->getData();
+            $result = $this->apiInstance->findInstances($processUid)->getData();
             $this->assertGreaterThan(0, count($result));
+            //Return first Instance relative with ProcessUid for Getting DataModel
+            return ['instance_uid'=>$result[0]->getId()];
             //print_r($result);
         } catch (ApiException $e) {
             $this->dumpError($e, __METHOD__);
@@ -1210,7 +1213,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-
+    /** This test case for emulating start trigger event */
 
     public function testTaskInstanceShowIndex()
     {
@@ -1229,8 +1232,14 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         /** Try to trigger startevent */
         $this->TriggerStartEvent($startEvent['event_uid'],$arrayUids['process_uid']);
 
+        return $arrayUids;
+
     }
 
+    /**  For testTaskInstanceShowIndex
+     * @param string $startEvent
+     * @param string $processUid
+     */
 
     private function TriggerStartEvent($startEvent,$processUid)
     {
@@ -1253,6 +1262,12 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             $this->assertEquals($value,$respContent[$key],"Key $key should be equaled to $value");
         }
     }
+
+     /**  For testTaskInstanceShowIndex
+     * @param bool $process or string $process
+     * @param string $taskUid
+     * @return array
+     */
 
     private function addFlowForTaskToEndEvent($process = false, $taskUid, $eventUid) {
         try {
@@ -1286,6 +1301,13 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             $this->dumpError($e, __METHOD__);
         }
     }
+
+    /**  For testTaskInstanceShowIndex
+     * @param bool $process or string $process
+     * @param string $startEventUid
+     * @param string $userTaskUid
+     * @return array
+     */
 
 
     private function addFlowEventToTask($process = false, $startEventUid, $userTaskUid) {
@@ -1322,7 +1344,10 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
     }
 
 
-
+    /**  For testTaskInstanceShowIndex
+     * @param bool $process or string $process
+     * @return array
+     */
 
     private function addEvent($process = false) {
         try {
@@ -1353,6 +1378,8 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
     }
 
+    /** Getting list of TaskInstances */
+
     public function testFindTaskInstances()
     {
         try {
@@ -1364,6 +1391,8 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    /** Getting TaskInstance by ID */
+
     public function testFindTaskInstanceById()
     {
         try {
@@ -1373,6 +1402,8 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             $this->dumpError($e, __METHOD__);
         }
     }
+
+    /** Update DataModel using TaskInstance */
 
     public function testUpdateTaskInstance()
     {
@@ -1391,6 +1422,20 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             new TaskInstanceUpdateItem(['data' => new TaskInstance(['attributes' => $itemData])])
         );
         $this->assertEquals('COMPLETE', $result->getData()->getAttributes()->getStatus(), 'Status should be updated');
+    }
+
+    /** Getting DataModel using Process and Instance Uids */
+
+    public function testFindDataModelByProcessInstance()
+    {
+        $arrayIds = $this->testTaskInstanceShowIndex();
+
+        try {
+            $result = $this->apiInstance->findDataModel($arrayIds['process_uid'], $this->testFindInstances($arrayIds['process_uid'])['instance_uid'])->getData()->getAttributes();
+            $this->assertNotEmpty($result);
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
     }
 
 
