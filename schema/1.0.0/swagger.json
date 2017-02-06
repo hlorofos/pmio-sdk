@@ -1,14 +1,14 @@
 {
   "swagger": "2.0",
-  "info":{
+  "info": {
     "version": "1.0.0",
     "title": "ProcessMaker API",
-    "description": "An API to access ProcessMaker core functionality",
+    "description": "This ProcessMaker Core API provide access to the new generation engine with BPMN 2.0 support. The current Alpha 1.0 version supports  the part of BPM system functionality like process import, process execution, task assignment",
     "termsOfService": "http://processmaker.com/terms/",
     "contact": {
-      "name": "ProcessMaker API team",
-      "email": "oleg@processmaker.com",
-      "url": "http://processmaker.com/"
+      "name": "ProcessMaker Core API Team",
+      "email": "alpha-program@processmaker.com",
+      "url": "https://alpha-program.processmaker.com/"
     },
     "license": {
       "name": "MIT",
@@ -35,12 +35,12 @@
     }
   ],
   "paths": {
-    "/processes/{process_id}/instance/{instance_id}/datamodel":{
+    "/processes/{process_id}/instance/{instance_id}/datamodel": {
       "get": {
         "tags": [
           "processmaker"
         ],
-        "description": "Returns DataModel based on a Process and Instance",
+        "description": "This method returns the instance DataModel and lets work with it directly",
         "operationId": "findDataModel",
         "parameters": [
           {
@@ -104,12 +104,12 @@
         }
       }
     },
-    "/task_instances/{task_instance_id}":{
+    "/task_instances/{task_instance_id}": {
       "get": {
         "tags": [
           "processmaker"
         ],
-        "description": "This method is responsible for retrieving TaskInstance based on it’s ID.",
+        "description": "This method is responsible for retrieving TaskInstance based on itâ€™s ID.",
         "operationId": "findTaskInstanceById",
         "parameters": [
           {
@@ -227,12 +227,12 @@
         }
       }
     },
-    "/task_instances":{
+    "/task_instances": {
       "get": {
         "tags": [
           "processmaker"
         ],
-        "description": "Returns all TaskInstances",
+        "description": "This method is responsible for retrieving and finding tasks instances  related to the task",
         "operationId": "findTaskInstances",
         "parameters": [
           {
@@ -286,13 +286,13 @@
         "tags": [
           "processmaker"
         ],
-        "description": "Returns all Instances",
+        "description": "This method is responsible for retrieving all Instances related to the Process via Process ID",
         "operationId": "findInstances",
         "parameters": [
           {
             "name": "process_id",
             "in": "path",
-            "description": "ID of Process relative to instance",
+            "description": "Process ID relative to instance",
             "required": true,
             "type": "string"
           },
@@ -315,7 +315,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Instances list",
+            "description": "The request has been fulfilled and Instances list is ready to use",
             "schema": {
               "title": "InstanceCollection",
               "description": "Json Api Response with collection of Items in array",
@@ -351,7 +351,7 @@
           {
             "name": "process_id",
             "in": "path",
-            "description": "ID of Process relative to instance",
+            "description": "Process ID relative to instance",
             "required": true,
             "type": "string"
           },
@@ -375,7 +375,7 @@
         ],
         "responses": {
           "201": {
-            "description": "Created Instance response",
+            "description": "Instance response was created succesfully",
             "schema": {
               "type": "object",
               "title": "InstanceItem",
@@ -389,8 +389,8 @@
               }
             }
           },
-          "500": {
-            "description": "Internal server error",
+          "400": {
+            "description": "Invalid parameters",
             "schema": {
               "$ref": "#/definitions/errorArray"
             }
@@ -401,14 +401,14 @@
               "$ref": "#/definitions/errorArray"
             }
           },
-          "400": {
-            "description": "Invalid parameters",
+          "500": {
+            "description": "Internal server error",
             "schema": {
               "$ref": "#/definitions/errorArray"
             }
           },
           "default": {
-            "description": "unexpected error",
+            "description": "Unexpected error",
             "schema": {
               "$ref": "#/definitions/errorArray"
             }
@@ -421,7 +421,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "This method is responsible for retrieving an instance based on it’s ID.",
+        "description": "This method is responsible for retrieving an instance based on itâ€™s ID.",
         "operationId": "findInstanceById",
         "parameters": [
           {
@@ -540,7 +540,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "This method is intended for deleting a single item based on the instance_id and Process ID.",
+        "description": "This method is intended for deleting a single item based on the instance ID and Process ID.",
         "operationId": "deleteInstance",
         "parameters": [
           {
@@ -560,7 +560,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Item successfully deleted",
+            "description": "Instance was successfully deleted",
             "schema": {
               "$ref": "#/definitions/ResultSuccess"
             }
@@ -620,7 +620,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Flows list",
+            "description": "Flows list is ready to use",
             "schema": {
               "title": "FlowCollection",
               "description": "Json Api Response with collection of Items in array",
@@ -650,7 +650,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "Creates a new flow",
+        "description": "This method is intended for creating a new Sequence flow",
         "operationId": "addFlow",
         "parameters": [
           {
@@ -680,7 +680,7 @@
         ],
         "responses": {
           "201": {
-            "description": "Created Flow response",
+            "description": "The request has been fulfilled and Sequence Flow being created",
             "schema": {
               "type": "object",
               "title": "FlowItem",
@@ -694,8 +694,8 @@
               }
             }
           },
-          "500": {
-            "description": "Internal server error",
+          "400": {
+            "description": "Invalid parameters",
             "schema": {
               "$ref": "#/definitions/errorArray"
             }
@@ -706,8 +706,8 @@
               "$ref": "#/definitions/errorArray"
             }
           },
-          "400": {
-            "description": "Invalid parameters",
+          "500": {
+            "description": "Internal server error",
             "schema": {
               "$ref": "#/definitions/errorArray"
             }
@@ -726,7 +726,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "This method is intended for retrieving a flow based on it’s ID.",
+        "description": "This method is intended for retrieving a flow based on itâ€™s ID.",
         "operationId": "findFlowById",
         "parameters": [
           {
@@ -999,8 +999,8 @@
               }
             }
           },
-          "500": {
-            "description": "Internal server error",
+          "400": {
+            "description": "Invalid parameters",
             "schema": {
               "$ref": "#/definitions/errorArray"
             }
@@ -1011,8 +1011,8 @@
               "$ref": "#/definitions/errorArray"
             }
           },
-          "400": {
-            "description": "Invalid parameters",
+          "500": {
+            "description": "Internal server error",
             "schema": {
               "$ref": "#/definitions/errorArray"
             }
@@ -1031,7 +1031,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "This method is intended for retrieving a gateway based on it’s ID.",
+        "description": "This method is intended for retrieving a gateway based on itâ€™s ID.",
         "operationId": "findGatewayById",
         "parameters": [
           {
@@ -1201,7 +1201,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "Returns all Events",
+        "description": "This method returns all events related to the runned process",
         "operationId": "findEvents",
         "parameters": [
           {
@@ -1304,8 +1304,8 @@
               }
             }
           },
-          "500": {
-            "description": "Internal server error",
+          "400": {
+            "description": "Invalid parameters",
             "schema": {
               "$ref": "#/definitions/errorArray"
             }
@@ -1316,8 +1316,8 @@
               "$ref": "#/definitions/errorArray"
             }
           },
-          "400": {
-            "description": "Invalid parameters",
+          "500": {
+            "description": "Internal server error",
             "schema": {
               "$ref": "#/definitions/errorArray"
             }
@@ -1336,7 +1336,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "This method is intended for retrieving an event based on it’s ID.",
+        "description": "This method is intended for retrieving an event based on itâ€™s ID.",
         "operationId": "findEventById",
         "parameters": [
           {
@@ -1387,7 +1387,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "Update existing Event",
+        "description": "This method lets update the existing Process Event with new  data",
         "operationId": "updateEvent",
         "parameters": [
           {
@@ -1500,7 +1500,7 @@
           }
         }
       }
-     },
+    },
     "/processes/{process_id}/events/{event_id}/trigger": {
       "post": {
         "tags": [
@@ -1557,14 +1557,14 @@
               }
             }
           },
-          "500": {
-            "description": "Internal server error",
+          "404": {
+            "description": "Not found item",
             "schema": {
               "$ref": "#/definitions/errorArray"
             }
           },
-          "404": {
-            "description": "Not found item",
+          "500": {
+            "description": "Internal server error",
             "schema": {
               "$ref": "#/definitions/errorArray"
             }
@@ -1583,7 +1583,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "Returns all Tasks",
+        "description": "This method is intended for returning a list of all Tasks related to the process",
         "operationId": "findTasks",
         "parameters": [
           {
@@ -1686,8 +1686,8 @@
               }
             }
           },
-          "500": {
-            "description": "Internal server error",
+          "400": {
+            "description": "Invalid parameters",
             "schema": {
               "$ref": "#/definitions/errorArray"
             }
@@ -1698,8 +1698,8 @@
               "$ref": "#/definitions/errorArray"
             }
           },
-          "400": {
-            "description": "Invalid parameters",
+          "500": {
+            "description": "Internal server error",
             "schema": {
               "$ref": "#/definitions/errorArray"
             }
@@ -1718,7 +1718,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "This method is responsible for retrieving a task based on it’s ID.",
+        "description": "This method is responsible for retrieving a task based on itâ€™s ID.",
         "operationId": "findTaskById",
         "parameters": [
           {
@@ -1888,7 +1888,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "Attach Group(s) to the given Task",
+        "description": "This method is intended for assignment group(s) to the choosen task",
         "operationId": "addGroupsToTask",
         "parameters": [
           {
@@ -1925,15 +1925,9 @@
         ],
         "responses": {
           "200": {
-            "description": "JsonApi response with result details",
+            "description": "Group(s) was assigned to the task",
             "schema": {
               "$ref": "#/definitions/ResultSuccess"
-            }
-          },
-          "422": {
-            "description": "Un-processable entity",
-            "schema": {
-              "$ref": "#/definitions/errorArray"
             }
           },
           "404": {
@@ -1942,8 +1936,14 @@
               "$ref": "#/definitions/errorArray"
             }
           },
+          "422": {
+            "description": "Un-processable entity",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
           "500": {
-            "description": "Error adding Group(s)",
+            "description": "Unkwown error is appera due adding Group(s) to the task",
             "schema": {
               "$ref": "#/definitions/errorArray"
             }
@@ -2002,14 +2002,14 @@
               "$ref": "#/definitions/ResultSuccess"
             }
           },
-          "422": {
-            "description": "Un-processable entity",
+          "404": {
+            "description": "Group(s) not found",
             "schema": {
               "$ref": "#/definitions/errorArray"
             }
           },
-          "404": {
-            "description": "Group(s) not found",
+          "422": {
+            "description": "Un-processable entity",
             "schema": {
               "$ref": "#/definitions/errorArray"
             }
@@ -2164,7 +2164,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "Creates a new process",
+        "description": "This method is responsible for creating a new process",
         "operationId": "addProcess",
         "parameters": [
           {
@@ -2187,7 +2187,7 @@
         ],
         "responses": {
           "201": {
-            "description": "Created Process response",
+            "description": "New process was created",
             "schema": {
               "type": "object",
               "title": "ProcessItem",
@@ -2201,14 +2201,14 @@
               }
             }
           },
-          "500": {
-            "description": "Internal server error",
+          "400": {
+            "description": "Invalid parameters",
             "schema": {
               "$ref": "#/definitions/errorArray"
             }
           },
-          "400": {
-            "description": "Invalid parameters",
+          "500": {
+            "description": "Internal server error",
             "schema": {
               "$ref": "#/definitions/errorArray"
             }
@@ -2332,7 +2332,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "This method is intended for deleting a single item based on the item’s ID. ",
+        "description": "This method is intended for deleting a single item based on the itemâ€™s ID. ",
         "operationId": "deleteProcess",
         "parameters": [
           {
@@ -2350,6 +2350,12 @@
               "$ref": "#/definitions/ResultSuccess"
             }
           },
+          "401": {
+            "description": "Unauthorized access",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
           "404": {
             "description": "Item not found",
             "schema": {
@@ -2358,12 +2364,6 @@
           },
           "500": {
             "description": "Deletion error",
-            "schema": {
-              "$ref": "#/definitions/errorArray"
-            }
-          },
-          "401": {
-            "description": "Unauthorized access",
             "schema": {
               "$ref": "#/definitions/errorArray"
             }
@@ -2596,7 +2596,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "This method is intended for deleting a single item based on the item’s ID.",
+        "description": "This method is intended for deleting a single item based on the itemâ€™s ID.",
         "operationId": "deleteGroup",
         "parameters": [
           {
@@ -2808,12 +2808,12 @@
         }
       }
     },
-    "/users/myself":{
+    "/users/myself": {
       "get": {
         "tags": [
           "processmaker"
         ],
-        "description": "Returns User based on Token",
+        "description": "This method returns User information based on Token",
         "operationId": "myselfUser",
         "parameters": [
           {
@@ -2868,7 +2868,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "This method is intended for returning all existing users.",
+        "description": "This method is intended for returning all existing users in the system.",
         "operationId": "findUsers",
         "parameters": [
           {
@@ -2920,7 +2920,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "This method is intended for creating a a new user in the system.",
+        "description": "This method is intended for creating a new user in the system.",
         "operationId": "addUser",
         "parameters": [
           {
@@ -2943,7 +2943,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Created User response",
+            "description": "New User was created",
             "schema": {
               "type": "object",
               "title": "UserItem",
@@ -3021,7 +3021,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "This method is intended for updating an existing user.",
+        "description": "This method is intended for updating parameters an existing user.",
         "operationId": "updateUser",
         "parameters": [
           {
@@ -3083,7 +3083,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "This deletes a single item based on the item’s ID.",
+        "description": "This method deletes User from the system.",
         "operationId": "deleteUser",
         "parameters": [
           {
@@ -3096,19 +3096,19 @@
         ],
         "responses": {
           "204": {
-            "description": "Item successfully deleted",
+            "description": "User was successfully deleted",
             "schema": {
               "$ref": "#/definitions/ResultSuccess"
             }
           },
           "404": {
-            "description": "Item not found",
+            "description": "User not found",
             "schema": {
               "$ref": "#/definitions/errorArray"
             }
           },
           "500": {
-            "description": "Deletion error",
+            "description": "The server encountered an unexpected condition due delete response",
             "schema": {
               "$ref": "#/definitions/errorArray"
             }
@@ -3176,9 +3176,9 @@
               "type": "string",
               "example": "9d705617-cc29-482a-85ff-7f7292f72b11"
             },
-            "status":{
-              "type":"string",
-              "default":"INITIAL",
+            "status": {
+              "type": "string",
+              "default": "INITIAL",
               "enum": [
                 "INITIAL",
                 "DELEGATED",
@@ -3189,9 +3189,9 @@
                 "PAUSED"
               ]
             },
-            "priority":{
-              "type":"string",
-              "default":"3",
+            "priority": {
+              "type": "string",
+              "default": "3",
               "enum": [
                 "1",
                 "2",
@@ -3220,7 +3220,7 @@
             },
             "instance_overdue_percentage": {
               "type": "number",
-              "format":"double"
+              "format": "double"
             },
             "data": {
               "type": "string"
@@ -3261,7 +3261,7 @@
           "properties": {
             "content": {
               "type": "object"
-              }
+            }
           }
         }
       }
@@ -3410,13 +3410,10 @@
             "from_object_id": {
               "type": "string",
               "example": "9d705617-cc29-482a-85ff-7f7292f72b25"
-              },
+            },
             "from_object_type": {
               "type": "string",
               "example": "task"
-            },
-            "to_object_id": {
-              "type": "integer"
             },
             "to_object_id": {
               "type": "string",
@@ -3428,7 +3425,7 @@
             },
             "type": {
               "type": "string",
-              "default":"SEQUENTIAL",
+              "default": "SEQUENTIAL",
               "enum": [
                 "SEQUENTIAL",
                 "EVALUATE",
@@ -3479,7 +3476,7 @@
           "required": [
             "type",
             "process_id"
-            ],
+          ],
           "type": "object",
           "properties": {
             "name": {
@@ -3738,7 +3735,7 @@
             },
             "selfservice_timeout": {
               "type": "integer",
-              "default":0
+              "default": 0
             },
             "selfservice_time": {
               "type": "string"
@@ -3864,12 +3861,12 @@
               "type": "string",
               "example": "9d705617-cc29-482a-85ff-7f7292f72b33"
             },
-            "create_user_id":{
+            "create_user_id": {
               "type": "string",
               "example": "9d705617-cc29-482a-85ff-7f7292f72b44"
             },
             "debug": {
-              "type":"boolean",
+              "type": "boolean",
               "default": false
             },
             "dynaform_summary_id": {
