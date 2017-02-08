@@ -35,6 +35,75 @@
     }
   ],
   "paths": {
+    "/processes/import": {
+      "post": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "This method is intended for importing BPMN files. This import covers next BPMN 2.0 elements for modeling processes: Sequence Flows, Start event, End event, Message Start event, Message Intermediate event, Timer Boundary Interrupting Event, Timer Boundary Non-Interrupting Event, Script task, User task, Service task Exclusive Gateways, Inclusive Gateways, Parallel Gateways. A new process is created when import passed successful.",
+        "operationId": "importBpmnFile",
+        "parameters": [
+          {
+            "name": "bpmnImportItem",
+            "in": "body",
+            "description": "JsonApi with the BPMN file to import",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/BpmnFile"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Process instance was created successfully",
+            "schema": {
+              "type": "object",
+              "title": "ProcessCollection",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Process"
+                  }
+                },
+                "meta": {
+                  "$ref": "#/definitions/MetaLog"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden access",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      }
+    },
     "/processes/{process_id}/instance/{instance_id}/datamodel": {
       "get": {
         "tags": [
@@ -3136,6 +3205,30 @@
     }
   },
   "definitions": {
+    "BpmnFile": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "default": "process",
+          "type": "string",
+          "example": "process"
+        },
+        "attributes": {
+          "required": [
+            "bpmn"
+           ],
+          "type": "object",
+          "properties": {
+            "bpmn": {
+              "type": "string"
+              }
+            }
+        }
+      }
+    },
     "TaskInstance": {
       "type": "object",
       "required": [
@@ -4174,6 +4267,17 @@
               "example": "http://localhost/api/v1/groups?page=1"
             }
           }
+        }
+      }
+    },
+    "MetaLog": {
+      "type": "object",
+      "required":[
+        "import_log"
+      ],
+      "properties": {
+        "import_log": {
+          "type": "string"
         }
       }
     },
