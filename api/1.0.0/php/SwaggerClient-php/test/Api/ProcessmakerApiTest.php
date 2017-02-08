@@ -41,6 +41,7 @@
 namespace Swagger\Client;
 
 use Swagger\Client\Api\ProcessmakerApi;
+use Swagger\Client\Model\BpmnImportItem;
 use Swagger\Client\Model\Error;
 use Swagger\Client\Model\Group;
 use Swagger\Client\Model\GroupAddUsersItem;
@@ -91,7 +92,9 @@ use Swagger\Client\Model\TriggerEventCreateItem;
 use Swagger\Client\Model\TaskInstance;
 use Swagger\Client\Model\TaskInstanceAttributes;
 use Swagger\Client\Model\TaskInstanceUpdateItem;
-
+use Swagger\Client\Model\BpmnFile;
+use Swagger\Client\Model\BpmnFileAttributes;
+use Swagger\Client\Model\MetaLog;
 /**
  * ProcessmakerApiTest Class Doc Comment
  *
@@ -129,9 +132,10 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
         }
         /** Try to set accessToken to get Process for test user*/
-        $this->apiInstance->getApiClient()->getConfig()->setAccessToken('eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImYwNmIzNTEwYWMwODJlNTdjYmRlZDViMDljMzQ1MmNkNjcxZmU2ZWMwN2Q1ZGQ4YjBhMWIwOGIxYjRiMWI2ZmI1M2JjNzExMjMzMWUwOGJiIn0.eyJhdWQiOiIxIiwianRpIjoiZjA2YjM1MTBhYzA4MmU1N2NiZGVkNWIwOWMzNDUyY2Q2NzFmZTZlYzA3ZDVkZDhiMGExYjA4YjFiNGIxYjZmYjUzYmM3MTEyMzMxZTA4YmIiLCJpYXQiOjE0ODU3NzU1MzUsIm5iZiI6MTQ4NTc3NTUzNSwiZXhwIjoxNTE3MzExNTM1LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.F-9YO88LilVFphbrB7-RhWBL9tgELVJQn92RQNpHdMCU-FKCEg3LYu34r8GRb2Qo5yx69PU1LuUBuiXqoyr2yxzEgL10bYNCMxnV05hBevthqjTD5Tnqd9Vrwujs2C2iF6OQwewdWgrEBDgPQ3LLE-GLpNqAUQdO20dIFfM6PGJBDv3ihFZgl1QhsCL0jMqnTDJwJbo0fKMusl1C8jIq9TXu4L_4FPqYOE9CP2ytPd40rj2xMMPb_7tDD0wPQMi6YHHn6cnc7blPMAJw4fZbKdPNHS--cd38LL0hfKR3juupni0XCTG03iNcWMTxBFEm0BeUrsyN0B6I40z383Yupg-e_qvQU6RMq-Re_FF_SCqKgW25sx-PP5z3qR0Fe_T-ZsIL-TIztsGsLe_f_54YBm8r84Injkcvx811ZTomSTvbARyktmm8qygnnJR7J3c4Jw2DJKVst2RUzNclzXC6tSC9koFaXpCCueWfqT0cpjizjYxe701Ajy3SdVUSolp6hhMhMAR-Fmx8v8rOTkcshMNoG1yNuJLffQnpfRNepZMav4auTPYULTZbPBWTxSdG9szEPrERmdS7nSBhZku0X0AeZcW4uwduQMPznquZu_RRTbwbz53i_r-CpWW6Lrvmql_vCPf9Kwm0wigJYhIaJLDXiwdO_nX_YSlDGfFKFFs');
+        $this->apiInstance->getApiClient()->getConfig()->setAccessToken('eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6Ijg3NjFmYmZlY2UxZDBlMTZiZTI5MjRiYzY2YWNhNTE4OWNkMzBhMGYxYzFlODNhZTQ5NzQ0NDJjMjlhMjY5NWQ5MmYxMzYyNmRhYjY3NTQwIn0.eyJhdWQiOiIxIiwianRpIjoiODc2MWZiZmVjZTFkMGUxNmJlMjkyNGJjNjZhY2E1MTg5Y2QzMGEwZjFjMWU4M2FlNDk3NDQ0MmMyOWEyNjk1ZDkyZjEzNjI2ZGFiNjc1NDAiLCJpYXQiOjE0ODY0NzE3MzIsIm5iZiI6MTQ4NjQ3MTczMiwiZXhwIjoxNTE4MDA3NzMyLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.SIqLIUMQdV_PC9mRFF64-CZ6_HfAM1jB2P3ISLJ9No84UkogIxq_QftWhv6ISl7suErOmwgGcOHcQS_Wezx0MYVEv0TJDA8fqeljJX0s-qskHQ3be2p6WCKoLnxM0zAQYuaD2ycaC_RamtEijsV8xDJ_1pSvY_M-g65GYt7td8H829DS8Zl8vE1jb7rARPpHbwmNByaRSxvOCFrb3dNhwb9XgI8kwqlVP91MoNvU8yEKVdP3YG0cEwVPVn5sTaeUrTdlnnFkMY93JI_hh_PYdh7vgeW9evFZGTumlPD4qWFEPCGxb3YfBadLnQ9GKVMLN00FC9VteBHYEsP7jBOuJsiMP9Y9CTeKbPoiM56nhYbWTYTr1sKY4XQkVNWS14iCajbXN8a5PjLdFGe5f0FeCeH_jAVmaOZNKm_4L09S9SykvlKfGsRgMJocygmPM3ARKYq7VxFvZiazKtFs1YD6Xram1hhZgRFxxNBjBXegGgKFlP0nHhK-z_wf-CF1P0pVe4bSh7BW0eBgPTe4tJO0PBHA4dHzESNJhG_9tC8jdQ0QnO9Vd2-q5e02MdJDsKkoxjS6os3XAc8tctaxUNASbuU-pCMBVek3dtpv10Dfebsw44cy8zQZxYi8yz671ZNcge7R1I2VDsqEcGAjmWJXe3eFr7bJPZEtB4A21IxPHNM');
+
         $this->testUserUid = $this->apiInstance->myselfUser()->getData()->getId();
-        //'0bb47aa7-0321-4ffa-9dfe-a6115eb769e9';
+
     }
 
     /**
@@ -171,7 +175,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
             $this->assertNotNull($result->getData()->getId());
             $this->assertEquals('Group title', $result->getData()->getAttributes()->getTitle());
-            //print_r($result->getData());
+
             return $result->getData()->getId();
 
         } catch (ApiException $e) {
@@ -202,7 +206,6 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
             $this->assertNotNull($result->getData()->getId());
             $this->assertEquals('Johnny', $result->getData()->getAttributes()->getFirstname());
-            //print_r($result->getData());
             return $result->getData()->getId();
         } catch (ApiException $e) {
             $this->dumpError($e, __METHOD__);
@@ -231,7 +234,6 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         try {
             /** @var ResultSuccess $result */
             $result = $this->apiInstance->addUsersToGroup($groupId, $GroupAddUsersItem);
-            //print_r($result->getMeta());
             $this->assertEquals('1021', $result->getMeta()->getCode(), 'User should be attached to the Group');
             return $groupId;
         } catch (ApiException $e) {
@@ -1433,6 +1435,28 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         try {
             $result = $this->apiInstance->findDataModel($arrayIds['process_uid'], $this->testFindInstances($arrayIds['process_uid'])['instance_uid'])->getData()->getAttributes();
             $this->assertNotEmpty($result);
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    /** Test case for import BPMN file feature */
+
+    public function testBpmnImportFile()
+    {
+        $bpmn = file_get_contents('test/Api/message_startevent.bpmn');
+        $this->assertNotNull($bpmn, 'Imported file not found');
+        $bpmnAttr = new BpmnFileAttributes();
+        $bpmnAttr->setBpmn($bpmn);
+        try {
+           $result = $this->apiInstance->importBpmnFile(new BpmnImportItem(
+                [
+                    'data' => new BpmnFile(['attributes' => $bpmnAttr])
+                ]
+            ));
+            $this->assertEquals(2,count($result->getData()));
+            assertNotEmpty($result->getMeta());
+
         } catch (ApiException $e) {
             $this->dumpError($e, __METHOD__);
         }
