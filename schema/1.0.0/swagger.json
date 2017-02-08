@@ -40,7 +40,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "This method is intended for importing bpmn files.",
+        "description": "This method is intended for importing BPMN files. This import covers next BPMN 2.0 elements for modeling processes: Sequence Flows, Start event, End event, Message Start event, Message Intermediate event, Timer Boundary Interrupting Event, Timer Boundary Non-Interrupting Event, Script task, User task, Service task Exclusive Gateways, Inclusive Gateways, Parallel Gateways. A new process is created when import passed successful.",
         "operationId": "importBpmnFile",
         "parameters": [
           {
@@ -63,10 +63,10 @@
         ],
         "responses": {
           "201": {
-            "description": "Instance response was created succesfully",
+            "description": "Process instance was created successfully",
             "schema": {
               "type": "object",
-              "title": "InstanceItem",
+              "title": "ProcessCollection",
               "required": [
                 "data"
               ],

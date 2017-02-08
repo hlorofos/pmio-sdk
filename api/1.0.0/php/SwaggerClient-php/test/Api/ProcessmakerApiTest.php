@@ -1455,7 +1455,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
                 ]
             ));
             $this->assertEquals(2,count($result->getData()));
-            assertNotEmpty($result->getMeta());
+            $this->assertNotEmpty($result->getMeta());
 
         } catch (ApiException $e) {
             $this->dumpError($e, __METHOD__);
