@@ -1467,6 +1467,8 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    /** Test case adding InputOutput */
+
     public function testAddInputOutput()
     {
         $arrayUid = $this->testAddTask();
@@ -1500,6 +1502,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
     }
 
+    /** Test case getting collection of InputOutputs */
 
     public function testFindInputOutput()
     {
@@ -1514,7 +1517,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test case for findInstanceById
+     * Test case getting of InputOutput by ID
      *
      */
 
@@ -1531,7 +1534,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test case for updateInstance
+     * Test case updating InputOutput by ID
      *
      */
 
@@ -1552,7 +1555,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test case for deleteInstance
+     * Test case deleting InputOutput by ID
      *
      */
 
