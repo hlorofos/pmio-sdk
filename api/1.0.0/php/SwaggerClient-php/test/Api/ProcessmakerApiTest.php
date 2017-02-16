@@ -1474,7 +1474,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         $arrayUid = $this->testAddTask();
         try {
 
-            /*Creating 2 objects for Flow under the same Process Id */
+
             $inputOutputAttr= new InputOutputAttributes();
             $inputOutputAttr->setInputParameters(['some_key']);
             $inputOutputAttr->setOutputParameters(['some_key_1']);
