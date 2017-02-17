@@ -40,21 +40,22 @@
         "tags": [
           "processmaker"
         ],
-        "description": "This method is intended for retrieving all existing InputOutput objects.",
+        "description": "This method is intended for retrieving all existing InputOutput objects for the related task instance.",
         "operationId": "findInputOutputs",
         "parameters": [
           {
             "name": "process_id",
             "in": "path",
-            "description": "ID of Process relative to InputOutput",
+            "description": "Process ID related to InputOutput object",
             "required": true,
             "type": "string"
           },
           {
             "name": "task_id",
             "in": "path",
-            "description": "ID of Task relative to InputOutput",
+            "description": "Task instance ID related to InputOutput object",
             "required": true,
+
             "type": "string"
           },
           {
@@ -79,7 +80,7 @@
             "description": "InputOutputs list is ready to use",
             "schema": {
               "title": "InputOutputCollection",
-              "description": "Json Api Response with collection of Items in array",
+              "description": "JSON API Response with array of items collection",
               "type": "object",
               "properties": {
                 "data": {
@@ -112,21 +113,21 @@
           {
             "name": "process_id",
             "in": "path",
-            "description": "ID of Process relative to flow",
+            "description": "Process ID related to InputOutput object",
             "required": true,
             "type": "string"
           },
           {
             "name": "task_id",
             "in": "path",
-            "description": "ID of Task relative to InputOutput",
+            "description": "Task instance ID related to InputOutput object",
             "required": true,
             "type": "string"
           },
           {
             "name": "InputOutputCreateItem",
             "in": "body",
-            "description": "JsonApi with the Flow object to add",
+            "description": "Create and add a new InputOutput object with JSON API",
             "required": true,
             "schema": {
               "type": "object",
@@ -143,7 +144,7 @@
         ],
         "responses": {
           "201": {
-            "description": "The request has been fulfilled and InputOutput being created",
+            "description": "The request has been fulfilled and InputOutput object being created",
             "schema": {
               "type": "object",
               "title": "InputOutputItem",
@@ -183,20 +184,20 @@
         "tags": [
           "processmaker"
         ],
-        "description": "This method is intended for retrieving a InputOutput based on ID.",
+        "description": "This method is intended for retrieving an InputOutput object based on ID.",
         "operationId": "findInputOutputById",
         "parameters": [
           {
             "name": "process_id",
             "in": "path",
-            "description": "ID of Process relative to InputOutput",
+            "description": "Process ID related to InputOutput object",
             "required": true,
             "type": "string"
           },
           {
             "name": "task_id",
             "in": "path",
-            "description": "ID of Task relative to InputOutput",
+            "description": "Task instance ID related to InputOutput object",
             "required": true,
             "type": "string"
           },
@@ -210,7 +211,7 @@
         ],
         "responses": {
           "200": {
-            "description": "InputOutput Item response",
+            "description": "InputOutput Item response was completed",
             "schema": {
               "type": "object",
               "required": [
@@ -247,14 +248,14 @@
           {
             "name": "process_id",
             "in": "path",
-            "description": "ID of Process relative to InputOutput",
+            "description": "Process ID related to InputOutput object",
             "required": true,
             "type": "string"
           },
           {
             "name": "task_id",
             "in": "path",
-            "description": "ID of Task relative to InputOutput",
+            "description": "Task instance ID related to InputOutput object",
             "required": true,
             "type": "string"
           },
@@ -285,7 +286,7 @@
         ],
         "responses": {
           "200": {
-            "description": "JsonApi response with updated InputOutput object",
+            "description": "The InputOutput object was updated successfully via JSON API response",
             "schema": {
               "type": "object",
               "required": [
@@ -322,14 +323,14 @@
           {
             "name": "process_id",
             "in": "path",
-            "description": "ID of Process relative to InputOutput",
+            "description": "Process ID related to InputOutput object",
             "required": true,
             "type": "string"
           },
           {
             "name": "task_id",
             "in": "path",
-            "description": "ID of Task relative to InputOutput",
+            "description": "Task instance ID related to InputOutput object",
             "required": true,
             "type": "string"
           },
