@@ -50,6 +50,7 @@ use Swagger\Client\Model\GroupCreateItem;
 use Swagger\Client\Model\GroupItem;
 use Swagger\Client\Model\GroupRemoveUsersItem;
 use Swagger\Client\Model\GroupUpdateItem;
+use Swagger\Client\Model\InputOutputItem;
 use Swagger\Client\Model\InstanceUpdateItem;
 use Swagger\Client\Model\MetaResult;
 use Swagger\Client\Model\ResultSuccess;
@@ -95,6 +96,10 @@ use Swagger\Client\Model\TaskInstanceUpdateItem;
 use Swagger\Client\Model\BpmnFile;
 use Swagger\Client\Model\BpmnFileAttributes;
 use Swagger\Client\Model\MetaLog;
+use Swagger\Client\Model\InputOutputAttributes;
+use Swagger\Client\Model\InputOutput;
+use Swagger\Client\Model\InputOutputCreateItem;
+use Swagger\Client\Model\InputOutputUpdateItem;
 /**
  * ProcessmakerApiTest Class Doc Comment
  *
@@ -132,7 +137,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
         }
         /** Try to set accessToken to get Process for test user*/
-        $this->apiInstance->getApiClient()->getConfig()->setAccessToken('eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6Ijg3NjFmYmZlY2UxZDBlMTZiZTI5MjRiYzY2YWNhNTE4OWNkMzBhMGYxYzFlODNhZTQ5NzQ0NDJjMjlhMjY5NWQ5MmYxMzYyNmRhYjY3NTQwIn0.eyJhdWQiOiIxIiwianRpIjoiODc2MWZiZmVjZTFkMGUxNmJlMjkyNGJjNjZhY2E1MTg5Y2QzMGEwZjFjMWU4M2FlNDk3NDQ0MmMyOWEyNjk1ZDkyZjEzNjI2ZGFiNjc1NDAiLCJpYXQiOjE0ODY0NzE3MzIsIm5iZiI6MTQ4NjQ3MTczMiwiZXhwIjoxNTE4MDA3NzMyLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.SIqLIUMQdV_PC9mRFF64-CZ6_HfAM1jB2P3ISLJ9No84UkogIxq_QftWhv6ISl7suErOmwgGcOHcQS_Wezx0MYVEv0TJDA8fqeljJX0s-qskHQ3be2p6WCKoLnxM0zAQYuaD2ycaC_RamtEijsV8xDJ_1pSvY_M-g65GYt7td8H829DS8Zl8vE1jb7rARPpHbwmNByaRSxvOCFrb3dNhwb9XgI8kwqlVP91MoNvU8yEKVdP3YG0cEwVPVn5sTaeUrTdlnnFkMY93JI_hh_PYdh7vgeW9evFZGTumlPD4qWFEPCGxb3YfBadLnQ9GKVMLN00FC9VteBHYEsP7jBOuJsiMP9Y9CTeKbPoiM56nhYbWTYTr1sKY4XQkVNWS14iCajbXN8a5PjLdFGe5f0FeCeH_jAVmaOZNKm_4L09S9SykvlKfGsRgMJocygmPM3ARKYq7VxFvZiazKtFs1YD6Xram1hhZgRFxxNBjBXegGgKFlP0nHhK-z_wf-CF1P0pVe4bSh7BW0eBgPTe4tJO0PBHA4dHzESNJhG_9tC8jdQ0QnO9Vd2-q5e02MdJDsKkoxjS6os3XAc8tctaxUNASbuU-pCMBVek3dtpv10Dfebsw44cy8zQZxYi8yz671ZNcge7R1I2VDsqEcGAjmWJXe3eFr7bJPZEtB4A21IxPHNM');
+        $this->apiInstance->getApiClient()->getConfig()->setAccessToken('eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQ5MWFiNTkzODEyZmNhYzg0NmUwMWY3YjRhOTFkYWQ3ZTNmODk4N2Y5NTgwOTU1YjIzNTQ3YjI1M2Y2YzQ1YjNlNzJiMjYyMTE1YjIzZThlIn0.eyJhdWQiOiIxIiwianRpIjoiNDkxYWI1OTM4MTJmY2FjODQ2ZTAxZjdiNGE5MWRhZDdlM2Y4OTg3Zjk1ODA5NTViMjM1NDdiMjUzZjZjNDViM2U3MmIyNjIxMTViMjNlOGUiLCJpYXQiOjE0ODcwNzg3NzQsIm5iZiI6MTQ4NzA3ODc3NCwiZXhwIjoxNTE4NjE0Nzc0LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.bii03P4LikwLbyqhx7Dp_m1dU6nGO4BebJqts3W5_CJW8W-KkQ40kxKM7z3F3A-wfjj81ZjmcyKtmy7TAZtJuKVlFL7gBl6TpTYRRJqA9j1pOyM2FgoHLCzFtHstsqf-hdf4jZSGYQZxY6a0DfYyaeUdZ8CjaK5pbAN7ArpZpIMWjRbMVlrLET-CfwnfGIpIvWZzrxDi93TkFzNXR90GNMvD99zxjJO1L1hhpKldOtvylzN53eNVt6FisTszTTwOwV8-qdX6egGrnBcC2UuSqrSvhcLckf1zdi8HZAQ4TWuYhJTYH-KPT3P7hR_AGdxZaQwkYjQ0gSNp9WGbehdvNcCdg8ElKTTd5ZXaiEIzJdlOD_kG9Zp1HobjIV-fUivWsiNx8F49ztvlg_N5Vw8XUmU4LYo75Ln1mEFRZJVJF1fWYA2Ws305nnGP7fGQ2-02kd9mPzzcutWh3ft7My-pW4RafAS9ticaJghS4b57VBQfy9bZs5a2DZSUCJDBqMDcMbDa0WccDulif3nYLz7VvoEg6tDnt1sck66pqfI8RoYF13mXlkx6slM1uQhnUQO4ljxGYgHVCRERfLiOsgfaVIeuPARx_cpB9j-JYgWcrDGLcp9OwHd3vaR2kklpPfN5sXmp0akCqJOGWDEX3yDfDdTAZ0LlQ_B9Io4SUYqGfFw');
 
         $this->testUserUid = $this->apiInstance->myselfUser()->getData()->getId();
 
@@ -1462,6 +1467,108 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    /** Test case adding InputOutput */
+
+    public function testAddInputOutput()
+    {
+        $arrayUid = $this->testAddTask();
+        try {
+
+
+            $inputOutputAttr= new InputOutputAttributes();
+            $inputOutputAttr->setInputParameters(['some_key']);
+            $inputOutputAttr->setOutputParameters(['some_key_1']);
+            $result = $this->apiInstance->addInputOutput(
+                $arrayUid['process_uid'],
+                $arrayUid['task_uid'],
+                new InputOutputCreateItem(
+                    [
+                        'data' => new InputOutput(['attributes' => $inputOutputAttr])
+                    ]
+                )
+            );
+
+            $this->assertNotNull($result->getData()->getId());
+            $this->assertEquals($inputOutputAttr->getInputParameters(), $result->getData()->getAttributes()->getInputParameters());
+            $this->assertEquals($inputOutputAttr->getOutputParameters(), $result->getData()->getAttributes()->getOutputParameters());
+            //print_r($result->getData());
+            $arrayUid['inputoutput_uid'] = $result->getData()->getId();
+            return $arrayUid;
+
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+
+
+    }
+
+    /** Test case getting collection of InputOutputs */
+
+    public function testFindInputOutput()
+    {
+        $arrayUids = $this->testAddInputOutput();
+       try {
+            $result = $this->apiInstance->findInputOutputs($arrayUids['process_uid'], $arrayUids['task_uid'])->getData();
+            $this->assertGreaterThan(0, count($result));
+       } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+       }
+
+    }
+
+    /**
+     * Test case getting of InputOutput by ID
+     *
+     */
+
+    public function testFindInputOutputById()
+    {
+        $array_uids = $this->testAddInputOutput();
+        try {
+            $result = $this->apiInstance->findInputOutputById($array_uids['process_uid'], $array_uids['task_uid'], $array_uids['inputoutput_uid'])->getData()->getAttributes();
+            $this->assertNotEmpty($result);
+
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    /**
+     * Test case updating InputOutput by ID
+     *
+     */
+
+    public function testUpdateInputOutput()
+    {
+        $array_uids = $this->testAddInputOutput();
+        $itemData = new InputOutputAttributes();
+        $itemData->setInputParameters(['Updated input']);
+        $itemData->setOutputParameters(['Updated output']);
+        $result = $this->apiInstance->updateInputOutput(
+            $array_uids['process_uid'],
+            $array_uids['task_uid'],
+            $array_uids['inputoutput_uid'],
+            new InputOutputUpdateItem(['data' => new InputOutput(['attributes' => $itemData])])
+        );
+        $this->assertEquals($itemData->getInputParameters(), $result->getData()->getAttributes()->getInputParameters(), 'Input parameter should be updated');
+        $this->assertEquals($itemData->getOutputParameters(), $result->getData()->getAttributes()->getOutputParameters(), 'Output parameter should be updated');
+    }
+
+    /**
+     * Test case deleting InputOutput by ID
+     *
+     */
+
+    public function testDeleteInputOutput()
+    {
+        $array_uids = $this->testAddInputOutput();
+        try {
+            $result = $this->apiInstance->deleteInputOutput($array_uids['process_uid'], $array_uids['task_uid'], $array_uids['inputoutput_uid']);
+            $this->assertEquals('1817', $result->getMeta()->getCode(), 'Result code expected');
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
 
 
 }

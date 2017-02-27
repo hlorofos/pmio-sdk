@@ -35,6 +35,341 @@
     }
   ],
   "paths": {
+    "/processes/{process_id}/tasks/{task_id}/inputoutput": {
+      "get": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "This method is intended for retrieving all existing InputOutput objects for the related task instance.",
+        "operationId": "findInputOutputs",
+        "parameters": [
+          {
+            "name": "process_id",
+            "in": "path",
+            "description": "Process ID related to InputOutput object",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "task_id",
+            "in": "path",
+            "description": "Task instance ID related to InputOutput object",
+            "required": true,
+
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page Nr to fetch",
+            "required": false,
+            "default": 1,
+            "type": "integer"
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "Amount of Items per Page",
+            "required": false,
+            "default": 15,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "InputOutputs list is ready to use",
+            "schema": {
+              "title": "InputOutputCollection",
+              "description": "JSON API Response with array of items collection",
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/InputOutput"
+                  }
+                },
+                "meta": {
+                  "$ref": "#/definitions/Meta"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "This method is intended for creating a new InputOutput",
+        "operationId": "addInputOutput",
+        "parameters": [
+          {
+            "name": "process_id",
+            "in": "path",
+            "description": "Process ID related to InputOutput object",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "task_id",
+            "in": "path",
+            "description": "Task instance ID related to InputOutput object",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "InputOutputCreateItem",
+            "in": "body",
+            "description": "Create and add a new InputOutput object with JSON API",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/InputOutput"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "The request has been fulfilled and InputOutput object being created",
+            "schema": {
+              "type": "object",
+              "title": "InputOutputItem",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/InputOutput"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      }
+    },
+    "/processes/{process_id}/tasks/{task_id}/inputoutput/{inputoutput_uid}": {
+      "get": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "This method is intended for retrieving an InputOutput object based on ID.",
+        "operationId": "findInputOutputById",
+        "parameters": [
+          {
+            "name": "process_id",
+            "in": "path",
+            "description": "Process ID related to InputOutput object",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "task_id",
+            "in": "path",
+            "description": "Task instance ID related to InputOutput object",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "inputoutput_uid",
+            "in": "path",
+            "description": "ID of InputOutput to fetch",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "InputOutput Item response was completed",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/InputOutput"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Item not found",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "This method is intended for updating an existing InputOutput.",
+        "operationId": "updateInputOutput",
+        "parameters": [
+          {
+            "name": "process_id",
+            "in": "path",
+            "description": "Process ID related to InputOutput object",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "task_id",
+            "in": "path",
+            "description": "Task instance ID related to InputOutput object",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "inputoutput_uid",
+            "in": "path",
+            "description": "ID of InputOutput to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "InputOutputUpdateItem",
+            "in": "body",
+            "description": "InputOutput object to edit",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/InputOutput"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The InputOutput object was updated successfully via JSON API response",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/InputOutput"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "This method is intended for deleting a single item based on the InputOutput ID, Process ID and Task ID",
+        "operationId": "deleteInputOutput",
+        "parameters": [
+          {
+            "name": "process_id",
+            "in": "path",
+            "description": "Process ID related to InputOutput object",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "task_id",
+            "in": "path",
+            "description": "Task instance ID related to InputOutput object",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "inputoutput_uid",
+            "in": "path",
+            "description": "ID of InputOutput to fetch",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Item successfully deleted",
+            "schema": {
+              "$ref": "#/definitions/ResultSuccess"
+            }
+          },
+          "404": {
+            "description": "Item not found",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "500": {
+            "description": "Deletion error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      }
+    },
     "/processes/import": {
       "post": {
         "tags": [
@@ -3205,6 +3540,44 @@
     }
   },
   "definitions": {
+    "InputOutput": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "9d705617-cc29-482a-85ff-7f7292f72b31"
+        },
+        "type": {
+          "default": "input_output",
+          "type": "string",
+          "example": "input_output"
+        },
+        "attributes": {
+          "required": [
+            "input_parameters",
+            "output_parameters"
+          ],
+          "type": "object",
+          "properties": {
+            "input_parameters": {
+              "type": "object"
+            },
+            "output_parameters": {
+              "type": "object"
+            },
+            "created_at": {
+              "$ref": "#/definitions/dateTime"
+            },
+            "updated_at": {
+              "$ref": "#/definitions/dateTime"
+            }
+          }
+        }
+      }
+    },
     "BpmnFile": {
       "type": "object",
       "required": [
