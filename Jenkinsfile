@@ -43,6 +43,9 @@ try {
         }
 
         sh """
+
+            cd api/1.0.0/php/SwaggerClient-php/
+
             php -v
 
             if [ ! -f composer.phar ]; then
