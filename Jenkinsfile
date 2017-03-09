@@ -2,7 +2,7 @@
 
         properties([[$class: 'ParametersDefinitionProperty',
             parameterDefinitions: [
-                [$class: 'StringParameterDefinition', defaultValue: '4.0.0.qacore.processmaker.net', description: 'Domain for PMCore installation', name : 'PMCOREHOST'],
+                [$class: 'StringParameterDefinition', defaultValue: '4.0.0.qacore.processmaker.net/api/v1', description: 'URL Path for PMCore API installation', name : 'PMCOREHOST'],
                 [$class: 'StringParameterDefinition', defaultValue: 'Default user key', description: 'Auth key for user Test', name : 'KEY_TEST']
             ]
         ]]);
@@ -63,7 +63,7 @@ try {
         }
 
         stage('Publishing') {
-            System.setProperty("hudson.model.DirectoryBrowserSupport.CSP", "")
+            //System.setProperty("hudson.model.DirectoryBrowserSupport.CSP", "")
             publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'docs/1.0.0/html', reportFiles: 'index.html', reportName: 'API SDK HTML Docs'])
             publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'docs/1.0.0/html2', reportFiles: 'index.html', reportName: 'API SDK HTML v.2'])
         }

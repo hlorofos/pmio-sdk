@@ -130,9 +130,18 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-	require "../../.env";
+        try {
+            /** @var string $host */
+            /** @var array $key */
+            include __DIR__ . "/../../.env";
+        } catch (\Exception $e) {
+            die("Cannot find .env file with functional test settings: " . $e->getMessage());
+        }
 
-        $this->apiInstance = new Api\ProcessmakerApi((new ApiClient())->getConfig()->setHost($host));
+        $apiClient = new ApiClient();
+        $apiClient->getConfig()->setHost($host);
+
+        $this->apiInstance = new Api\ProcessmakerApi($apiClient);
         if (in_array('--debug', $_SERVER['argv'])) {
             $this->apiInstance->getApiClient()->getConfig()->setDebug(true);
             $this->apiInstance->getApiClient()->getConfig()->setDebugFile('mydebug.log');
