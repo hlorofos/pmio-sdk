@@ -56,7 +56,7 @@ node {
             vendor/bin/phpunit test/Api --debug --log-junit=junit.xml || true
         """
 
-        junit 'junit.xml'
+        junit 'api/1.0.0/php/SwaggerClient-php/junit.xml'
 
             echo 'Status: ' + currentBuild.result
     //            hipchatSend (color: 'GREEN', notify: true, room: 'ProcessMaker Core', textFormat: false, failOnError: false,
