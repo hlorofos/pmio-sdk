@@ -49,7 +49,7 @@ try {
             php composer.phar install
             php composer.phar dump-autoload
 
-            vendor/bin/phpunit
+            vendor/bin/phpunit test/Api
         """
         }
 
