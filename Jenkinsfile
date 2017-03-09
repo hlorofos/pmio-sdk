@@ -21,11 +21,9 @@ node {
 try {
     stage('Build') {
 
-        sh "./build.sh clean && ./build.sh"
+        sh "./build.sh"
 
         }
-
-    if (currentBuild.result == 'SUCCESS') {
 
         stage('Acceptance Test') {
         wrap([$class: 'AnsiColorBuildWrapper']) {
@@ -68,6 +66,8 @@ try {
         }
         }
 
+    if (currentBuild.result == 'SUCCESS') {
+
         stage('Publishing') {
             //System.setProperty("hudson.model.DirectoryBrowserSupport.CSP", "")
             publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'docs/1.0.0/html', reportFiles: 'index.html', reportName: 'API SDK HTML Docs'])
@@ -75,9 +75,9 @@ try {
         }
 
     } else {
-  //          hipchatSend (color: 'YELLOW', notify: true, room: 'ProcessMaker Core', textFormat: false, failOnError: false,
-  //                message: "$env.JOB_NAME [#${env.BUILD_NUMBER}] - ${currentBuild.result} (<a href='${env.BUILD_URL}'>Open</a>)"
-  //          )
+            hipchatSend (color: 'YELLOW', notify: true, room: 'ProcessMaker Core', textFormat: false, failOnError: false,
+                  message: "$env.JOB_NAME [#${env.BUILD_NUMBER}] - ${currentBuild.result} (<a href='${env.BUILD_URL}'>Open</a>)"
+            )
     }
 } catch(error) {
         echo error
