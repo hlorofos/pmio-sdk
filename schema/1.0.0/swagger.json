@@ -439,7 +439,7 @@
         }
       }
     },
-    "/processes/{process_id}/instance/{instance_id}/datamodel": {
+    "/processes/{process_id}/instances/{instance_id}/datamodel": {
       "get": {
         "tags": [
           "processmaker"
@@ -3814,9 +3814,9 @@
             },
             "status": {
               "type": "string",
-              "default": "DRAFT",
+              "default": "RUNNING",
               "enum": [
-                "DRAFT",
+                "RUNNING",
                 "TODO",
                 "PAUSED",
                 "COMPLETED",

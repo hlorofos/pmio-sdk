@@ -137,7 +137,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
         }
         /** Try to set accessToken to get Process for test user*/
-        $this->apiInstance->getApiClient()->getConfig()->setAccessToken('eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQ5MWFiNTkzODEyZmNhYzg0NmUwMWY3YjRhOTFkYWQ3ZTNmODk4N2Y5NTgwOTU1YjIzNTQ3YjI1M2Y2YzQ1YjNlNzJiMjYyMTE1YjIzZThlIn0.eyJhdWQiOiIxIiwianRpIjoiNDkxYWI1OTM4MTJmY2FjODQ2ZTAxZjdiNGE5MWRhZDdlM2Y4OTg3Zjk1ODA5NTViMjM1NDdiMjUzZjZjNDViM2U3MmIyNjIxMTViMjNlOGUiLCJpYXQiOjE0ODcwNzg3NzQsIm5iZiI6MTQ4NzA3ODc3NCwiZXhwIjoxNTE4NjE0Nzc0LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.bii03P4LikwLbyqhx7Dp_m1dU6nGO4BebJqts3W5_CJW8W-KkQ40kxKM7z3F3A-wfjj81ZjmcyKtmy7TAZtJuKVlFL7gBl6TpTYRRJqA9j1pOyM2FgoHLCzFtHstsqf-hdf4jZSGYQZxY6a0DfYyaeUdZ8CjaK5pbAN7ArpZpIMWjRbMVlrLET-CfwnfGIpIvWZzrxDi93TkFzNXR90GNMvD99zxjJO1L1hhpKldOtvylzN53eNVt6FisTszTTwOwV8-qdX6egGrnBcC2UuSqrSvhcLckf1zdi8HZAQ4TWuYhJTYH-KPT3P7hR_AGdxZaQwkYjQ0gSNp9WGbehdvNcCdg8ElKTTd5ZXaiEIzJdlOD_kG9Zp1HobjIV-fUivWsiNx8F49ztvlg_N5Vw8XUmU4LYo75Ln1mEFRZJVJF1fWYA2Ws305nnGP7fGQ2-02kd9mPzzcutWh3ft7My-pW4RafAS9ticaJghS4b57VBQfy9bZs5a2DZSUCJDBqMDcMbDa0WccDulif3nYLz7VvoEg6tDnt1sck66pqfI8RoYF13mXlkx6slM1uQhnUQO4ljxGYgHVCRERfLiOsgfaVIeuPARx_cpB9j-JYgWcrDGLcp9OwHd3vaR2kklpPfN5sXmp0akCqJOGWDEX3yDfDdTAZ0LlQ_B9Io4SUYqGfFw');
+        $this->apiInstance->getApiClient()->getConfig()->setAccessToken('eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImM5ZjlmZTFkODRiZDA3MWRjMDc1OTQ3OWQ0MDk1MTFkY2ZkNzZhODhlODQyNjM3OWU4NzMxZmUwZjRhZGRjOGJiMjE5MTRkYjU2MjFlMDllIn0.eyJhdWQiOiIxIiwianRpIjoiYzlmOWZlMWQ4NGJkMDcxZGMwNzU5NDc5ZDQwOTUxMWRjZmQ3NmE4OGU4NDI2Mzc5ZTg3MzFmZTBmNGFkZGM4YmIyMTkxNGRiNTYyMWUwOWUiLCJpYXQiOjE0ODg1MzY5NDksIm5iZiI6MTQ4ODUzNjk0OSwiZXhwIjoxNTIwMDcyOTQ5LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.GFf5dZntDpEZYdA-tM70JkGW5AZO4RzWgGLjTXomGMBrZWZ7fMk9xobHDa2qkHSodZ_7wOsIvtrVzxCO4gNtL8nIMw-JLQBKracw4vzR0Z3rvMDN19I5bGCByJp_pzhCp8mBk_-NQ4bESdpT801OpEItx2gc6BvR64d8ss4r6aOT73h4QI9dug7jHc4C7W8QG6XVmVjm7Yxq_0-L4zyheWdumMFhKIdJC2YpbuF7rACwUI7L4q1sXe9xMPvKGFjoBkV2Z8EXXFDPzhcnPjlh0NS23e1g1S981I2hXqPEGKzKZghj_fR8OYPla21l3WS5DxoV-8IXDvcLFhY39x4z4iNab8mCKiKPX8ogvmlBcfX8mYvEBqeKiSQ-tDHZxOrJIctvoG73dRQwen76cyxX5x1gs8VwT0gqZl8JpU9OsDz2Uh-0mWGI-kivUoWsFSpfZBRlMqHM8LgGvAnDy3wSQQiVThvH0cQqNl4wLIgQ99CwXfNHM2FUHFJYeEoslcTXanYeCsr9_3MbRCxXjtU6URjaEPL2XhsX8Er4Csy2mtuBxnHmZPfZhrj6LcltBvvBMuBkO7YcH5BKofStWJUeJO8NuoXOcQpV5uV-eCGlGPLnLxdQEnxNZYX3vb2c8byWHmMSkoqvWkUNFj2ulB9GK4QHYasp_3MFuNxYmOx_04Y');
 
         $this->testUserUid = $this->apiInstance->myselfUser()->getData()->getId();
 
@@ -1125,7 +1125,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             $processUid = $this->testAddProcess();
             $instanceAttr = new InstanceAttributes();
             $instanceAttr->setName('Instance name');
-            $instanceAttr->setStatus('TODO');
+            //$instanceAttr->setStatus('TODO');
             $instanceAttr->setPin('123456');
             $instanceAttr->setProcessId($processUid);
             $result = $this->apiInstance->addInstance(
@@ -1194,14 +1194,14 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         $array_ids = $this->testAddInstance();
         $itemData = new InstanceAttributes();
         $itemData->setName('New Instance name');
-        $itemData->setStatus('DRAFT');
+        $itemData->setStatus('CANCELLED');
         $result = $this->apiInstance->updateInstance(
             $array_ids['process_uid'],
             $array_ids['instance_uid'],
             new InstanceUpdateItem(['data' => new Instance(['attributes' => $itemData])])
         );
-        $this->assertEquals('New Instance name', $result->getData()->getAttributes()->getName(), 'Name should be updated');
-        $this->assertEquals('DRAFT', $result->getData()->getAttributes()->getStatus(), 'Status should be updated');
+        $this->assertEquals($itemData->getName(), $result->getData()->getAttributes()->getName(), 'Name should be updated');
+        $this->assertEquals($itemData->getStatus(), $result->getData()->getAttributes()->getStatus(), 'Status should be updated');
     }
 
     /**
