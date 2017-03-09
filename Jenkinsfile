@@ -39,7 +39,10 @@ try {
             echo '\$key["Test"] = "${KEY_TEST}";' >>.env
 
             cat .env
+        """
+        }
 
+        sh """
             php -v
 
             if [ ! -f composer.phar ]; then
@@ -49,10 +52,10 @@ try {
             php composer.phar install
             php composer.phar dump-autoload
 
-            vendor/bin/phpunit test/Api
+            vendor/bin/phpunit test/Api --debug --log-junit=junit.xml || true
         """
-        }
 
+        junit 'junit.xml'
 
             echo 'Status: ' + currentBuild.result
     //            hipchatSend (color: 'GREEN', notify: true, room: 'ProcessMaker Core', textFormat: false, failOnError: false,
