@@ -29,8 +29,8 @@ try {
 
             cat .env
 
-            ./build clean
-            ./build
+            ./build.sh clean
+            ./build.sh
             """
         }
     }
