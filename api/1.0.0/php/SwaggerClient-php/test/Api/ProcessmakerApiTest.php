@@ -139,7 +139,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
         }
         /** Try to set accessToken to get Process for test user*/
-        $this->apiInstance->getApiClient()->getConfig()->setAccessToken('eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImVmZjVjYWEwMmM1ZWE5ODdkODJkMjE2YTUzN2E0ZmU1YWFjNDYyYWNmZjJjNTM0ZDFhNWYzMTEzOTg4ZjY3MjNlNTE2NzhjYmUzZDNmYzljIn0.eyJhdWQiOiIxIiwianRpIjoiZWZmNWNhYTAyYzVlYTk4N2Q4MmQyMTZhNTM3YTRmZTVhYWM0NjJhY2ZmMmM1MzRkMWE1ZjMxMTM5ODhmNjcyM2U1MTY3OGNiZTNkM2ZjOWMiLCJpYXQiOjE0ODg5Nzg5NzgsIm5iZiI6MTQ4ODk3ODk3OCwiZXhwIjoxNTIwNTE0OTc4LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.QKVglprS7I7WXedpuQeVnK4tannJ7ToZR3bWy_TjZX8jfr48M3529pM1YKc7jhLis2LsSM-dBdKnBvNuHziQKhZo5c2BPoBJoqyZa-HYmYFMojfcXOf8znJHHDbQso77oy3RdSjmDzyYQXQ1_k3OQXu7G8-Y-JKTspghpsH9PvdTK50UKdKhXxnIEzRjH2HDjeweFAWqiqIJoUCi5Zj7JmO8xSYSiFHJujIDrlCyrvH4n0Lm3t_cwPMy7v7981qs4jLIOko2RtL90Eeih5VmgMZP1MRKeuwNZWXrL3FG_fnL-FjGTziy_-d08BCksyhvbbahqJK03JumSLuArVlVM9YezM2ig41WzrYYzRk5vnwDFyzTgtLycAweRArV3A2h-lIleF6Kq5xuAqIpWa_BCxV_DVOVfdgAWFJVB-Eyxzx-P9nC-nCdXUht6HCnHBabpVzcwx0R76db0cyFOWKYCEKVG-m1Jczh5AYhZTi489cFAqMdeNQR6OvCaUCF8Lf3WZA-7oXlGY7GKbhXkeZRYRYRk3Dp9msY8yFkl2y_6xzkW1vn-ivkhteEZNAVJQGvw59P1kLTkfFQuhPl1sYnWWbRjhVd_WbKk0-cU1aNI5xNp8do1Vl-G_FGTJUSoGkR13G7jLS01kaLuA9HWjnL7tqWS0PO_KFQMWF2ematiXY');
+        $this->apiInstance->getApiClient()->getConfig()->setAccessToken('');
 
         $this->testUserUid = $this->apiInstance->myselfUser()->getData()->getId();
 
