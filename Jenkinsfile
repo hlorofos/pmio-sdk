@@ -21,16 +21,6 @@ node {
 try {
     stage('Build') {
 
-        if ( !fileExists ('.env') || KEY_TEST != 'Default user key') {
-            sh """
-            echo '<?php' >.env
-            echo '\$host = "${PMCOREHOST}";' >>.env
-            echo '\$key["Test"] = "${KEY_TEST}";' >>.env
-
-            cat .env
-         """
-        }
-
         sh "./build.sh clean && ./build.sh"
 
         }
@@ -40,9 +30,29 @@ try {
         stage('Acceptance Test') {
         wrap([$class: 'AnsiColorBuildWrapper']) {
 
-            def dot_env = sh(script: "cat .env |base64 -w0", returnStdout: true).trim();
-            actual_key = sh(script: "cat .env |grep Test | grep -oP '= \"\\K[^\"]+(?=\")'", returnStdout: true).trim();
-            echo "actual key: " + actual_key
+
+        if ( !fileExists ('api/1.0.0/php/SwaggerClient-php/.env') || KEY_TEST != 'Default user key') {
+        sh """
+            cd api/1.0.0/php/SwaggerClient-php/
+            echo '<?php' >.env
+            echo '\$host = "${PMCOREHOST}";' >>.env
+            echo '\$key["Test"] = "${KEY_TEST}";' >>.env
+
+            cat .env
+
+            php -v
+
+            if [ ! -f composer.phar ]; then
+            wget \"https://getcomposer.org/composer.phar\" -O composer.phar
+            fi
+
+            php composer.phar install
+            php composer.phar dump-autoload
+
+            vendor/bin/phpunit
+        """
+        }
+
 
             echo 'Status: ' + currentBuild.result
     //            hipchatSend (color: 'GREEN', notify: true, room: 'ProcessMaker Core', textFormat: false, failOnError: false,
@@ -53,6 +63,7 @@ try {
         }
 
         stage('Publishing') {
+            System.setProperty("hudson.model.DirectoryBrowserSupport.CSP", "")
             publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'docs/1.0.0/html', reportFiles: 'index.html', reportName: 'API SDK HTML Docs'])
             publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'docs/1.0.0/html2', reportFiles: 'index.html', reportName: 'API SDK HTML v.2'])
         }
