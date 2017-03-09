@@ -21,11 +21,11 @@ node {
 try {
     stage('Build') {
 
-       // sh "./build.sh"
+        sh "./build.sh"
 
-        }
+    }
 
-        stage('Acceptance Test') {
+        stage('Functional Test') {
         wrap([$class: 'AnsiColorBuildWrapper']) {
 
 
@@ -59,9 +59,9 @@ try {
         junit 'api/1.0.0/php/SwaggerClient-php/junit.xml'
 
             echo 'Status: ' + currentBuild.result
-    //            hipchatSend (color: 'GREEN', notify: true, room: 'ProcessMaker Core', textFormat: false, failOnError: false,
-    //            message: "<img src='http://ieltsplanet.info/wp-content/uploads/avatars/11860/3135a9543009deaed32574afacdb0c53-bpthumb.png' width=50 height=50 align='left'>$env.JOB_NAME [#${env.BUILD_NUMBER}] - ${currentBuild.result} (<a href='${env.BUILD_URL}'>Open</a>)<br>Deployed to <b>$deploydomain</b>"
-    //            )
+                hipchatSend (color: 'GREEN', notify: true, room: 'ProcessMaker Core', textFormat: false, failOnError: false,
+                message: "<img src='http://ieltsplanet.info/wp-content/uploads/avatars/11860/3135a9543009deaed32574afacdb0c53-bpthumb.png' width=50 height=50 align='left'>$env.JOB_NAME [#${env.BUILD_NUMBER}] - ${currentBuild.result} (<a href='${env.BUILD_URL}'>Open</a>)<br>Deployed to <b>$deploydomain</b>"
+                )
 
         }
         }
@@ -69,7 +69,7 @@ try {
     if (currentBuild.result == 'SUCCESS') {
 
         stage('Publishing') {
-            //System.setProperty("hudson.model.DirectoryBrowserSupport.CSP", "")
+            System.setProperty("hudson.model.DirectoryBrowserSupport.CSP", "")
             publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'docs/1.0.0/html', reportFiles: 'index.html', reportName: 'API SDK HTML Docs'])
             publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'docs/1.0.0/html2', reportFiles: 'index.html', reportName: 'API SDK HTML v.2'])
         }
