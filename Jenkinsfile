@@ -18,7 +18,7 @@ node {
 
     gitCommit = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
 
-//try {
+try {
     stage('Build') {
 
         sh "./build.sh"
@@ -69,7 +69,6 @@ node {
     if (currentBuild.result == 'SUCCESS') {
 
         stage('Publishing') {
-            System.setProperty("hudson.model.DirectoryBrowserSupport.CSP", "")
             publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'docs/1.0.0/html', reportFiles: 'index.html', reportName: 'API SDK HTML Docs'])
             publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'docs/1.0.0/html2', reportFiles: 'index.html', reportName: 'API SDK HTML v.2'])
         }
@@ -79,11 +78,11 @@ node {
                   message: "$env.JOB_NAME [#${env.BUILD_NUMBER}] - ${currentBuild.result} (<a href='${env.BUILD_URL}'>Open</a>)"
             )
     }
-//} catch(error) {
-//        echo error
-//    currentBuild.result = "FAILED"
-//    hipchatSend (color: 'RED', notify: true, room: 'ProcessMaker Core', textFormat: false, failOnError: false,
-//        message: "<img src='http://i.istockimg.com/file_thumbview_approve/86219539/3/stock-illustration-86219539-cute-cartoon-piggy.jpg' width=50 height=50 align='left'>$env.JOB_NAME [#${env.BUILD_NUMBER}] - ${currentBuild.result} (<a href='${env.BUILD_URL}'>Open</a>)"
-//    )
-//}
+} catch(error) {
+        echo error
+    currentBuild.result = "FAILED"
+    hipchatSend (color: 'RED', notify: true, room: 'ProcessMaker Core', textFormat: false, failOnError: false,
+        message: "<img src='http://i.istockimg.com/file_thumbview_approve/86219539/3/stock-illustration-86219539-cute-cartoon-piggy.jpg' width=50 height=50 align='left'>$env.JOB_NAME [#${env.BUILD_NUMBER}] - ${currentBuild.result} (<a href='${env.BUILD_URL}'>Open</a>)"
+    )
+}
 }
