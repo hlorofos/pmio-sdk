@@ -28,12 +28,12 @@ try {
             echo '\$key["Test"] = "${KEY_TEST}";' >>.env
 
             cat .env
-
-            ./build.sh clean
-            ./build.sh
-            """
+         """
         }
-    }
+
+        sh "./build.sh clean && ./build.sh"
+
+        }
 
     if (currentBuild.result == 'SUCCESS') {
 
