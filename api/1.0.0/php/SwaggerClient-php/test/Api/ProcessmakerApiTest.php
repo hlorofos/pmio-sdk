@@ -130,17 +130,27 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->apiInstance = new Api\ProcessmakerApi();
+        try {
+            /** @var string $host */
+            /** @var array $key */
+            include __DIR__ . "/../../.env";
+        } catch (\Exception $e) {
+            die("Cannot find .env file with functional test settings: " . $e->getMessage());
+        }
+
+        $apiClient = new ApiClient();
+        $apiClient->getConfig()->setHost($host);
+
+        $this->apiInstance = new Api\ProcessmakerApi($apiClient);
         if (in_array('--debug', $_SERVER['argv'])) {
             $this->apiInstance->getApiClient()->getConfig()->setDebug(true);
             $this->apiInstance->getApiClient()->getConfig()->setDebugFile('mydebug.log');
 
         }
         /** Try to set accessToken to get Process for test user*/
-        $this->apiInstance->getApiClient()->getConfig()->setAccessToken('eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImM5ZjlmZTFkODRiZDA3MWRjMDc1OTQ3OWQ0MDk1MTFkY2ZkNzZhODhlODQyNjM3OWU4NzMxZmUwZjRhZGRjOGJiMjE5MTRkYjU2MjFlMDllIn0.eyJhdWQiOiIxIiwianRpIjoiYzlmOWZlMWQ4NGJkMDcxZGMwNzU5NDc5ZDQwOTUxMWRjZmQ3NmE4OGU4NDI2Mzc5ZTg3MzFmZTBmNGFkZGM4YmIyMTkxNGRiNTYyMWUwOWUiLCJpYXQiOjE0ODg1MzY5NDksIm5iZiI6MTQ4ODUzNjk0OSwiZXhwIjoxNTIwMDcyOTQ5LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.GFf5dZntDpEZYdA-tM70JkGW5AZO4RzWgGLjTXomGMBrZWZ7fMk9xobHDa2qkHSodZ_7wOsIvtrVzxCO4gNtL8nIMw-JLQBKracw4vzR0Z3rvMDN19I5bGCByJp_pzhCp8mBk_-NQ4bESdpT801OpEItx2gc6BvR64d8ss4r6aOT73h4QI9dug7jHc4C7W8QG6XVmVjm7Yxq_0-L4zyheWdumMFhKIdJC2YpbuF7rACwUI7L4q1sXe9xMPvKGFjoBkV2Z8EXXFDPzhcnPjlh0NS23e1g1S981I2hXqPEGKzKZghj_fR8OYPla21l3WS5DxoV-8IXDvcLFhY39x4z4iNab8mCKiKPX8ogvmlBcfX8mYvEBqeKiSQ-tDHZxOrJIctvoG73dRQwen76cyxX5x1gs8VwT0gqZl8JpU9OsDz2Uh-0mWGI-kivUoWsFSpfZBRlMqHM8LgGvAnDy3wSQQiVThvH0cQqNl4wLIgQ99CwXfNHM2FUHFJYeEoslcTXanYeCsr9_3MbRCxXjtU6URjaEPL2XhsX8Er4Csy2mtuBxnHmZPfZhrj6LcltBvvBMuBkO7YcH5BKofStWJUeJO8NuoXOcQpV5uV-eCGlGPLnLxdQEnxNZYX3vb2c8byWHmMSkoqvWkUNFj2ulB9GK4QHYasp_3MFuNxYmOx_04Y');
+        $this->apiInstance->getApiClient()->getConfig()->setAccessToken($key['Test']);
 
         $this->testUserUid = $this->apiInstance->myselfUser()->getData()->getId();
-
     }
 
     /**
