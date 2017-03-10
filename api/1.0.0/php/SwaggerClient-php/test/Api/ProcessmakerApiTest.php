@@ -132,17 +132,27 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->apiInstance = new Api\ProcessmakerApi();
+        try {
+            /** @var string $host */
+            /** @var array $key */
+            include __DIR__ . "/../../.env";
+        } catch (\Exception $e) {
+            die("Cannot find .env file with functional test settings: " . $e->getMessage());
+        }
+
+        $apiClient = new ApiClient();
+        $apiClient->getConfig()->setHost($host);
+
+        $this->apiInstance = new Api\ProcessmakerApi($apiClient);
         if (in_array('--debug', $_SERVER['argv'])) {
             $this->apiInstance->getApiClient()->getConfig()->setDebug(true);
             $this->apiInstance->getApiClient()->getConfig()->setDebugFile('mydebug.log');
 
         }
         /** Try to set accessToken to get Process for test user*/
-        $this->apiInstance->getApiClient()->getConfig()->setAccessToken('');
+        $this->apiInstance->getApiClient()->getConfig()->setAccessToken($key['Test']);
 
         $this->testUserUid = $this->apiInstance->myselfUser()->getData()->getId();
-
     }
 
     /**
@@ -1127,7 +1137,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             $processUid = $this->testAddProcess();
             $instanceAttr = new InstanceAttributes();
             $instanceAttr->setName('Instance name');
-            $instanceAttr->setStatus('TODO');
+            //$instanceAttr->setStatus('TODO');
             $instanceAttr->setPin('123456');
             $instanceAttr->setProcessId($processUid);
             $result = $this->apiInstance->addInstance(
@@ -1196,14 +1206,14 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         $array_ids = $this->testAddInstance();
         $itemData = new InstanceAttributes();
         $itemData->setName('New Instance name');
-        $itemData->setStatus('DRAFT');
+        $itemData->setStatus('CANCELLED');
         $result = $this->apiInstance->updateInstance(
             $array_ids['process_uid'],
             $array_ids['instance_uid'],
             new InstanceUpdateItem(['data' => new Instance(['attributes' => $itemData])])
         );
-        $this->assertEquals('New Instance name', $result->getData()->getAttributes()->getName(), 'Name should be updated');
-        $this->assertEquals('DRAFT', $result->getData()->getAttributes()->getStatus(), 'Status should be updated');
+        $this->assertEquals($itemData->getName(), $result->getData()->getAttributes()->getName(), 'Name should be updated');
+        $this->assertEquals($itemData->getStatus(), $result->getData()->getAttributes()->getStatus(), 'Status should be updated');
     }
 
     /**
