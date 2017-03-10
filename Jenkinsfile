@@ -23,47 +23,50 @@ try {
 
         sh "./build.sh"
 
-    }
-
-        stage('Functional Test') {
-        wrap([$class: 'AnsiColorBuildWrapper']) {
-
-
-        if ( !fileExists ('api/1.0.0/php/SwaggerClient-php/.env') || KEY_TEST != 'Default user key') {
-        sh """
+        if ( !fileExists ('api/1.0.0/php/SwaggerClient-php/.env') && KEY_TEST != 'Default user key') {
+            sh """
             cd api/1.0.0/php/SwaggerClient-php/
             echo '<?php' >.env
             echo '\$host = "${PMCOREHOST}";' >>.env
             echo '\$key["Test"] = "${KEY_TEST}";' >>.env
 
             cat .env
-        """
+            """
         }
 
-        sh """
+    }
 
-            cd api/1.0.0/php/SwaggerClient-php/
+        if ( !fileExists ('api/1.0.0/php/SwaggerClient-php/.env')) {
 
-            php -v
+            stage('Functional Test') {
+            wrap([$class: 'AnsiColorBuildWrapper']) {
 
-            if [ ! -f composer.phar ]; then
-            wget \"https://getcomposer.org/composer.phar\" -O composer.phar
-            fi
+            sh """
 
-            php composer.phar install
-            php composer.phar dump-autoload
+                cd api/1.0.0/php/SwaggerClient-php/
 
-            vendor/bin/phpunit test/Api --debug --log-junit=junit.xml || true
-        """
+                php -v
 
-        junit 'api/1.0.0/php/SwaggerClient-php/junit.xml'
+                if [ ! -f composer.phar ]; then
+                wget \"https://getcomposer.org/composer.phar\" -O composer.phar
+                fi
 
-            echo 'Status: ' + currentBuild.result
-                hipchatSend (color: 'GREEN', notify: true, room: 'ProcessMaker Core', textFormat: false, failOnError: false,
-                message: "<img src='http://ieltsplanet.info/wp-content/uploads/avatars/11860/3135a9543009deaed32574afacdb0c53-bpthumb.png' width=50 height=50 align='left'>$env.JOB_NAME [#${env.BUILD_NUMBER}] - ${currentBuild.result} (<a href='${env.BUILD_URL}'>Open</a>)"
-                )
+                php composer.phar install
+                php composer.phar dump-autoload
 
-        }
+                vendor/bin/phpunit test/Api --debug --log-junit=junit.xml || true
+            """
+
+            junit 'api/1.0.0/php/SwaggerClient-php/junit.xml'
+
+                echo 'Status: ' + currentBuild.result
+                    hipchatSend (color: 'GREEN', notify: true, room: 'ProcessMaker Core', textFormat: false, failOnError: false,
+                    message: "<img src='http://ieltsplanet.info/wp-content/uploads/avatars/11860/3135a9543009deaed32574afacdb0c53-bpthumb.png' width=50 height=50 align='left'>$env.JOB_NAME [#${env.BUILD_NUMBER}] - ${currentBuild.result} (<a href='${env.BUILD_URL}'>Open</a>)"
+                    )
+
+            }
+            }
+
         }
 
     if (currentBuild.result == 'SUCCESS') {

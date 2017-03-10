@@ -35,6 +35,299 @@
     }
   ],
   "paths": {
+    "/users/{user_id}/clients": {
+      "get": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "This method is intended for retrieving all existing clients of user.",
+        "operationId": "findClients",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "ID of User relative to clients",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page Nr to fetch",
+            "required": false,
+            "default": 1,
+            "type": "integer"
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "Amount of Items per Page",
+            "required": false,
+            "default": 15,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Clients list is ready to use",
+            "schema": {
+              "title": "ClientCollection",
+              "description": "Json Api Response with collection of Items in array",
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Client"
+                  }
+                },
+                "meta": {
+                  "$ref": "#/definitions/Meta"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "This method is intended for creating a new Client for User",
+        "operationId": "addClient",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "ID of User relative to client",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "ClientCreateItem",
+            "in": "body",
+            "description": "JsonApi with the Client object to add",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Client"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "The request has been fulfilled and Client being created",
+            "schema": {
+              "type": "object",
+              "title": "ClientItem",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Client"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      }
+    },
+    "/users/{user_id}/clients/{client_id}": {
+      "get": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "This method is intended for retrieving a client based on ID.",
+        "operationId": "findClientById",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "ID of User to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "client_id",
+            "in": "path",
+            "description": "ID of Client to fetch",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Client Item response",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Client"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Item not found",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "This method is intended for updating an existing client.",
+        "operationId": "updateClient",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "ID of User to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "client_id",
+            "in": "path",
+            "description": "ID of Client to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "ClientUpdateItem",
+            "in": "body",
+            "description": "Client object to edit",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Client"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "JsonApi response with updated Client object",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Client"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "This method is intended for deleting a single item based on the Client and User IDs.",
+        "operationId": "deleteClient",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "ID of of User item",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "client_id",
+            "in": "path",
+            "description": "ID of item to delete",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Item successfully deleted",
+            "schema": {
+              "$ref": "#/definitions/ResultSuccess"
+            }
+          },
+          "404": {
+            "description": "Item not found",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "500": {
+            "description": "Deletion error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      }
+    },
     "/processes/{process_id}/tasks/{task_id}/inputoutput": {
       "get": {
         "tags": [
@@ -3540,6 +3833,54 @@
     }
   },
   "definitions": {
+    "Client": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "example": "1"
+        },
+        "type": {
+          "default": "client",
+          "type": "string",
+          "example": "client"
+        },
+        "attributes": {
+          "type": "object",
+          "required": [
+            "name"
+          ],
+          "properties": {
+            "secret": {
+              "type": "string",
+              "example": "1WfPZS8TepSKgnure5FHUOyvT8340fQH8cz4ISN2"
+            },
+            "name": {
+              "type": "string",
+              "example": "Client Name"
+            },
+            "personal_access_client": {
+              "type": "boolean"
+            },
+            "password_client": {
+              "type": "boolean"
+            },
+            "revoked": {
+              "type": "boolean"
+            },
+            "created_at": {
+              "$ref": "#/definitions/dateTime"
+            },
+            "updated_at": {
+              "$ref": "#/definitions/dateTime"
+            }
+          }
+        }
+      }
+    },
     "InputOutput": {
       "type": "object",
       "required": [
@@ -4580,6 +4921,12 @@
             },
             "updated_at": {
               "$ref": "#/definitions/dateTime"
+            },
+            "clients": {
+              "type":"array",
+              "items":{
+                "type":"integer"
+              }
             }
           }
         }

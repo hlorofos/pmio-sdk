@@ -50,7 +50,6 @@ use Swagger\Client\Model\GroupCreateItem;
 use Swagger\Client\Model\GroupItem;
 use Swagger\Client\Model\GroupRemoveUsersItem;
 use Swagger\Client\Model\GroupUpdateItem;
-use Swagger\Client\Model\InputOutputItem;
 use Swagger\Client\Model\InstanceUpdateItem;
 use Swagger\Client\Model\MetaResult;
 use Swagger\Client\Model\ResultSuccess;
@@ -95,11 +94,14 @@ use Swagger\Client\Model\TaskInstanceAttributes;
 use Swagger\Client\Model\TaskInstanceUpdateItem;
 use Swagger\Client\Model\BpmnFile;
 use Swagger\Client\Model\BpmnFileAttributes;
-use Swagger\Client\Model\MetaLog;
 use Swagger\Client\Model\InputOutputAttributes;
 use Swagger\Client\Model\InputOutput;
 use Swagger\Client\Model\InputOutputCreateItem;
 use Swagger\Client\Model\InputOutputUpdateItem;
+use Swagger\Client\Model\Client;
+use Swagger\Client\Model\ClientCreateItem;
+use Swagger\Client\Model\ClientUpdateItem;
+use Swagger\Client\Model\ClientAttributes;
 /**
  * ProcessmakerApiTest Class Doc Comment
  *
@@ -1575,6 +1577,109 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         try {
             $result = $this->apiInstance->deleteInputOutput($array_uids['process_uid'], $array_uids['task_uid'], $array_uids['inputoutput_uid']);
             $this->assertEquals('1817', $result->getMeta()->getCode(), 'Result code expected');
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+
+    /**
+     * Test case for addClient
+     * @return array of IDs
+     */
+
+    public function testAddClient() {
+        try {
+            /*Creating 2 objects for Flow under the same Process Id */
+            $clientAttr= new ClientAttributes();
+            $clientAttr->setName('Client name');
+            $result = $this->apiInstance->addClient(
+                $this->testUserUid,
+                new ClientCreateItem(
+                    [
+                        'data' => new Client(['attributes' => $clientAttr])
+                    ]
+                )
+            );
+
+            $this->assertNotNull($result->getData()->getId());
+            $this->assertEquals($clientAttr->getName(), $result->getData()->getAttributes()->getName());
+            //print_r($result->getData());
+            return $result->getData()->getId();
+
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    /**
+     * Test case for findClients
+     *
+     */
+
+    public function testFindClients()
+    {
+        try {
+            $this->testAddClient();
+            $result = $this->apiInstance->findClients($this->testUserUid)->getData();
+            $this->assertGreaterThan(0, count($result));
+            //print_r($result);
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    /**
+     * Test case for findClientById
+     *
+     */
+
+    public function testFindClientById()
+    {
+        $clientId = $this->testAddClient();
+        try {
+
+            $result = $this->apiInstance->findClientById($this->testUserUid, $clientId)->getData()->getAttributes();
+            $this->assertNotEmpty($result);
+
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    /**
+     * Test case for updateClient
+     *
+     */
+
+    public function testUpdateClient()
+    {
+        try {
+            $clientId = $this->testAddClient();
+            $itemData = new ClientAttributes();
+            $itemData->setName('New Client name');
+            $result = $this->apiInstance->updateClient(
+                $this->testUserUid,
+                $clientId,
+                new ClientUpdateItem(['data' => new Client(['attributes' => $itemData])])
+            );
+            $this->assertEquals($itemData->getName(), $result->getData()->getAttributes()->getName(), 'Name should be updated');
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    /**
+     * Test case for deleteFlow
+     *
+     */
+
+    public function testDeleteClient()
+    {
+        $clientId = $this->testAddClient();
+        try {
+            $result = $this->apiInstance->deleteClient($this->testUserUid,$clientId);
+            $this->assertEquals('1831', $result->getMeta()->getCode(), 'Result code expected');
         } catch (ApiException $e) {
             $this->dumpError($e, __METHOD__);
         }
