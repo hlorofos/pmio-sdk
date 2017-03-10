@@ -36,7 +36,7 @@ try {
 
     }
 
-        if ( !fileExists ('api/1.0.0/php/SwaggerClient-php/.env')) {
+        if ( fileExists ('api/1.0.0/php/SwaggerClient-php/.env')) {
 
             stage('Functional Test') {
             wrap([$class: 'AnsiColorBuildWrapper']) {
