@@ -23,7 +23,7 @@ try {
 
         sh "./build.sh"
 
-        if ( !fileExists ('api/1.0.0/php/SwaggerClient-php/.env') && params.KEY_TEST != 'Default user key') {
+        if (params.KEY_TEST != 'Default user key') {
             sh """
             cd api/1.0.0/php/SwaggerClient-php/
             echo '<?php' >.env
