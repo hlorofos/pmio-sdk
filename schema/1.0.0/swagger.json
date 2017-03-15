@@ -3,7 +3,7 @@
   "info": {
     "version": "1.0.0",
     "title": "ProcessMaker API",
-    "description": "This ProcessMaker Core API provide access to the new generation engine with BPMN 2.0 support. The current Alpha 1.0 version supports  the part of BPM system functionality like process import, process execution, task assignment",
+    "description": "The ProcessMaker.io API is a developer friendly Workflow and BPM Engine API. The engine provides full native support for BPMN 2.0. The current Alpha 1.0 version supports BPMN 2.0 xml file import, process execution, task assignment, and much more.",
     "termsOfService": "http://processmaker.com/terms/",
     "contact": {
       "name": "ProcessMaker Core API Team",
