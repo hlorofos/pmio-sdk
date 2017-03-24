@@ -105,10 +105,15 @@ use Swagger\Client\Model\ClientUpdateItem;
 use Swagger\Client\Model\ClientAttributes;
 
 use Swagger\Client\Model\EventConnector;
-use Swagger\Client\Model\EventConnectorItem;
 use Swagger\Client\Model\EventConnectorCreateItem;
 use Swagger\Client\Model\EventConnectorAttributes;
 use Swagger\Client\Model\EventConnectorUpdateItem;
+
+use Swagger\Client\Model\TaskConnector;
+use Swagger\Client\Model\TaskConnectorCreateItem;
+use Swagger\Client\Model\TaskConnectorAttributes;
+use Swagger\Client\Model\TaskConnectorUpdateItem;
+
 
 /**
  * ProcessmakerApiTest Class Doc Comment
@@ -1696,12 +1701,12 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
 
     /**
-     * Test case for addEvent
-     * @param  boolean $process
+     * Test case for addEventConnector
      * @return array IDs
      */
 
-    public function testAddEventConnector() {
+    public function testAddEventConnector()
+    {
         try {
 
             /** @var array $arrayUids */
@@ -1709,7 +1714,6 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
             /** @var EventConnectorAttributes $eventConnectorAttr */
             $eventConnectorAttr = new EventConnectorAttributes();
-            $eventConnectorAttr->setConnectorClass('INTERMEDIATE_THROW');
             $eventConnectorAttr->setInputParameters(json_encode([['key' => 'value'], ['key1' => 'value1']]));
             $eventConnectorAttr->setOutputParameters(json_encode([]));
             $result = $this->apiInstance->addEventConnector(
@@ -1730,12 +1734,11 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         } catch (ApiException $e) {
             $this->dumpError($e, __METHOD__);
         }
-
     }
 
 
     /**
-     * Test case for findEvents
+     * Test case for findEventConnectors
      *
      */
 
@@ -1745,23 +1748,23 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             /** @var array $arrayUids */
             $arrayUids = $this->testAddEventConnector();
 
-            /** @var EventConnectorsCollection $result */
             $result = $this->apiInstance->findEventConnectors($arrayUids['process_uid'], $arrayUids['event_uid'])->getData();
 
             $this->assertGreaterThan(0, count($result));
-            //print_r($result);
+
         } catch (ApiException $e) {
             $this->dumpError($e, __METHOD__);
         }
     }
 
     /**
-     * Test case for findEventById
+     * Test case for findEventConnectorById
      *
      */
 
     public function testFindEventConnectorById()
     {
+        /** @var array $arrayUids */
         $arrayUids = $this->testAddEventConnector();
         try {
             /** @var EventConnector $result */
@@ -1778,13 +1781,16 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test case for updateEvent
+     * Test case for updateEventConnector
      *
      */
 
     public function testUpdateEventConnector()
     {
+        /** @var array $arrayUids */
         $arrayUids = $this->testAddEventConnector();
+
+        /** @var EventConnectorAttributes $itemData */
         $itemData = new EventConnectorAttributes();
         $itemData->setInputParameters(json_encode(['new key'=>'new value']));
         $result = $this->apiInstance->updateEventConnector(
@@ -1797,12 +1803,13 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test case for DeleteEvent
+     * Test case for DeleteEventConnector
      *
      */
 
     public function testDeleteEventConnector()
     {
+        /** @var array $arrayUids */
         $arrayUids = $this->testAddEventConnector();
         try {
             $result = $this->apiInstance->deleteEventConnector(
@@ -1816,9 +1823,12 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    private function addIntermediateTrowEvent($process = false) {
+    /** Creates INTERMEDIATE_THROW event for event connector */
+
+    private function addIntermediateTrowEvent()
+    {
         try {
-            ($process == false) ? $processUid = $this->testAddProcess() : $processUid = $process;
+            $processUid = $this->testAddProcess();
             $eventAttr = new EventAttributes();
             $eventAttr->setName('Event name');
             $eventAttr->setType('INTERMEDIATE_THROW');
@@ -1836,14 +1846,173 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
             $this->assertNotNull($result->getData()->getId());
             $this->assertEquals('Event name', $result->getData()->getAttributes()->getName());
-            //print_r($result->getData());
+
             return ['event_uid'=>$result->getData()->getId(),'process_uid'=>$processUid];
+
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+
+    /**
+     * Test case for addTaskConnector
+     * @return array IDs
+     */
+
+    public function testAddTaskConnector()
+    {
+        try {
+
+            /** @var array $arrayUids */
+            $arrayUids = $this->addServiceTask();
+
+            /** @var TaskConnectorAttributes $taskConnectorAttr */
+            $taskConnectorAttr = new TaskConnectorAttributes();
+            $taskConnectorAttr->setInputParameters(json_encode([['key' => 'value'], ['key1' => 'value1']]));
+            $result = $this->apiInstance->addTaskConnector(
+                $arrayUids['process_uid'],
+                $arrayUids['task_uid'],
+                new TaskConnectorCreateItem(
+                    [
+                        'data' => new TaskConnector(['attributes' => $taskConnectorAttr])
+                    ]
+                )
+            );
+
+            $this->assertNotNull($result->getData()->getId());
+            $this->assertEquals($taskConnectorAttr->getInputParameters(), $result->getData()->getAttributes()->getInputParameters());
+            $arrayUids['task_connector_uid'] = $result->getData()->getId();
+            return $arrayUids;
+
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+
+    /**
+     * Test case for findTaskConnectors
+     *
+     */
+
+    public function testFindTaskConnectors()
+    {
+        try {
+            /** @var array $arrayUids */
+            $arrayUids = $this->testAddTaskConnector();
+
+            $result = $this->apiInstance->findTaskConnectors($arrayUids['process_uid'], $arrayUids['task_uid'])->getData();
+
+            $this->assertGreaterThan(0, count($result));
+
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    /**
+     * Test case for findTaskConnectorById
+     *
+     */
+
+    public function testFindTaskConnectorById()
+    {
+        /** @var array $arrayUids */
+        $arrayUids = $this->testAddTaskConnector();
+        try {
+            /** @var TaskConnector $result */
+            $result = $this->apiInstance->findTaskConnectorById(
+                $arrayUids['process_uid'],
+                $arrayUids['task_uid'],
+                $arrayUids['task_connector_uid']
+            )->getData()->getAttributes();
+            $this->assertNotEmpty($result);
+
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    /**
+     * Test case for updateTaskConnector
+     *
+     */
+
+    public function testUpdateTaskConnector()
+    {
+        /** @var array $arrayUids */
+        $arrayUids = $this->testAddTaskConnector();
+
+        /** @var TaskConnectorAttributes $itemData */
+        $itemData = new TaskConnectorAttributes();
+        $itemData->setInputParameters(json_encode(['new key'=>'new value']));
+        $result = $this->apiInstance->updateTaskConnector(
+            $arrayUids['process_uid'],
+            $arrayUids['task_uid'],
+            $arrayUids['task_connector_uid'],
+            new TaskConnectorUpdateItem(['data' => new TaskConnector(['attributes' => $itemData])])
+        );
+        $this->assertEquals($itemData->getInputParameters(), $result->getData()->getAttributes()->getInputParameters(), 'Name should be updated');
+    }
+
+    /**
+     * Test case for DeleteTaskConnector
+     *
+     */
+
+    public function testDeleteTaskConnector()
+    {
+        /** @var array $arrayUids */
+        $arrayUids = $this->testAddTaskConnector();
+        try {
+            $result = $this->apiInstance->deleteTaskConnector(
+                $arrayUids['process_uid'],
+                $arrayUids['task_uid'],
+                $arrayUids['task_connector_uid']
+            );
+            $this->assertEquals('1801', $result->getMeta()->getCode(), 'Result code expected');
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    /** Crates Service Task for task connector */
+
+    private function addServiceTask()
+    {
+        try {
+            $processUid = $this->testAddProcess();
+            $taskAttr = new TaskAttributes();
+            $taskAttr->setName('Task name');
+            $taskAttr->setType('SERVICE-TASK');
+            $taskAttr->setProcessId($processUid);
+            $taskAttr->setAssignType('CYCLIC');
+            $taskAttr->setTransferFly(true);
+            $taskAttr->setCanUpload(true);
+            $taskAttr->setViewUpload(true);
+            $taskAttr->setViewAdditionalDocumentation(true);
+            $taskAttr->setStart(false);
+            $taskAttr->setSendLastEmail(true);
+            $taskAttr->setSelfserviceTimeout(10);
+
+            $result = $this->apiInstance->addTask(
+                $processUid,
+                new TaskCreateItem(
+                    [
+                        'data' => new Task(['attributes' => $taskAttr])
+                    ]
+                )
+            );
+
+            $this->assertNotNull($result->getData()->getId());
+            $this->assertEquals('Task name', $result->getData()->getAttributes()->getName());
+            //print_r($result->getData());
+            return ['task_uid'=>$result->getData()->getId(),'process_uid'=>$processUid];
 
         } catch (ApiException $e) {
             $this->dumpError($e, __METHOD__);
         }
 
     }
-
-
 }
