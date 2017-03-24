@@ -2386,7 +2386,7 @@
             "description": "Created Event connector response",
             "schema": {
               "type": "object",
-              "title": "EventConnectorItem",
+              "title": "EventConnector",
               "required": [
                 "data"
               ],
@@ -4196,7 +4196,6 @@
         },
         "attributes": {
           "required": [
-            "event_id",
             "connector_class"
           ],
           "type": "object",
@@ -4208,10 +4207,10 @@
               "type": "string"
             },
             "input_parameters": {
-              "type": "object"
+              "type": "string"
             },
             "output_parameters": {
-              "type": "object"
+              "type": "string"
             },
             "async_before": {
               "type": "boolean"

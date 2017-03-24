@@ -43,6 +43,7 @@ namespace Swagger\Client;
 use Swagger\Client\Api\ProcessmakerApi;
 use Swagger\Client\Model\BpmnImportItem;
 use Swagger\Client\Model\Error;
+use Swagger\Client\Model\EventConnectorsCollection;
 use Swagger\Client\Model\Group;
 use Swagger\Client\Model\GroupAddUsersItem;
 use Swagger\Client\Model\GroupAttributes;
@@ -102,6 +103,13 @@ use Swagger\Client\Model\Client;
 use Swagger\Client\Model\ClientCreateItem;
 use Swagger\Client\Model\ClientUpdateItem;
 use Swagger\Client\Model\ClientAttributes;
+
+use Swagger\Client\Model\EventConnector;
+use Swagger\Client\Model\EventConnectorItem;
+use Swagger\Client\Model\EventConnectorCreateItem;
+use Swagger\Client\Model\EventConnectorAttributes;
+use Swagger\Client\Model\EventConnectorUpdateItem;
+
 /**
  * ProcessmakerApiTest Class Doc Comment
  *
@@ -135,7 +143,8 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         try {
             /** @var string $host */
             /** @var array $key */
-            include __DIR__ . "/../../.env";
+            //include __DIR__ . "/../../.env";
+            include __DIR__ . "/.env";
         } catch (\Exception $e) {
             die("Cannot find .env file with functional test settings: " . $e->getMessage());
         }
@@ -1683,6 +1692,157 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         } catch (ApiException $e) {
             $this->dumpError($e, __METHOD__);
         }
+    }
+
+
+    /**
+     * Test case for addEvent
+     * @param  boolean $process
+     * @return array IDs
+     */
+
+    public function testAddEventConnector() {
+        try {
+
+            /** @var array $arrayUids */
+            $arrayUids = $this->addIntermediateTrowEvent();
+
+            /** @var EventConnectorAttributes $eventConnectorAttr */
+            $eventConnectorAttr = new EventConnectorAttributes();
+            $eventConnectorAttr->setConnectorClass('INTERMEDIATE_THROW');
+            $eventConnectorAttr->setInputParameters(json_encode([['key' => 'value'], ['key1' => 'value1']]));
+            $eventConnectorAttr->setOutputParameters(json_encode([]));
+            $result = $this->apiInstance->addEventConnector(
+                $arrayUids['process_uid'],
+                $arrayUids['event_uid'],
+                new EventConnectorCreateItem(
+                    [
+                        'data' => new EventConnector(['attributes' => $eventConnectorAttr])
+                    ]
+                )
+            );
+
+            $this->assertNotNull($result->getData()->getId());
+            $this->assertEquals($eventConnectorAttr->getInputParameters(), $result->getData()->getAttributes()->getInputParameters());
+            $arrayUids['event_connector_uid'] = $result->getData()->getId();
+            return $arrayUids;
+
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+
+    }
+
+
+    /**
+     * Test case for findEvents
+     *
+     */
+
+    public function testFindEventConnectors()
+    {
+        try {
+            /** @var array $arrayUids */
+            $arrayUids = $this->testAddEventConnector();
+
+            /** @var EventConnectorsCollection $result */
+            $result = $this->apiInstance->findEventConnectors($arrayUids['process_uid'], $arrayUids['event_uid'])->getData();
+
+            $this->assertGreaterThan(0, count($result));
+            //print_r($result);
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    /**
+     * Test case for findEventById
+     *
+     */
+
+    public function testFindEventConnectorById()
+    {
+        $arrayUids = $this->testAddEventConnector();
+        try {
+            /** @var EventConnector $result */
+            $result = $this->apiInstance->findEventConnectorById(
+                $arrayUids['process_uid'],
+                $arrayUids['event_uid'],
+                $arrayUids['event_connector_uid']
+            )->getData()->getAttributes();
+            $this->assertNotEmpty($result);
+
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    /**
+     * Test case for updateEvent
+     *
+     */
+
+    public function testUpdateEventConnector()
+    {
+        $arrayUids = $this->testAddEventConnector();
+        $itemData = new EventConnectorAttributes();
+        $itemData->setInputParameters(json_encode(['new key'=>'new value']));
+        $result = $this->apiInstance->updateEventConnector(
+            $arrayUids['process_uid'],
+            $arrayUids['event_uid'],
+            $arrayUids['event_connector_uid'],
+            new EventConnectorUpdateItem(['data' => new EventConnector(['attributes' => $itemData])])
+        );
+        $this->assertEquals($itemData->getInputParameters(), $result->getData()->getAttributes()->getInputParameters(), 'Name should be updated');
+    }
+
+    /**
+     * Test case for DeleteEvent
+     *
+     */
+
+    public function testDeleteEventConnector()
+    {
+        $arrayUids = $this->testAddEventConnector();
+        try {
+            $result = $this->apiInstance->deleteEventConnector(
+                $arrayUids['process_uid'],
+                $arrayUids['event_uid'],
+                $arrayUids['event_connector_uid']
+                );
+            $this->assertEquals('1803', $result->getMeta()->getCode(), 'Result code expected');
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+    }
+
+    private function addIntermediateTrowEvent($process = false) {
+        try {
+            ($process == false) ? $processUid = $this->testAddProcess() : $processUid = $process;
+            $eventAttr = new EventAttributes();
+            $eventAttr->setName('Event name');
+            $eventAttr->setType('INTERMEDIATE_THROW');
+            $eventAttr->setProcessId($processUid);
+            $eventAttr->setDefinition('MESSAGE');
+
+            $result = $this->apiInstance->addEvent(
+                $processUid,
+                new EventCreateItem(
+                    [
+                        'data' => new Event(['attributes' => $eventAttr])
+                    ]
+                )
+            );
+
+            $this->assertNotNull($result->getData()->getId());
+            $this->assertEquals('Event name', $result->getData()->getAttributes()->getName());
+            //print_r($result->getData());
+            return ['event_uid'=>$result->getData()->getId(),'process_uid'=>$processUid];
+
+        } catch (ApiException $e) {
+            $this->dumpError($e, __METHOD__);
+        }
+
     }
 
 

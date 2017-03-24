@@ -4,8 +4,7 @@ VERSION="1.0.0"
 CODEGEN="bin/swagger-codegen-cli-modified.jar"
 SCHEMA="schema/$VERSION/swagger.json"
 
-languages="android async-scala csharp cpprest dart flash python-flask go groovy java javascript javascript-closure-angular jmeter objc perl php python qt5cpp ruby scala scalatra sinatra rails5 slim spring swift tizen typescript-angular2 typescript-angular typescript-node typescript-fetch akka-scala clojure lumen"
-docs="swagger html html2 dynamic-html cwiki"
+languages="php"
 
 DetectJava() {
 
