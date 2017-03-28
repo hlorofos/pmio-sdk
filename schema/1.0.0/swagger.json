@@ -2280,7 +2280,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "This method returns all events connectors related to the runned process and event",
+        "description": "This method returns all Event connectors related to the run Process and Event.",
         "operationId": "findEventConnectors",
         "parameters": [
           {
@@ -2346,7 +2346,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "This method is intended for creating a new event connector.",
+        "description": "This method is intended for creating a new Event connector.",
         "operationId": "addEventConnector",
         "parameters": [
           {
@@ -2429,7 +2429,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "This method is intended for retrieving an event connector based on it's ID.",
+        "description": "This method returns all Event connectors related to the run Process and Event.",
         "operationId": "findEventConnectorById",
         "parameters": [
           {
@@ -2487,7 +2487,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "This method lets update the existing Event Connector with new  data",
+        "description": "This method lets update the existing Event connector with new parameters values",
         "operationId": "updateEventConnector",
         "parameters": [
           {
@@ -2568,7 +2568,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "This method is intended for deleting a single item based on event_id and Process ID.",
+        "description": "This method is intended for deleting a single Event connector based on Event ID, Process ID and Connector ID.",
         "operationId": "deleteEventConnector",
         "parameters": [
           {
@@ -2761,7 +2761,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "This method is responsible for retrieving a task based on itâ€™s ID.",
+        "description": "This method is responsible for retrieving a task based on items ID.",
         "operationId": "findTaskById",
         "parameters": [
           {
@@ -2931,7 +2931,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "This method returns all tasks connectors related to the runned process and task",
+        "description": "This method returns all Task connectors related to the run Process and Task.",
         "operationId": "findTaskConnectors",
         "parameters": [
           {
@@ -3080,7 +3080,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "This method is intended for retrieving an task connector based on it's ID.",
+        "description": "This method is intended for retrieving an Task connector based on it's ID.",
         "operationId": "findTaskConnectorById",
         "parameters": [
           {
@@ -3138,7 +3138,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "This method lets update the existing Task Connector with new data",
+        "description": "This method lets update the existing Task connector with new parameters values",
         "operationId": "updateTaskConnector",
         "parameters": [
           {
@@ -3219,7 +3219,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "This method is intended for deleting a single item based on Task Id and Process ID.",
+        "description": "This method is intended for deleting a single Task connector based on Task ID, Process ID and Connector ID.",
         "operationId": "deleteTaskConnector",
         "parameters": [
           {

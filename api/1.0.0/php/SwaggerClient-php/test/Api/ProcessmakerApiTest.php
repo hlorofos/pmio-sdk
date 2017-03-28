@@ -1823,7 +1823,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    /** Creates INTERMEDIATE_THROW event for event connector */
+    /** Create Message Intermediate Throw event for the Event connector */
 
     private function addIntermediateTrowEvent()
     {
@@ -1977,7 +1977,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    /** Crates Service Task for task connector */
+    /** Crates Service Task for Task connector */
 
     private function addServiceTask()
     {
