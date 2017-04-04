@@ -43,7 +43,6 @@ namespace Swagger\Client;
 use Swagger\Client\Api\ProcessmakerApi;
 use Swagger\Client\Model\BpmnImportItem;
 use Swagger\Client\Model\Error;
-use Swagger\Client\Model\EventConnectorsCollection;
 use Swagger\Client\Model\Group;
 use Swagger\Client\Model\GroupAddUsersItem;
 use Swagger\Client\Model\GroupAttributes;
@@ -103,12 +102,10 @@ use Swagger\Client\Model\Client;
 use Swagger\Client\Model\ClientCreateItem;
 use Swagger\Client\Model\ClientUpdateItem;
 use Swagger\Client\Model\ClientAttributes;
-
 use Swagger\Client\Model\EventConnector;
 use Swagger\Client\Model\EventConnectorCreateItem;
 use Swagger\Client\Model\EventConnectorAttributes;
 use Swagger\Client\Model\EventConnectorUpdateItem;
-
 use Swagger\Client\Model\TaskConnector;
 use Swagger\Client\Model\TaskConnectorCreateItem;
 use Swagger\Client\Model\TaskConnectorAttributes;
@@ -148,8 +145,8 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         try {
             /** @var string $host */
             /** @var array $key */
-            //include __DIR__ . "/../../.env";
-            include __DIR__ . "/.env";
+            include __DIR__ . "/../../.env";
+
         } catch (\Exception $e) {
             die("Cannot find .env file with functional test settings: " . $e->getMessage());
         }
