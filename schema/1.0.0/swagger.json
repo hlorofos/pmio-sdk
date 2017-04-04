@@ -2275,6 +2275,352 @@
         }
       }
     },
+    "/processes/{process_id}/events/{event_id}/connectors": {
+      "get": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "This method returns all Event connectors related to the run Process and Event.",
+        "operationId": "findEventConnectors",
+        "parameters": [
+          {
+            "name": "process_id",
+            "in": "path",
+            "description": "ID of Process to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "event_id",
+            "in": "path",
+            "description": "ID of Task to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page Nr to fetch",
+            "required": false,
+            "default": 1,
+            "type": "integer"
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "Amount of Items per Page",
+            "required": false,
+            "default": 15,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Event connectors list",
+            "schema": {
+              "title": "EventConnectorsCollection",
+              "description": "Json Api Response with collection of Items in array",
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/EventConnector"
+                  }
+                },
+                "meta": {
+                  "$ref": "#/definitions/Meta"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "This method is intended for creating a new Event connector.",
+        "operationId": "addEventConnector",
+        "parameters": [
+          {
+            "name": "process_id",
+            "in": "path",
+            "description": "ID of Process to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "event_id",
+            "in": "path",
+            "description": "ID of Event to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "EventConnectorCreateItem",
+            "in": "body",
+            "description": "JsonApi with the EventConnector object to add",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/EventConnector"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created Event connector response",
+            "schema": {
+              "type": "object",
+              "title": "EventConnector",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/EventConnector"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "404": {
+            "description": "Not found item",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      }
+    },
+    "/processes/{process_id}/events/{event_id}/connectors/{connector_id}": {
+      "get": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "This method returns all Event connectors related to the run Process and Event.",
+        "operationId": "findEventConnectorById",
+        "parameters": [
+          {
+            "name": "process_id",
+            "in": "path",
+            "description": "ID of Process to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "event_id",
+            "in": "path",
+            "description": "ID of Event to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "connector_id",
+            "in": "path",
+            "description": "ID of EventConnector to fetch",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Event Connector Item response",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/EventConnector"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Item not found",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "This method lets update the existing Event connector with new parameters values",
+        "operationId": "updateEventConnector",
+        "parameters": [
+          {
+            "name": "process_id",
+            "in": "path",
+            "description": "ID of Process to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "event_id",
+            "in": "path",
+            "description": "ID of Event to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "connector_id",
+            "in": "path",
+            "description": "ID of Event Connector to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "EventConnectorUpdateItem",
+            "in": "body",
+            "description": "EventConnector object to edit",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/EventConnector"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "JsonApi response with updated EventConnector object",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/EventConnector"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "404": {
+            "description": "Item not found",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "This method is intended for deleting a single Event connector based on Event ID, Process ID and Connector ID.",
+        "operationId": "deleteEventConnector",
+        "parameters": [
+          {
+            "name": "process_id",
+            "in": "path",
+            "description": "ID of of Process item",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "event_id",
+            "in": "path",
+            "description": "ID of item to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "connector_id",
+            "in": "path",
+            "description": "ID of EventConnector to fetch",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Item successfully deleted",
+            "schema": {
+              "$ref": "#/definitions/ResultSuccess"
+            }
+          },
+          "404": {
+            "description": "Item not found",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "500": {
+            "description": "Deletion error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      }
+    },
     "/processes/{process_id}/tasks": {
       "get": {
         "tags": [
@@ -2415,7 +2761,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "This method is responsible for retrieving a task based on itâ€™s ID.",
+        "description": "This method is responsible for retrieving a task based on items ID.",
         "operationId": "findTaskById",
         "parameters": [
           {
@@ -2534,7 +2880,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "This method is intended for deleting a single item based on task_id and Process ID.",
+        "description": "This method is intended for deleting a single item based on Task ID (task_id) and Process ID (process_id) parameters",
         "operationId": "deleteTask",
         "parameters": [
           {
@@ -2548,6 +2894,352 @@
             "name": "task_id",
             "in": "path",
             "description": "ID of item to delete",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Item successfully deleted",
+            "schema": {
+              "$ref": "#/definitions/ResultSuccess"
+            }
+          },
+          "404": {
+            "description": "Item not found",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "500": {
+            "description": "Deletion error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      }
+    },
+    "/processes/{process_id}/tasks/{task_id}/connectors": {
+      "get": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "This method returns all Task connectors related to the run Process and Task.",
+        "operationId": "findTaskConnectors",
+        "parameters": [
+          {
+            "name": "process_id",
+            "in": "path",
+            "description": "ID of Process to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "task_id",
+            "in": "path",
+            "description": "ID of Task to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page Nr to fetch",
+            "required": false,
+            "default": 1,
+            "type": "integer"
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "Amount of Items per Page",
+            "required": false,
+            "default": 15,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Task connectors list",
+            "schema": {
+              "title": "TaskConnectorsCollection",
+              "description": "Json Api Response with collection of Items in array",
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/TaskConnector"
+                  }
+                },
+                "meta": {
+                  "$ref": "#/definitions/Meta"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "This method is intended for creating a new task connector.",
+        "operationId": "addTaskConnector",
+        "parameters": [
+          {
+            "name": "process_id",
+            "in": "path",
+            "description": "ID of Process to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "task_id",
+            "in": "path",
+            "description": "ID of Task to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "TaskConnectorCreateItem",
+            "in": "body",
+            "description": "JsonApi with the TaskConnector object to add",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/TaskConnector"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created Task connector response",
+            "schema": {
+              "type": "object",
+              "title": "TaskConnector",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/TaskConnector"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "404": {
+            "description": "Not found item",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      }
+    },
+    "/processes/{process_id}/tasks/{task_id}/connectors/{connector_id}": {
+      "get": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "This method is intended for retrieving an Task connector based on it's ID.",
+        "operationId": "findTaskConnectorById",
+        "parameters": [
+          {
+            "name": "process_id",
+            "in": "path",
+            "description": "ID of Process to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "task_id",
+            "in": "path",
+            "description": "ID of Task to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "connector_id",
+            "in": "path",
+            "description": "ID of TaskConnector to fetch",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Task Connector Item response",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/TaskConnector"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Item not found",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "This method lets update the existing Task connector with new parameters values",
+        "operationId": "updateTaskConnector",
+        "parameters": [
+          {
+            "name": "process_id",
+            "in": "path",
+            "description": "ID of Process to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "task_id",
+            "in": "path",
+            "description": "ID of Task to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "connector_id",
+            "in": "path",
+            "description": "ID of Task Connector to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "TaskConnectorUpdateItem",
+            "in": "body",
+            "description": "TaskConnector object to edit",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/TaskConnector"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "JsonApi response with updated TaskConnector object",
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/TaskConnector"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "404": {
+            "description": "Item not found",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorArray"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "processmaker"
+        ],
+        "description": "This method is intended for deleting a single Task connector based on Task ID, Process ID and Connector ID.",
+        "operationId": "deleteTaskConnector",
+        "parameters": [
+          {
+            "name": "process_id",
+            "in": "path",
+            "description": "ID of Process item to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "task_id",
+            "in": "path",
+            "description": "ID of Task item to fetch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "connector_id",
+            "in": "path",
+            "description": "ID of TaskConnector to fetch",
             "required": true,
             "type": "string"
           }
@@ -3833,6 +4525,98 @@
     }
   },
   "definitions": {
+    "TaskConnector": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "9d705617-cc29-482a-85ff-7f7292f72b31"
+        },
+        "type": {
+          "default": "task_connector",
+          "type": "string",
+          "example": "task_connector"
+        },
+        "attributes": {
+          "type": "object",
+          "properties": {
+            "task_id": {
+              "type": "integer"
+            },
+            "connector_class": {
+              "type": "string",
+              "default": "HttpConnector"
+            },
+            "input_parameters": {
+              "type": "string",
+              "default": "[]"
+            },
+            "output_parameters": {
+              "type": "string",
+              "default": "[]"
+            },
+            "async_before": {
+              "type": "boolean"
+            },
+            "created_at": {
+              "$ref": "#/definitions/dateTime"
+            },
+            "updated_at": {
+              "$ref": "#/definitions/dateTime"
+            }
+          }
+        }
+      }
+    },
+    "EventConnector": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "9d705617-cc29-482a-85ff-7f7292f72b31"
+        },
+        "type": {
+          "default": "event_connector",
+          "type": "string",
+          "example": "event_connector"
+        },
+        "attributes": {
+          "type": "object",
+          "properties": {
+            "event_id": {
+              "type": "integer"
+            },
+            "connector_class": {
+              "type": "string",
+              "default": "CorrelationKeys"
+            },
+            "input_parameters": {
+              "type": "string",
+              "default": "[]"
+            },
+            "output_parameters": {
+              "type": "string",
+              "default": "[]"
+            },
+            "async_before": {
+              "type": "boolean"
+            },
+            "created_at": {
+              "$ref": "#/definitions/dateTime"
+            },
+            "updated_at": {
+              "$ref": "#/definitions/dateTime"
+            }
+          }
+        }
+      }
+    },
     "Client": {
       "type": "object",
       "required": [
@@ -4476,6 +5260,7 @@
                 "INTERMEDIATE-THROW-MESSAGE-EVENT",
                 "INTERMEDIATE-CATCH-MESSAGE-EVENT",
                 "SCRIPT-TASK",
+                "SERVICE-TASK",
                 "USER-TASK",
                 "START-TIMER-EVENT",
                 "INTERMEDIATE-CATCH-TIMER-EVENT",
