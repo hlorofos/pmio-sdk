@@ -2880,7 +2880,7 @@
         "tags": [
           "processmaker"
         ],
-        "description": "This method is intended for deleting a single item based on task_id and Process ID.",
+        "description": "This method is intended for deleting a single item based on Task ID (task_id) and Process ID (process_id) parameters",
         "operationId": "deleteTask",
         "parameters": [
           {
