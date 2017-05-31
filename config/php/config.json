@@ -1,0 +1,9 @@
+{
+"invokerPackage": "ProcessMaker\\PMIO",
+"modelPackage": "ProcessMaker\\PMIO\\Model",
+"apiPackage": "ProcessMaker\\PMIO",
+"packagePath": "pmio-sdk-php",
+"composerProjectName": "pmio-sdk-php",
+"composerVendorName": "ProcessMaker",
+"artifactVersion": "1.0.0"
+}
