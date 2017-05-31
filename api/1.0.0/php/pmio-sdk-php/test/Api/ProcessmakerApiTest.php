@@ -38,78 +38,79 @@
  * Please update the test case below to test the endpoint.
  */
 
-namespace Swagger\Client;
+namespace ProcessMaker\PMIO;
 
-use Swagger\Client\Api\ProcessmakerApi;
-use Swagger\Client\Model\BpmnImportItem;
-use Swagger\Client\Model\Error;
-use Swagger\Client\Model\Group;
-use Swagger\Client\Model\GroupAddUsersItem;
-use Swagger\Client\Model\GroupAttributes;
-use Swagger\Client\Model\GroupCreateItem;
-use Swagger\Client\Model\GroupItem;
-use Swagger\Client\Model\GroupRemoveUsersItem;
-use Swagger\Client\Model\GroupUpdateItem;
-use Swagger\Client\Model\InstanceUpdateItem;
-use Swagger\Client\Model\MetaResult;
-use Swagger\Client\Model\ResultSuccess;
-use Swagger\Client\Model\User;
-use Swagger\Client\Model\UserAttributes;
-use Swagger\Client\Model\UserCreateItem;
-use Swagger\Client\Model\UserIds;
-use Swagger\Client\Model\UserItem;
-use Swagger\Client\Model\UserUpdateItem;
-use Swagger\Client\Model\Process;
-use Swagger\Client\Model\ProcessCreateItem;
-use Swagger\Client\Model\ProcessItem;
-use Swagger\Client\Model\ProcessAttributes;
-use Swagger\Client\Model\Task;
-use Swagger\Client\Model\TaskCreateItem;
-use Swagger\Client\Model\TaskAttributes;
-use Swagger\Client\Model\TaskAddGroupsItem;
-use Swagger\Client\Model\TaskSyncGroupsItem;
-use Swagger\Client\Model\TaskRemoveGroupsItem;
-use Swagger\Client\Model\TaskUpdateItem;
-use Swagger\Client\Model\GroupIds;
-use Swagger\Client\Model\Event;
-use Swagger\Client\Model\EventCreateItem;
-use Swagger\Client\Model\EventAttributes;
-use Swagger\Client\Model\EventUpdateItem;
-use Swagger\Client\Model\Gateway;
-use Swagger\Client\Model\GatewayCreateItem;
-use Swagger\Client\Model\GatewayAttributes;
-use Swagger\Client\Model\GatewayUpdateItem;
-use Swagger\Client\Model\Flow;
-use Swagger\Client\Model\FlowCreateItem;
-use Swagger\Client\Model\FlowUpdateItem;
-use Swagger\Client\Model\FlowAttributes;
-use Swagger\Client\Model\Instance;
-use Swagger\Client\Model\InstanceCreateItem;
-use Swagger\Client\Model\InstanceAttributes;
-use Swagger\Client\Model\DataModel;
-use Swagger\Client\Model\DataModelAttributes;
-use Swagger\Client\Model\TriggerEventCreateItem;
-use Swagger\Client\Model\TaskInstance;
-use Swagger\Client\Model\TaskInstanceAttributes;
-use Swagger\Client\Model\TaskInstanceUpdateItem;
-use Swagger\Client\Model\BpmnFile;
-use Swagger\Client\Model\BpmnFileAttributes;
-use Swagger\Client\Model\InputOutputAttributes;
-use Swagger\Client\Model\InputOutput;
-use Swagger\Client\Model\InputOutputCreateItem;
-use Swagger\Client\Model\InputOutputUpdateItem;
-use Swagger\Client\Model\Client;
-use Swagger\Client\Model\ClientCreateItem;
-use Swagger\Client\Model\ClientUpdateItem;
-use Swagger\Client\Model\ClientAttributes;
-use Swagger\Client\Model\EventConnector;
-use Swagger\Client\Model\EventConnectorCreateItem;
-use Swagger\Client\Model\EventConnectorAttributes;
-use Swagger\Client\Model\EventConnectorUpdateItem;
-use Swagger\Client\Model\TaskConnector;
-use Swagger\Client\Model\TaskConnectorCreateItem;
-use Swagger\Client\Model\TaskConnectorAttributes;
-use Swagger\Client\Model\TaskConnectorUpdateItem;
+use ProcessMaker\PMIO\Model\BpmnImportItem;
+use ProcessMaker\PMIO\Model\Error;
+use ProcessMaker\PMIO\Model\Group;
+use ProcessMaker\PMIO\Model\GroupAddUsersItem;
+use ProcessMaker\PMIO\Model\GroupAttributes;
+use ProcessMaker\PMIO\Model\GroupCreateItem;
+use ProcessMaker\PMIO\Model\GroupItem;
+use ProcessMaker\PMIO\Model\GroupRemoveUsersItem;
+use ProcessMaker\PMIO\Model\GroupUpdateItem;
+use ProcessMaker\PMIO\Model\InstanceUpdateItem;
+use ProcessMaker\PMIO\Model\MetaResult;
+use ProcessMaker\PMIO\Model\ResultSuccess;
+use ProcessMaker\PMIO\Model\TaskItem;
+use ProcessMaker\PMIO\Model\User;
+use ProcessMaker\PMIO\Model\UserAttributes;
+use ProcessMaker\PMIO\Model\UserCreateItem;
+use ProcessMaker\PMIO\Model\UserIds;
+use ProcessMaker\PMIO\Model\UserItem;
+use ProcessMaker\PMIO\Model\UserUpdateItem;
+use ProcessMaker\PMIO\Model\Process;
+use ProcessMaker\PMIO\Model\ProcessCreateItem;
+use ProcessMaker\PMIO\Model\ProcessItem;
+use ProcessMaker\PMIO\Model\ProcessAttributes;
+use ProcessMaker\PMIO\Model\Task;
+use ProcessMaker\PMIO\Model\TaskCreateItem;
+use ProcessMaker\PMIO\Model\TaskAttributes;
+use ProcessMaker\PMIO\Model\TaskAddGroupsItem;
+use ProcessMaker\PMIO\Model\TaskSyncGroupsItem;
+use ProcessMaker\PMIO\Model\TaskRemoveGroupsItem;
+use ProcessMaker\PMIO\Model\TaskUpdateItem;
+use ProcessMaker\PMIO\Model\GroupIds;
+use ProcessMaker\PMIO\Model\Event;
+use ProcessMaker\PMIO\Model\EventCreateItem;
+use ProcessMaker\PMIO\Model\EventAttributes;
+use ProcessMaker\PMIO\Model\EventUpdateItem;
+use ProcessMaker\PMIO\Model\Gateway;
+use ProcessMaker\PMIO\Model\GatewayCreateItem;
+use ProcessMaker\PMIO\Model\GatewayAttributes;
+use ProcessMaker\PMIO\Model\GatewayUpdateItem;
+use ProcessMaker\PMIO\Model\Flow;
+use ProcessMaker\PMIO\Model\FlowCreateItem;
+use ProcessMaker\PMIO\Model\FlowUpdateItem;
+use ProcessMaker\PMIO\Model\FlowAttributes;
+use ProcessMaker\PMIO\Model\Instance;
+use ProcessMaker\PMIO\Model\InstanceCreateItem;
+use ProcessMaker\PMIO\Model\InstanceAttributes;
+use ProcessMaker\PMIO\Model\DataModel;
+use ProcessMaker\PMIO\Model\DataModelAttributes;
+use ProcessMaker\PMIO\Model\TriggerEventCreateItem;
+use ProcessMaker\PMIO\Model\TaskInstance;
+use ProcessMaker\PMIO\Model\TaskInstanceAttributes;
+use ProcessMaker\PMIO\Model\TaskInstanceUpdateItem;
+use ProcessMaker\PMIO\Model\BpmnFile;
+use ProcessMaker\PMIO\Model\BpmnFileAttributes;
+use ProcessMaker\PMIO\Model\InputOutputAttributes;
+use ProcessMaker\PMIO\Model\InputOutput;
+use ProcessMaker\PMIO\Model\InputOutputCreateItem;
+use ProcessMaker\PMIO\Model\InputOutputUpdateItem;
+use ProcessMaker\PMIO\Model\Client;
+use ProcessMaker\PMIO\Model\ClientCreateItem;
+use ProcessMaker\PMIO\Model\ClientUpdateItem;
+use ProcessMaker\PMIO\Model\ClientAttributes;
+use ProcessMaker\PMIO\Model\EventConnector;
+use ProcessMaker\PMIO\Model\EventConnectorCreateItem;
+use ProcessMaker\PMIO\Model\EventConnectorAttributes;
+use ProcessMaker\PMIO\Model\EventConnectorUpdateItem;
+use ProcessMaker\PMIO\Model\TaskConnector;
+use ProcessMaker\PMIO\Model\TaskConnectorCreateItem;
+use ProcessMaker\PMIO\Model\TaskConnectorAttributes;
+use ProcessMaker\PMIO\Model\TaskConnectorUpdateItem;
+use ProcessMaker\PMIO\ProcessmakerApi;
 
 
 /**
@@ -154,7 +155,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         $apiClient = new ApiClient();
         $apiClient->getConfig()->setHost($host);
 
-        $this->apiInstance = new Api\ProcessmakerApi($apiClient);
+        $this->apiInstance = new ProcessmakerApi($apiClient);
         if (in_array('--debug', $_SERVER['argv'])) {
             $this->apiInstance->getApiClient()->getConfig()->setDebug(true);
             $this->apiInstance->getApiClient()->getConfig()->setDebugFile('mydebug.log');
@@ -193,7 +194,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         try {
 
             $groupAtt = new GroupAttributes();
-            $groupAtt->setCode('Test Code '.mt_rand(100000,999999));
+            $groupAtt->setCode('Test Code ' . mt_rand(100000, 999999));
             $groupAtt->setTitle('Group title');
 
             /** @var GroupItem $result */
@@ -224,7 +225,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             $userAtt->setFirstname('Johnny');
             $userAtt->setLastname('Doe');
             $userAtt->setPassword('password');
-            $userAtt->setUsername('Username ' . mt_rand(10000000,99999999));
+            $userAtt->setUsername('Username ' . mt_rand(10000000, 99999999));
             $userAtt->setEmail('email@at.com');
 
             /** @var UserItem $result */
@@ -243,7 +244,6 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test case for addUsersToGroup
-     *
      */
     public function testAddUsersToGroup($user = false)
     {
@@ -251,7 +251,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         $groupId = $this->testAddGroup();
         $this->assertNotNull($groupId, 'Group should be created');
 
-        /** @var string $userIdId */
+        /** @var string $userId */
         (!$user) ? $userId = $this->testAddUser() : $userId = $user;
         $GroupAddUsersItem = new GroupAddUsersItem([
             'data' => new UserIds([
@@ -287,7 +287,8 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         ]);
 
         /** Try to attach UsersItem to given group
-         * @var MetaResult $result */
+         * @var MetaResult $result
+         */
         $result = $this->apiInstance->addUsersToGroup($groupId, $UsersItem);
         $this->assertEquals('1021', $result->getMeta()->getCode(), 'User should be attached to the Group');
 
@@ -304,8 +305,6 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
     /**
      * Test case for syncUsersToGroup
      */
-
-
     public function testSyncUsersToGroup()
     {
         /** @var string $groupId */
@@ -334,9 +333,6 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test case for findGroupById
-     *
-     *
-     *
      */
     public function testFindGroupById()
     {
@@ -363,7 +359,6 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test case for findGroups
-     *
      */
     public function testFindGroups()
     {
@@ -379,11 +374,10 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test case for findUserById
-     *
      */
     public function testFindUserById()
     {
-        $userId= $this->testAddUser();
+        $userId = $this->testAddUser();
         try {
             $result = $this->apiInstance->findUserById($userId)->getData()->getAttributes();
             $this->assertNotEmpty($result);
@@ -395,7 +389,6 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test case for findUsers
-     *
      */
     public function testFindUsers()
     {
@@ -412,7 +405,6 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test case for updateGroup
-     *
      */
     public function testUpdateGroup()
     {
@@ -431,7 +423,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
      */
     public function testUpdateUser()
     {
-        $newUsername = 'New ' . mt_rand(10000000,99999999);
+        $newUsername = 'New ' . mt_rand(10000000, 99999999);
         $userId = $this->testAddUser();
         $itemData = new UserAttributes();
         $itemData->setUsername($newUsername);
@@ -444,7 +436,6 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test case for deleteUser
-     *
      */
     public function testDeleteUser()
     {
@@ -482,13 +473,13 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
     private function dumpError(ApiException $e, $methodName)
     {
-        echo "Exception when calling $methodName, ". $e->getMessage(). PHP_EOL;
+        echo "Exception when calling $methodName, " . $e->getMessage() . PHP_EOL;
         if ($e->getResponseObject()) {
             /** @var Error[] $errorArray */
             $errorArray = $e->getResponseObject()->getErrors();
             print_r($errorArray);
         }
-        $this->assertNull(true, "Exception when calling $methodName, ". $e->getMessage());
+        $this->assertNull(true, "Exception when calling $methodName, " . $e->getMessage());
     }
 
     /**
@@ -496,7 +487,8 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
      *
      */
 
-    public function testAddProcess() {
+    public function testAddProcess()
+    {
         try {
 
             $processAtt = new ProcessAttributes();
@@ -523,14 +515,11 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         } catch (ApiException $e) {
             $this->dumpError($e, __METHOD__);
         }
-
     }
 
     /**
      * Test case for findProcessById
-     *
      */
-
     public function testFindProcessById()
     {
 
@@ -548,9 +537,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test case for findProcesses
-     *
      */
-
     public function testFindProcesses()
     {
         try {
@@ -564,9 +551,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test case for deleteProcess
-     *
      */
-
     public function testDeleteProcess()
     {
         $processId = $this->testAddProcess();
@@ -580,14 +565,13 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-
     /**
      * Test case for addTask
      * @param boolean $process
      * @return array of IDs
      */
-
-    public function testAddTask($process = false) {
+    public function testAddTask($process = false)
+    {
         try {
             ($process == false) ? $processUid = $this->testAddProcess() : $processUid = $process;
             $taskAttr = new TaskAttributes();
@@ -616,7 +600,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             $this->assertNotNull($result->getData()->getId());
             $this->assertEquals('Task name', $result->getData()->getAttributes()->getName());
             //print_r($result->getData());
-            return ['task_uid'=>$result->getData()->getId(),'process_uid'=>$processUid];
+            return ['task_uid' => $result->getData()->getId(), 'process_uid' => $processUid];
 
         } catch (ApiException $e) {
             $this->dumpError($e, __METHOD__);
@@ -626,9 +610,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test case for findTasks
-     *
      */
-
     public function testFindTasks()
     {
         try {
@@ -642,14 +624,12 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test case for findTaskById
-     *
      */
-
     public function testFindTaskById()
     {
         $array_ids = $this->testAddTask();
         try {
-            $result = $this->apiInstance->findTaskById($array_ids['process_uid'],$array_ids['task_uid'])->getData()->getAttributes();
+            $result = $this->apiInstance->findTaskById($array_ids['process_uid'], $array_ids['task_uid'])->getData()->getAttributes();
             $this->assertNotEmpty($result);
 
         } catch (ApiException $e) {
@@ -659,9 +639,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test case for updateTask
-     *
      */
-
     public function testUpdateTask()
     {
         $array_ids = $this->testAddTask();
@@ -677,14 +655,12 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test case for deleteTask
-     *
      */
-
     public function testDeleteTask()
     {
         $array_ids = $this->testAddTask();
         try {
-            $result = $this->apiInstance->deleteTask($array_ids['process_uid'],$array_ids['task_uid']);
+            $result = $this->apiInstance->deleteTask($array_ids['process_uid'], $array_ids['task_uid']);
             $this->assertEquals('1122', $result->getMeta()->getCode(), 'Result code expected');
         } catch (ApiException $e) {
             $this->dumpError($e, __METHOD__);
@@ -695,16 +671,15 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
      * Test case for addGroupsToTask
      * @return array of IDs
      */
-
     public function testAddGroupsToTask($group = false)
     {
         /** @var string $groupId */
-        (!$group) ? $groupId = $this->testAddGroup() : $groupId = $group ;
+        (!$group) ? $groupId = $this->testAddGroup() : $groupId = $group;
 
 
-        /** @var array $array_ids of Process and Task*/
+        /** @var array $array_ids of Process and Task */
         $array_ids = $this->testAddTask();
-        $this->assertEquals(2,count($array_ids), 'We should get Process UID and Task UID');
+        $this->assertEquals(2, count($array_ids), 'We should get Process UID and Task UID');
 
         $taskAddGroupsItem = new TaskAddGroupsItem([
             'data' => new GroupIds([
@@ -730,16 +705,14 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test case for syncGroupsToTask
-     *
      */
-
     public function testSyncGroupsToTask()
     {
         /** @var string $groupId */
         $groupId = $this->testAddGroup();
         $this->assertNotNull($groupId, 'Group should be created');
 
-        /** @var array $array_ids of Process and Task*/
+        /** @var array $array_ids of Process and Task */
         $array_ids = $this->testAddTask();
         $this->assertEquals(2, count($array_ids), 'We should get Process UID and Task UID');
 
@@ -765,12 +738,10 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test case for removeGroupsFromTask
-     *
      */
-
     public function testRemoveGroupsFromTask()
     {
-        /** @var array $array_ids of Process and Task and ID of attached group*/
+        /** @var array $array_ids of Process and Task and ID of attached group */
         $array_ids = $this->testAddGroupsToTask();
 
         $groupItems = new TaskRemoveGroupsItem([
@@ -780,8 +751,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         ]);
 
         try {
-
-            /** @var MetaResult $result */
+            /** @var ResultSuccess $result */
             $result = $this->apiInstance->removeGroupsFromTask(
                 $array_ids['process_uid'],
                 $array_ids['task_uid'],
@@ -798,8 +768,8 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
      * @param  boolean $process
      * @return array IDs
      */
-
-    public function testAddEvent($process = false) {
+    public function testAddEvent($process = false)
+    {
         try {
             ($process == false) ? $processUid = $this->testAddProcess() : $processUid = $process;
             $eventAttr = new EventAttributes();
@@ -820,48 +790,43 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             $this->assertNotNull($result->getData()->getId());
             $this->assertEquals('Event name', $result->getData()->getAttributes()->getName());
             //print_r($result->getData());
-            return ['event_uid'=>$result->getData()->getId(),'process_uid'=>$processUid];
+            return ['event_uid' => $result->getData()->getId(), 'process_uid' => $processUid];
 
         } catch (ApiException $e) {
             $this->dumpError($e, __METHOD__);
         }
-
     }
 
     /**
      * Test case for triggerEvents
-     *
      */
     public function testTriggerEvent()
     {
-        $arrayContent = ['some_key'=>10,'one_more_key'=>5];
+        $arrayContent = ['some_key' => 10, 'one_more_key' => 5];
         $arrayUids = $this->testAddEvent();
         $dataModelattr = new DataModelAttributes();
         $dataModelattr->setContent(json_encode($arrayContent));
         $result = $this->apiInstance->eventTrigger(
             $arrayUids['process_uid'],
             $arrayUids['event_uid'],
-                new TriggerEventCreateItem(
-                    [
-                        'data' => new DataModel(['attributes' => $dataModelattr])
-                    ]
-                )
+            new TriggerEventCreateItem(
+                [
+                    'data' => new DataModel(['attributes' => $dataModelattr])
+                ]
+            )
         );
         $this->assertNotEmpty($result->getData()->getAttributes()->getContent());
         $respContent = $result->getData()->getAttributes()->getContent();
         /** Try to check our array responded */
         foreach ($arrayContent as $key => $value) {
-            $this->assertEquals($value,$respContent[$key],"Key $key should be equaled to $value");
+            $this->assertEquals($value, $respContent[$key], "Key $key should be equaled to $value");
         }
     }
 
 
-
     /**
      * Test case for findEvents
-     *
      */
-
     public function testFindEvents()
     {
         try {
@@ -875,15 +840,13 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test case for findEventById
-     *
      */
-
     public function testFindEventById()
     {
         $array_ids = $this->testAddEvent();
         try {
 
-            $result = $this->apiInstance->findEventById($array_ids['process_uid'],$array_ids['event_uid'])->getData()->getAttributes();
+            $result = $this->apiInstance->findEventById($array_ids['process_uid'], $array_ids['event_uid'])->getData()->getAttributes();
             $this->assertNotEmpty($result);
 
         } catch (ApiException $e) {
@@ -893,9 +856,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test case for updateEvent
-     *
      */
-
     public function testUpdateEvent()
     {
         $array_ids = $this->testAddEvent();
@@ -911,14 +872,12 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test case for DeleteEvent
-     *
      */
-
     public function testDeleteEvent()
     {
         $array_ids = $this->testAddEvent();
         try {
-            $result = $this->apiInstance->deleteEvent($array_ids['process_uid'],$array_ids['event_uid']);
+            $result = $this->apiInstance->deleteEvent($array_ids['process_uid'], $array_ids['event_uid']);
             $this->assertEquals('1770', $result->getMeta()->getCode(), 'Result code expected');
         } catch (ApiException $e) {
             $this->dumpError($e, __METHOD__);
@@ -929,8 +888,8 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
      * Test case for addGateway
      * @return array of IDs
      */
-
-    public function testAddGateway() {
+    public function testAddGateway()
+    {
         try {
             $processUid = $this->testAddProcess();
             $gatewayAttr = new GatewayAttributes();
@@ -950,19 +909,16 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             $this->assertNotNull($result->getData()->getId());
             $this->assertEquals('Gateway name', $result->getData()->getAttributes()->getName());
             //print_r($result->getData());
-            return ['gateway_uid'=>$result->getData()->getId(),'process_uid'=>$processUid];
+            return ['gateway_uid' => $result->getData()->getId(), 'process_uid' => $processUid];
 
         } catch (ApiException $e) {
             $this->dumpError($e, __METHOD__);
         }
-
     }
 
     /**
      * Test case for findGateways
-     *
      */
-
     public function testFindGateways()
     {
         try {
@@ -976,15 +932,13 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test case for findGatewayById
-     *
      */
-
     public function testFindGatewayById()
     {
         $array_ids = $this->testAddGateway();
         try {
 
-            $result = $this->apiInstance->findGatewayById($array_ids['process_uid'],$array_ids['gateway_uid'])->getData()->getAttributes();
+            $result = $this->apiInstance->findGatewayById($array_ids['process_uid'], $array_ids['gateway_uid'])->getData()->getAttributes();
             $this->assertNotEmpty($result);
 
         } catch (ApiException $e) {
@@ -994,9 +948,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test case for updateGateway
-     *
      */
-
     public function testUpdateGateway()
     {
         $array_ids = $this->testAddGateway();
@@ -1012,14 +964,12 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test case for deleteGateway
-     *
      */
-
     public function testDeleteGateway()
     {
         $array_ids = $this->testAddGateway();
         try {
-            $result = $this->apiInstance->deleteGateway($array_ids['process_uid'],$array_ids['gateway_uid']);
+            $result = $this->apiInstance->deleteGateway($array_ids['process_uid'], $array_ids['gateway_uid']);
             $this->assertEquals('1751', $result->getMeta()->getCode(), 'Result code expected');
         } catch (ApiException $e) {
             $this->dumpError($e, __METHOD__);
@@ -1030,14 +980,14 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
      * Test case for addFlow
      * @return array of IDs
      */
-
-    public function testAddFlow($process = false) {
+    public function testAddFlow($process = false)
+    {
         try {
             ($process == false) ? $processUid = $this->testAddProcess() : $processUid = $process;
             /*Creating 2 objects for Flow under the same Process Id */
             $task = $this->testAddTask($processUid);
             $event = $this->testAddEvent($processUid);
-            $flowAttr= new FlowAttributes();
+            $flowAttr = new FlowAttributes();
             $flowAttr->setName('Flow name');
             $flowAttr->setType('SEQUENTIAL');
             $flowAttr->setProcessId($processUid);
@@ -1059,7 +1009,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             $this->assertNotNull($result->getData()->getId());
             $this->assertEquals('Flow name', $result->getData()->getAttributes()->getName());
             //print_r($result->getData());
-            return ['flow_uid'=>$result->getData()->getId(),'process_uid'=>$processUid];
+            return ['flow_uid' => $result->getData()->getId(), 'process_uid' => $processUid];
 
         } catch (ApiException $e) {
             $this->dumpError($e, __METHOD__);
@@ -1092,7 +1042,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         $array_ids = $this->testAddFlow();
         try {
 
-            $result = $this->apiInstance->findFlowById($array_ids['process_uid'],$array_ids['flow_uid'])->getData()->getAttributes();
+            $result = $this->apiInstance->findFlowById($array_ids['process_uid'], $array_ids['flow_uid'])->getData()->getAttributes();
             $this->assertNotEmpty($result);
 
         } catch (ApiException $e) {
@@ -1131,7 +1081,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
     {
         $array_ids = $this->testAddFlow();
         try {
-            $result = $this->apiInstance->deleteFlow($array_ids['process_uid'],$array_ids['flow_uid']);
+            $result = $this->apiInstance->deleteFlow($array_ids['process_uid'], $array_ids['flow_uid']);
             $this->assertEquals('1761', $result->getMeta()->getCode(), 'Result code expected');
         } catch (ApiException $e) {
             $this->dumpError($e, __METHOD__);
@@ -1143,7 +1093,8 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
      * @return array of IDs
      */
 
-    public function testAddInstance() {
+    public function testAddInstance()
+    {
         try {
             $processUid = $this->testAddProcess();
             $instanceAttr = new InstanceAttributes();
@@ -1163,7 +1114,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             $this->assertNotNull($result->getData()->getId());
             $this->assertEquals('Instance name', $result->getData()->getAttributes()->getName());
             //print_r($result->getData());
-            return ['instance_uid'=>$result->getData()->getId(),'process_uid'=>$processUid];
+            return ['instance_uid' => $result->getData()->getId(), 'process_uid' => $processUid];
 
         } catch (ApiException $e) {
             $this->dumpError($e, __METHOD__);
@@ -1178,12 +1129,12 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
     public function testFindInstances($processUid = false)
     {
-        ( !$processUid ? $processUid = $this->testAddInstance()['process_uid'] : $processUid);
+        (!$processUid ? $processUid = $this->testAddInstance()['process_uid'] : $processUid);
         try {
             $result = $this->apiInstance->findInstances($processUid)->getData();
             $this->assertGreaterThan(0, count($result));
             //Return first Instance relative with ProcessUid for Getting DataModel
-            return ['instance_uid'=>$result[0]->getId()];
+            return ['instance_uid' => $result[0]->getId()];
             //print_r($result);
         } catch (ApiException $e) {
             $this->dumpError($e, __METHOD__);
@@ -1199,7 +1150,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
     {
         $array_ids = $this->testAddInstance();
         try {
-            $result = $this->apiInstance->findInstanceById($array_ids['process_uid'],$array_ids['instance_uid'])->getData()->getAttributes();
+            $result = $this->apiInstance->findInstanceById($array_ids['process_uid'], $array_ids['instance_uid'])->getData()->getAttributes();
             $this->assertNotEmpty($result);
 
         } catch (ApiException $e) {
@@ -1236,7 +1187,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
     {
         $array_ids = $this->testAddInstance();
         try {
-            $result = $this->apiInstance->deleteInstance($array_ids['process_uid'],$array_ids['instance_uid']);
+            $result = $this->apiInstance->deleteInstance($array_ids['process_uid'], $array_ids['instance_uid']);
             $this->assertEquals('1756', $result->getMeta()->getCode(), 'Result code expected');
         } catch (ApiException $e) {
             $this->dumpError($e, __METHOD__);
@@ -1256,11 +1207,11 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         $startEvent = $this->testAddEvent($arrayUids['process_uid']);
         $endEvent = $this->AddEvent($arrayUids['process_uid']);
 
-        $this->addFlowEventToTask($arrayUids['process_uid'],$startEvent['event_uid'],$arrayUids['task_uid']);
-        $this->addFlowForTaskToEndEvent($arrayUids['process_uid'],$arrayUids['task_uid'],$endEvent['event_uid']);
+        $this->addFlowEventToTask($arrayUids['process_uid'], $startEvent['event_uid'], $arrayUids['task_uid']);
+        $this->addFlowForTaskToEndEvent($arrayUids['process_uid'], $arrayUids['task_uid'], $endEvent['event_uid']);
 
         /** Try to trigger startevent */
-        $this->TriggerStartEvent($startEvent['event_uid'],$arrayUids['process_uid']);
+        $this->TriggerStartEvent($startEvent['event_uid'], $arrayUids['process_uid']);
 
         return $arrayUids;
 
@@ -1271,7 +1222,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
      * @param string $processUid
      */
 
-    private function TriggerStartEvent($startEvent,$processUid)
+    private function TriggerStartEvent($startEvent, $processUid)
     {
         $arrayContent = ['key' => 6, 'add' => 15, 'confirm' => false];
         $dataModelattr = new DataModelAttributes();
@@ -1289,21 +1240,22 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         $respContent = $result->getData()->getAttributes()->getContent();
         /** Try to check our array responded */
         foreach ($arrayContent as $key => $value) {
-            $this->assertEquals($value,$respContent[$key],"Key $key should be equaled to $value");
+            $this->assertEquals($value, $respContent[$key], "Key $key should be equaled to $value");
         }
     }
 
-     /**  For testTaskInstanceShowIndex
+    /**  For testTaskInstanceShowIndex
      * @param bool $process or string $process
      * @param string $taskUid
      * @return array
      */
 
-    private function addFlowForTaskToEndEvent($process = false, $taskUid, $eventUid) {
+    private function addFlowForTaskToEndEvent($process = false, $taskUid, $eventUid)
+    {
         try {
             ($process == false) ? $processUid = $this->testAddProcess() : $processUid = $process;
             /*Creating 2 objects for Flow under the same Process Id */
-            $flowAttr= new FlowAttributes();
+            $flowAttr = new FlowAttributes();
             $flowAttr->setName('Flow Event with Event');
             $flowAttr->setType('SEQUENTIAL');
             $flowAttr->setProcessId($processUid);
@@ -1325,7 +1277,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             $this->assertNotNull($result->getData()->getId());
             $this->assertEquals('Flow Event with Event', $result->getData()->getAttributes()->getName());
             //print_r($result->getData());
-            return ['flow_uid'=>$result->getData()->getId(),'process_uid'=>$processUid];
+            return ['flow_uid' => $result->getData()->getId(), 'process_uid' => $processUid];
 
         } catch (ApiException $e) {
             $this->dumpError($e, __METHOD__);
@@ -1340,11 +1292,12 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
      */
 
 
-    private function addFlowEventToTask($process = false, $startEventUid, $userTaskUid) {
+    private function addFlowEventToTask($process = false, $startEventUid, $userTaskUid)
+    {
         try {
             ($process == false) ? $processUid = $this->testAddProcess() : $processUid = $process;
             /*Creating 2 objects for Flow under the same Process Id */
-            $flowAttr= new FlowAttributes();
+            $flowAttr = new FlowAttributes();
             $flowAttr->setName('Flow Task with Event');
             $flowAttr->setType('SEQUENTIAL');
             $flowAttr->setProcessId($processUid);
@@ -1366,7 +1319,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             $this->assertNotNull($result->getData()->getId());
             $this->assertEquals('Flow Task with Event', $result->getData()->getAttributes()->getName());
             //print_r($result->getData());
-            return ['flow_uid'=>$result->getData()->getId(),'process_uid'=>$processUid];
+            return ['flow_uid' => $result->getData()->getId(), 'process_uid' => $processUid];
 
         } catch (ApiException $e) {
             $this->dumpError($e, __METHOD__);
@@ -1379,7 +1332,8 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
      * @return array
      */
 
-    private function addEvent($process = false) {
+    private function addEvent($process = false)
+    {
         try {
             ($process == false) ? $processUid = $this->testAddProcess() : $processUid = $process;
             $eventAttr = new EventAttributes();
@@ -1400,7 +1354,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             $this->assertNotNull($result->getData()->getId());
             $this->assertEquals('End Event', $result->getData()->getAttributes()->getName());
             //print_r($result->getData());
-            return ['event_uid'=>$result->getData()->getId(),'process_uid'=>$processUid];
+            return ['event_uid' => $result->getData()->getId(), 'process_uid' => $processUid];
 
         } catch (ApiException $e) {
             $this->dumpError($e, __METHOD__);
@@ -1477,12 +1431,12 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         $bpmnAttr = new BpmnFileAttributes();
         $bpmnAttr->setBpmn($bpmn);
         try {
-           $result = $this->apiInstance->importBpmnFile(new BpmnImportItem(
+            $result = $this->apiInstance->importBpmnFile(new BpmnImportItem(
                 [
                     'data' => new BpmnFile(['attributes' => $bpmnAttr])
                 ]
             ));
-            $this->assertEquals(2,count($result->getData()));
+            $this->assertEquals(2, count($result->getData()));
             $this->assertNotEmpty($result->getMeta());
 
         } catch (ApiException $e) {
@@ -1498,7 +1452,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         try {
 
 
-            $inputOutputAttr= new InputOutputAttributes();
+            $inputOutputAttr = new InputOutputAttributes();
             $inputOutputAttr->setInputParameters(['some_key']);
             $inputOutputAttr->setOutputParameters(['some_key_1']);
             $result = $this->apiInstance->addInputOutput(
@@ -1530,12 +1484,12 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
     public function testFindInputOutput()
     {
         $arrayUids = $this->testAddInputOutput();
-       try {
+        try {
             $result = $this->apiInstance->findInputOutputs($arrayUids['process_uid'], $arrayUids['task_uid'])->getData();
             $this->assertGreaterThan(0, count($result));
-       } catch (ApiException $e) {
+        } catch (ApiException $e) {
             $this->dumpError($e, __METHOD__);
-       }
+        }
 
     }
 
@@ -1599,10 +1553,11 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
      * @return array of IDs
      */
 
-    public function testAddClient() {
+    public function testAddClient()
+    {
         try {
             /*Creating 2 objects for Flow under the same Process Id */
-            $clientAttr= new ClientAttributes();
+            $clientAttr = new ClientAttributes();
             $clientAttr->setName('Client name');
             $result = $this->apiInstance->addClient(
                 $this->testUserUid,
@@ -1689,7 +1644,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
     {
         $clientId = $this->testAddClient();
         try {
-            $result = $this->apiInstance->deleteClient($this->testUserUid,$clientId);
+            $result = $this->apiInstance->deleteClient($this->testUserUid, $clientId);
             $this->assertEquals('1831', $result->getMeta()->getCode(), 'Result code expected');
         } catch (ApiException $e) {
             $this->dumpError($e, __METHOD__);
@@ -1789,7 +1744,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
         /** @var EventConnectorAttributes $itemData */
         $itemData = new EventConnectorAttributes();
-        $itemData->setInputParameters(json_encode(['new key'=>'new value']));
+        $itemData->setInputParameters(json_encode(['new key' => 'new value']));
         $result = $this->apiInstance->updateEventConnector(
             $arrayUids['process_uid'],
             $arrayUids['event_uid'],
@@ -1813,7 +1768,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
                 $arrayUids['process_uid'],
                 $arrayUids['event_uid'],
                 $arrayUids['event_connector_uid']
-                );
+            );
             $this->assertEquals('1803', $result->getMeta()->getCode(), 'Result code expected');
         } catch (ApiException $e) {
             $this->dumpError($e, __METHOD__);
@@ -1844,7 +1799,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             $this->assertNotNull($result->getData()->getId());
             $this->assertEquals('Event name', $result->getData()->getAttributes()->getName());
 
-            return ['event_uid'=>$result->getData()->getId(),'process_uid'=>$processUid];
+            return ['event_uid' => $result->getData()->getId(), 'process_uid' => $processUid];
 
         } catch (ApiException $e) {
             $this->dumpError($e, __METHOD__);
@@ -1943,7 +1898,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
         /** @var TaskConnectorAttributes $itemData */
         $itemData = new TaskConnectorAttributes();
-        $itemData->setInputParameters(json_encode(['new key'=>'new value']));
+        $itemData->setInputParameters(json_encode(['new key' => 'new value']));
         $result = $this->apiInstance->updateTaskConnector(
             $arrayUids['process_uid'],
             $arrayUids['task_uid'],
@@ -2005,11 +1960,10 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
             $this->assertNotNull($result->getData()->getId());
             $this->assertEquals('Task name', $result->getData()->getAttributes()->getName());
             //print_r($result->getData());
-            return ['task_uid'=>$result->getData()->getId(),'process_uid'=>$processUid];
+            return ['task_uid' => $result->getData()->getId(), 'process_uid' => $processUid];
 
         } catch (ApiException $e) {
             $this->dumpError($e, __METHOD__);
         }
-
     }
 }
