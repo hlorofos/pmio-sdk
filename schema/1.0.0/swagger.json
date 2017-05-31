@@ -95,20 +95,20 @@
                 "tags": [
                     "processmaker"
                 ],
-                "description": "This method creates a new client for the user",
+                "description": "This method creates a new Oauth client for the user",
                 "operationId": "addClient",
                 "parameters": [
                     {
                         "name": "user_id",
                         "in": "path",
-                        "description": "ID of the user related to the client",
+                        "description": "ID of the user related to the Oauth client",
                         "required": true,
                         "type": "string"
                     },
                     {
                         "name": "ClientCreateItem",
                         "in": "body",
-                        "description": "JSON API with the Client object to add",
+                        "description": "JSON API with the Oauth Client object to add",
                         "required": true,
                         "schema": {
                             "type": "object",
@@ -159,7 +159,7 @@
                 "tags": [
                     "processmaker"
                 ],
-                "description": "This method is retrieves a client based on its ID.",
+                "description": "This method is retrieves an Oauth client based on its ID.",
                 "operationId": "findClientById",
                 "parameters": [
                     {
@@ -210,7 +210,7 @@
                 "tags": [
                     "processmaker"
                 ],
-                "description": "This method updates an existing client.",
+                "description": "This method updates an existing Oauth client.",
                 "operationId": "updateClient",
                 "parameters": [
                     {
@@ -278,7 +278,7 @@
                 "tags": [
                     "processmaker"
                 ],
-                "description": "This method deletes a client using the client and user IDs.",
+                "description": "This method deletes an Oauth client using the client and user IDs.",
                 "operationId": "deleteClient",
                 "parameters": [
                     {
@@ -298,7 +298,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Item successfully was deleted",
+                        "description": "Item was successfully deleted",
                         "schema": {
                             "$ref": "#/definitions/ResultSuccess"
                         }
@@ -4557,10 +4557,12 @@
                             "type": "boolean"
                         },
                         "created_at": {
-                            "$ref": "#/definitions/dateTime"
+                            "type": "string",
+                            "example": "2017-01-01T00:00:00+00:00"
                         },
                         "updated_at": {
-                            "$ref": "#/definitions/dateTime"
+                            "type": "string",
+                            "example": "2017-01-01T00:00:00+00:00"
                         }
                     }
                 }
@@ -4603,10 +4605,12 @@
                             "type": "boolean"
                         },
                         "created_at": {
-                            "$ref": "#/definitions/dateTime"
+                            "type": "string",
+                            "example": "2017-01-01T00:00:00+00:00"
                         },
                         "updated_at": {
-                            "$ref": "#/definitions/dateTime"
+                            "type": "string",
+                            "example": "2017-01-01T00:00:00+00:00"
                         }
                     }
                 }
@@ -4651,10 +4655,12 @@
                             "type": "boolean"
                         },
                         "created_at": {
-                            "$ref": "#/definitions/dateTime"
+                            "type": "string",
+                            "example": "2017-01-01T00:00:00+00:00"
                         },
                         "updated_at": {
-                            "$ref": "#/definitions/dateTime"
+                            "type": "string",
+                            "example": "2017-01-01T00:00:00+00:00"
                         }
                     }
                 }
@@ -4689,10 +4695,12 @@
                             "type": "object"
                         },
                         "created_at": {
-                            "$ref": "#/definitions/dateTime"
+                            "type": "string",
+                            "example": "2017-01-01T00:00:00+00:00"
                         },
                         "updated_at": {
-                            "$ref": "#/definitions/dateTime"
+                            "type": "string",
+                            "example": "2017-01-01T00:00:00+00:00"
                         }
                     }
                 }
@@ -4716,7 +4724,8 @@
                     "type": "object",
                     "properties": {
                         "bpmn": {
-                            "type": "string"
+                            "type": "string",
+                            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>...</xml>"
                         }
                     }
                 }
@@ -4787,19 +4796,24 @@
                             ]
                         },
                         "delegate_date": {
-                            "$ref": "#/definitions/dateTime"
+                            "type": "string",
+                            "example": "2017-01-01T00:00:00+00:00"
                         },
                         "start_date": {
-                            "$ref": "#/definitions/dateTime"
+                            "type": "string",
+                            "example": "2017-01-01T00:00:00+00:00"
                         },
                         "finish_date": {
-                            "$ref": "#/definitions/dateTime"
+                            "type": "string",
+                            "example": "2017-01-01T00:00:00+00:00"
                         },
                         "task_due_date": {
-                            "$ref": "#/definitions/dateTime"
+                            "type": "string",
+                            "example": "2017-01-01T00:00:00+00:00"
                         },
                         "risk_date": {
-                            "$ref": "#/definitions/dateTime"
+                            "type": "string",
+                            "example": "2017-01-01T00:00:00+00:00"
                         },
                         "duration": {
                             "type": "integer"
@@ -4815,10 +4829,12 @@
                             "type": "string"
                         },
                         "created_at": {
-                            "$ref": "#/definitions/dateTime"
+                            "type": "string",
+                            "example": "2017-01-01T00:00:00+00:00"
                         },
                         "updated_at": {
-                            "$ref": "#/definitions/dateTime"
+                            "type": "string",
+                            "example": "2017-01-01T00:00:00+00:00"
                         }
                     }
                 }
@@ -4874,10 +4890,12 @@
                             "example": "Some parameters in json format"
                         },
                         "created_at": {
-                            "$ref": "#/definitions/dateTime"
+                            "type": "string",
+                            "example": "2017-01-01T00:00:00+00:00"
                         },
                         "updated_at": {
-                            "$ref": "#/definitions/dateTime"
+                            "type": "string",
+                            "example": "2017-01-01T00:00:00+00:00"
                         }
                     }
                 }
@@ -4944,10 +4962,12 @@
                             ]
                         },
                         "created_at": {
-                            "$ref": "#/definitions/dateTime"
+                            "type": "string",
+                            "example": "2017-01-01T00:00:00+00:00"
                         },
                         "updated_at": {
-                            "$ref": "#/definitions/dateTime"
+                            "type": "string",
+                            "example": "2017-01-01T00:00:00+00:00"
                         }
                     }
                 }
@@ -5034,10 +5054,12 @@
                             "default": false
                         },
                         "created_at": {
-                            "$ref": "#/definitions/dateTime"
+                            "type": "string",
+                            "example": "2017-01-01T00:00:00+00:00"
                         },
                         "updated_at": {
-                            "$ref": "#/definitions/dateTime"
+                            "type": "string",
+                            "example": "2017-01-01T00:00:00+00:00"
                         }
                     }
                 }
@@ -5095,10 +5117,12 @@
                             ]
                         },
                         "created_at": {
-                            "$ref": "#/definitions/dateTime"
+                            "type": "string",
+                            "example": "2017-01-01T00:00:00+00:00"
                         },
                         "updated_at": {
-                            "$ref": "#/definitions/dateTime"
+                            "type": "string",
+                            "example": "2017-01-01T00:00:00+00:00"
                         }
                     }
                 }
@@ -5185,13 +5209,16 @@
                             "type": "string"
                         },
                         "attached_to_task_id": {
-                            "type": "integer"
+                            "type": "string",
+                            "example": "9d705617-cc29-482a-85ff-7f7292f72b11"
                         },
                         "created_at": {
-                            "$ref": "#/definitions/dateTime"
+                            "type": "string",
+                            "example": "2017-01-01T00:00:00+00:00"
                         },
                         "updated_at": {
-                            "$ref": "#/definitions/dateTime"
+                            "type": "string",
+                            "example": "2017-01-01T00:00:00+00:00"
                         }
                     }
                 }
@@ -5341,10 +5368,12 @@
                             "type": "string"
                         },
                         "created_at": {
-                            "$ref": "#/definitions/dateTime"
+                            "type": "string",
+                            "example": "2017-01-01T00:00:00+00:00"
                         },
                         "updated_at": {
-                            "$ref": "#/definitions/dateTime"
+                            "type": "string",
+                            "example": "2017-01-01T00:00:00+00:00"
                         }
                     }
                 }
@@ -5461,10 +5490,12 @@
                             "example": "9d705617-cc29-482a-85ff-7f7292f72b55"
                         },
                         "created_at": {
-                            "$ref": "#/definitions/dateTime"
+                            "type": "string",
+                            "example": "2017-01-01T00:00:00+00:00"
                         },
                         "updated_at": {
-                            "$ref": "#/definitions/dateTime"
+                            "type": "string",
+                            "example": "2017-01-01T00:00:00+00:00"
                         }
                     }
                 }
@@ -5522,10 +5553,12 @@
                             }
                         },
                         "created_at": {
-                            "$ref": "#/definitions/dateTime"
+                            "type": "string",
+                            "example": "2017-01-01T00:00:00+00:00"
                         },
                         "updated_at": {
-                            "$ref": "#/definitions/dateTime"
+                            "type": "string",
+                            "example": "2017-01-01T00:00:00+00:00"
                         }
                     }
                 }
@@ -5634,8 +5667,9 @@
                             "type": "string",
                             "example": "example@example.com"
                         },
-                        "expire_date": {
-                            "$ref": "#/definitions/dateTime"
+                        "expires_at": {
+                            "type": "string",
+                            "example": "2017-01-01T00:00:00+00:00"
                         },
                         "status": {
                             "default": "ACTIVE",
@@ -5685,8 +5719,9 @@
                         "resume": {
                             "type": "string"
                         },
-                        "birthday": {
-                            "type": "string"
+                        "birthday_at": {
+                            "type": "string",
+                            "example": "2017-01-01T00:00:00+00:00"
                         },
                         "bookmark_start_cases": {
                             "type": "string"
@@ -5699,10 +5734,12 @@
                             "default": "en_US"
                         },
                         "created_at": {
-                            "$ref": "#/definitions/dateTime"
+                            "type": "string",
+                            "example": "2017-01-01T00:00:00+00:00"
                         },
                         "updated_at": {
-                            "$ref": "#/definitions/dateTime"
+                            "type": "string",
+                            "example": "2017-01-01T00:00:00+00:00"
                         },
                         "clients": {
                             "type": "array",
@@ -5711,18 +5748,6 @@
                             }
                         }
                     }
-                }
-            }
-        },
-        "dateTime": {
-            "type": "object",
-            "required": [
-                "date"
-            ],
-            "properties": {
-                "date": {
-                    "type": "string",
-                    "example": "2016-08-23 18:11:05.000000"
                 }
             }
         },
