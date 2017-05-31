@@ -25,7 +25,7 @@ try {
 
         if (params.KEY_TEST != 'Default user key') {
             sh """
-            cd api/1.0.0/php/SwaggerClient-php/
+            cd api/1.0.0/php/pmio-sdk-php/
             echo '<?php' >.env
             echo '\$host = "${params.PMCOREHOST}";' >>.env
             echo '\$key["Test"] = "${params.KEY_TEST}";' >>.env
@@ -36,14 +36,14 @@ try {
 
     }
 
-        if ( fileExists ('api/1.0.0/php/SwaggerClient-php/.env')) {
+        if ( fileExists ('api/1.0.0/php/pmio-sdk-php/.env')) {
 
             stage('Functional Test') {
             wrap([$class: 'AnsiColorBuildWrapper']) {
 
             sh """
 
-                cd api/1.0.0/php/SwaggerClient-php/
+                cd api/1.0.0/php/pmio-sdk-php/
 
                 php -v
 
@@ -57,7 +57,7 @@ try {
                 vendor/bin/phpunit test/Api --debug --log-junit=junit.xml || true
             """
 
-            junit 'api/1.0.0/php/SwaggerClient-php/junit.xml'
+            junit 'api/1.0.0/php/pmio-sdk-php/junit.xml'
 
                 echo 'Status: ' + currentBuild.result
                     hipchatSend (color: 'GREEN', notify: true, room: 'pm.io', textFormat: false, failOnError: false,
