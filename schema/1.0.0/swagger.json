@@ -8,13 +8,13 @@
         "contact": {
             "name": "ProcessMaker API Team",
             "email": "support@processmaker.io",
-            "url": "https://processmaker.atlassian.net/servicedesk/customer/portal/1"
+            "url": "https://www.processmaker.io/"
         }
     },
-    "host": "localhost",
+    "host": "CHANGEME.api.processmaker.io",
     "basePath": "/api/v1",
     "schemes": [
-        "http"
+        "https"
     ],
     "consumes": [
         "application/vnd.api+json"
@@ -25,9 +25,6 @@
     "security": [
         {
             "PasswordGrant": []
-        },
-        {
-            "internalApiKey": []
         }
     ],
     "paths": {
@@ -4512,11 +4509,6 @@
             "type": "oauth2",
             "flow": "password",
             "tokenUrl": "/oauth/access_token"
-        },
-        "internalApiKey": {
-            "type": "apiKey",
-            "in": "query",
-            "name": "access_token"
         }
     },
     "definitions": {
