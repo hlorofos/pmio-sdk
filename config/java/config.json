@@ -1,0 +1,8 @@
+{
+    "groupId": "ProcessMaker",
+    "artifactId": "PMIO",
+    "artifactVersion": "1.0.0",
+    "invokerPackage": "processmaker.pmio",
+    "modelPackage": "processmaker.pmio.model",
+    "apiPackage": "processmaker.pmio.api"
+}

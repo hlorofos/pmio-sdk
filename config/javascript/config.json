@@ -1,0 +1,8 @@
+{
+    "moduleName": "PMIO",
+    "projectName": "PMIO",
+    "projectVersion": "1.0.0",
+    "invokerPackage": "Processmaker",
+    "modelPackage": "Model",
+    "apiPackage": "PMIO"
+}
