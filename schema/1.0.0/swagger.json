@@ -4508,7 +4508,8 @@
         "PasswordGrant": {
             "type": "oauth2",
             "flow": "password",
-            "tokenUrl": "/oauth/access_token"
+            "tokenUrl": "/oauth/access_token",
+            "authorizationUrl": "/oauth/access_token"
         }
     },
     "definitions": {

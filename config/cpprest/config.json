@@ -1,0 +1,5 @@
+{
+  "modelPackage": "io.processmaker.pmio.model",
+  "apiPackage": "io.processmaker.pmio.api",
+  "packageVersion": "1.0.0"
+}
