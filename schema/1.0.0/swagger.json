@@ -31,7 +31,7 @@
         "/users/{user_id}/clients": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method retrieves all existing clients belonging to an user.",
                 "operationId": "findClients",
@@ -90,7 +90,7 @@
             },
             "post": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method creates a new Oauth client for the user",
                 "operationId": "addClient",
@@ -154,7 +154,7 @@
         "/users/{user_id}/clients/{client_id}": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method is retrieves an Oauth client based on its ID.",
                 "operationId": "findClientById",
@@ -205,7 +205,7 @@
             },
             "put": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method updates an existing Oauth client.",
                 "operationId": "updateClient",
@@ -273,7 +273,7 @@
             },
             "delete": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method deletes an Oauth client using the client and user IDs.",
                 "operationId": "deleteClient",
@@ -324,7 +324,7 @@
         "/processes/{process_id}/tasks/{task_id}/inputoutput": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method retrieves all existing Input/Output objects in the related task instance.",
                 "operationId": "findInputOutputs",
@@ -390,7 +390,7 @@
             },
             "post": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method creates a new Input/Output object",
                 "operationId": "addInputOutput",
@@ -467,7 +467,7 @@
         "/processes/{process_id}/tasks/{task_id}/inputoutput/{inputoutput_uid}": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method retrieves an Input/Output object using its ID.",
                 "operationId": "findInputOutputById",
@@ -525,7 +525,7 @@
             },
             "put": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method updates an existing Input/Output object.",
                 "operationId": "updateInputOutput",
@@ -600,7 +600,7 @@
             },
             "delete": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method deletes the Input/Output based on the Input/Output ID, process ID and task ID.",
                 "operationId": "deleteInputOutput",
@@ -658,7 +658,7 @@
         "/processes/import": {
             "post": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method imports BPMN files. A new process is created when import is successful.",
                 "operationId": "importBpmnFile",
@@ -727,7 +727,7 @@
         "/processes/{process_id}/instances/{instance_id}/datamodel": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method returns the instance DataModel and lets the user work with it directly",
                 "operationId": "findDataModel",
@@ -796,7 +796,7 @@
         "/task_instances/{task_instance_id}": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method retrieves a task instance based on its ID.",
                 "operationId": "findTaskInstanceById",
@@ -856,7 +856,7 @@
             },
             "patch": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method updates an existing task instance.",
                 "operationId": "updateTaskInstance",
@@ -919,7 +919,7 @@
         "/task_instances": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method retrieves all existing task instances",
                 "operationId": "findTaskInstances",
@@ -973,7 +973,7 @@
         "/processes/{process_id}/instances": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method retrieves related to the process using  the Process ID",
                 "operationId": "findInstances",
@@ -1032,7 +1032,7 @@
             },
             "post": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method creates a new instance.",
                 "operationId": "addInstance",
@@ -1108,7 +1108,7 @@
         "/processes/{process_id}/instances/{instance_id}": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method retrieves an instance using its ID.",
                 "operationId": "findInstanceById",
@@ -1159,7 +1159,7 @@
             },
             "put": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method updates  an existing instance.",
                 "operationId": "updateInstance",
@@ -1227,7 +1227,7 @@
             },
             "delete": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method deletes an instance using the instance ID and process ID.",
                 "operationId": "deleteInstance",
@@ -1278,7 +1278,7 @@
         "/processes/{process_id}/flows": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method retrieves all existing flows.",
                 "operationId": "findFlows",
@@ -1337,7 +1337,7 @@
             },
             "post": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method creates a new Sequence flow",
                 "operationId": "addFlow",
@@ -1413,7 +1413,7 @@
         "/processes/{process_id}/flows/{flow_id}": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method retrieves a flow based on its ID.",
                 "operationId": "findFlowById",
@@ -1464,7 +1464,7 @@
             },
             "put": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method updates an existing flow.",
                 "operationId": "updateFlow",
@@ -1532,7 +1532,7 @@
             },
             "delete": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method deletes a sequence flow using the flow ID and process ID.",
                 "operationId": "deleteFlow",
@@ -1583,7 +1583,7 @@
         "/processes/{process_id}/gateways": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method retrieves all existing gateways.",
                 "operationId": "findGateways",
@@ -1642,7 +1642,7 @@
             },
             "post": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method creates a new gateway.",
                 "operationId": "addGateway",
@@ -1718,7 +1718,7 @@
         "/processes/{process_id}/gateways/{gateway_id}": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method retrieves a gateway based on its ID.",
                 "operationId": "findGatewayById",
@@ -1769,7 +1769,7 @@
             },
             "put": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method updates an existing gateway.",
                 "operationId": "updateGateway",
@@ -1837,7 +1837,7 @@
             },
             "delete": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method is deletes a single item using the gateway ID and process ID.",
                 "operationId": "deleteGateway",
@@ -1888,7 +1888,7 @@
         "/processes/{process_id}/events": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method returns all events related to the runned process",
                 "operationId": "findEvents",
@@ -1947,7 +1947,7 @@
             },
             "post": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method creates the new event.",
                 "operationId": "addEvent",
@@ -2023,7 +2023,7 @@
         "/processes/{process_id}/events/{event_id}": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method retrieves an event using its ID.",
                 "operationId": "findEventById",
@@ -2074,7 +2074,7 @@
             },
             "put": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method updates an existing event",
                 "operationId": "updateEvent",
@@ -2142,7 +2142,7 @@
             },
             "delete": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method deletes an event using the event ID and process ID",
                 "operationId": "deleteEvent",
@@ -2193,7 +2193,7 @@
         "/processes/{process_id}/events/{event_id}/trigger": {
             "post": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method starts/triggers an event.",
                 "operationId": "EventTrigger",
@@ -2270,7 +2270,7 @@
         "/processes/{process_id}/events/{event_id}/connectors": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method returns all Event connectors related to the run Process and Event.",
                 "operationId": "findEventConnectors",
@@ -2336,7 +2336,7 @@
             },
             "post": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method is intended for creating a new Event connector.",
                 "operationId": "addEventConnector",
@@ -2419,7 +2419,7 @@
         "/processes/{process_id}/events/{event_id}/connectors/{connector_id}": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method returns all Event connectors related to the run Process and Event.",
                 "operationId": "findEventConnectorById",
@@ -2477,7 +2477,7 @@
             },
             "put": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method lets update the existing Event connector with new parameters values",
                 "operationId": "updateEventConnector",
@@ -2558,7 +2558,7 @@
             },
             "delete": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method is intended for deleting a single Event connector based on Event ID, Process ID and Connector ID.",
                 "operationId": "deleteEventConnector",
@@ -2616,7 +2616,7 @@
         "/processes/{process_id}/tasks": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method is intended for returning a list of all Tasks related to the process",
                 "operationId": "findTasks",
@@ -2675,7 +2675,7 @@
             },
             "post": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method creates a new task.",
                 "operationId": "addTask",
@@ -2751,7 +2751,7 @@
         "/processes/{process_id}/tasks/{task_id}": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method is retrieves a task using its ID.",
                 "operationId": "findTaskById",
@@ -2802,7 +2802,7 @@
             },
             "put": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method is intended for updating an existing task.",
                 "operationId": "updateTask",
@@ -2870,7 +2870,7 @@
             },
             "delete": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method deletes a task using the task ID and process ID.",
                 "operationId": "deleteTask",
@@ -2921,7 +2921,7 @@
         "/processes/{process_id}/tasks/{task_id}/connectors": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method returns all Task connectors related to the run Process and Task.",
                 "operationId": "findTaskConnectors",
@@ -2987,7 +2987,7 @@
             },
             "post": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method is intended for creating a new task connector.",
                 "operationId": "addTaskConnector",
@@ -3070,7 +3070,7 @@
         "/processes/{process_id}/tasks/{task_id}/connectors/{connector_id}": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method is intended for retrieving an Task connector based on it's ID.",
                 "operationId": "findTaskConnectorById",
@@ -3128,7 +3128,7 @@
             },
             "put": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method lets update the existing Task connector with new parameters values",
                 "operationId": "updateTaskConnector",
@@ -3209,7 +3209,7 @@
             },
             "delete": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method is intended for deleting a single Task connector based on Task ID, Process ID and Connector ID.",
                 "operationId": "deleteTaskConnector",
@@ -3267,7 +3267,7 @@
         "/processes/{process_id}/tasks/{task_id}/groups": {
             "put": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method assigns group(s) to the choosen task",
                 "operationId": "addGroupsToTask",
@@ -3339,7 +3339,7 @@
             },
             "delete": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method removes groups from a task",
                 "operationId": "removeGroupsFromTask",
@@ -3411,7 +3411,7 @@
             },
             "post": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method synchronizes a one or more groups with a task.",
                 "operationId": "syncGroupsToTask",
@@ -3479,7 +3479,7 @@
         "/processes": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method retrieves all existing processes.",
                 "operationId": "findProcesses",
@@ -3543,7 +3543,7 @@
             },
             "post": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method creates a new process",
                 "operationId": "addProcess",
@@ -3606,7 +3606,7 @@
         "/processes/{id}": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method retrieves a process using its ID",
                 "operationId": "findProcessById",
@@ -3650,7 +3650,7 @@
             },
             "put": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method updates an existing process.",
                 "operationId": "updateProcess",
@@ -3711,7 +3711,7 @@
             },
             "delete": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method deletes a process using the process ID.",
                 "operationId": "deleteProcess",
@@ -3761,7 +3761,7 @@
         "/groups": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method retrieves all existing groups.",
                 "operationId": "findGroups",
@@ -3813,7 +3813,7 @@
             },
             "post": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method creates a new group.",
                 "operationId": "addGroup",
@@ -3870,7 +3870,7 @@
         "/groups/{id}": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method retrieves a group using its ID.",
                 "operationId": "findGroupById",
@@ -3914,7 +3914,7 @@
             },
             "put": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method updates an existing group.",
                 "operationId": "updateGroup",
@@ -3975,7 +3975,7 @@
             },
             "delete": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method deletes a group using the group ID",
                 "operationId": "deleteGroup",
@@ -4019,7 +4019,7 @@
         "/groups/{id}/users": {
             "put": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method adds one or more new users to a group.",
                 "operationId": "addUsersToGroup",
@@ -4078,7 +4078,7 @@
             },
             "delete": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method removes one or more users from a group.",
                 "operationId": "removeUsersFromGroup",
@@ -4137,7 +4137,7 @@
             },
             "post": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method synchronizes one or more users with a group.",
                 "operationId": "syncUsersToGroup",
@@ -4192,7 +4192,7 @@
         "/users/myself": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method returns user information using a token",
                 "operationId": "myselfUser",
@@ -4247,7 +4247,7 @@
         "/users": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method returs all existing users in the system.",
                 "operationId": "findUsers",
@@ -4299,7 +4299,7 @@
             },
             "post": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method creates a new user in the system.",
                 "operationId": "addUser",
@@ -4356,7 +4356,7 @@
         "/users/{id}": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method returns a user using its ID.",
                 "operationId": "findUserById",
@@ -4400,7 +4400,7 @@
             },
             "put": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method updates an existing user.",
                 "operationId": "updateUser",
@@ -4462,7 +4462,7 @@
             },
             "delete": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method deletes a user from the system.",
                 "operationId": "deleteUser",
