@@ -33,13 +33,13 @@
                 "tags": [
                     "client"
                 ],
-                "description": "This method retrieves all existing clients belonging to an user.",
-                "operationId": "findClients",
+                "description": "This method retrieves all existing Oauth clients belonging to an user.",
+                "operationId": "findOauthClients",
                 "parameters": [
                     {
                         "name": "user_id",
                         "in": "path",
-                        "description": "User ID related to the clients",
+                        "description": "User ID related to the Oauth clients",
                         "required": true,
                         "type": "string"
                     },
@@ -62,16 +62,16 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "List of clients retrieved",
+                        "description": "List of Oauth clients retrieved",
                         "schema": {
-                            "title": "ClientCollection",
-                            "description": "JSON API response with a collection of the clients in an array",
+                            "title": "OauthClientCollection",
+                            "description": "JSON API response with a collection of the Oauth clients in an array",
                             "type": "object",
                             "properties": {
                                 "data": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/definitions/Client"
+                                        "$ref": "#/definitions/OauthClient"
                                     }
                                 },
                                 "meta": {
@@ -93,7 +93,7 @@
                     "client"
                 ],
                 "description": "This method creates a new Oauth client for the user",
-                "operationId": "addClient",
+                "operationId": "addOauthClient",
                 "parameters": [
                     {
                         "name": "user_id",
@@ -103,7 +103,7 @@
                         "type": "string"
                     },
                     {
-                        "name": "ClientCreateItem",
+                        "name": "OauthClientCreateItem",
                         "in": "body",
                         "description": "JSON API with the Oauth Client object to add",
                         "required": true,
@@ -114,7 +114,7 @@
                             ],
                             "properties": {
                                 "data": {
-                                    "$ref": "#/definitions/Client"
+                                    "$ref": "#/definitions/OauthClient"
                                 }
                             }
                         }
@@ -122,16 +122,16 @@
                 ],
                 "responses": {
                     "201": {
-                        "description": "The client was created",
+                        "description": "The Oauth client was created",
                         "schema": {
                             "type": "object",
-                            "title": "ClientItem",
+                            "title": "OauthClientItem",
                             "required": [
                                 "data"
                             ],
                             "properties": {
                                 "data": {
-                                    "$ref": "#/definitions/Client"
+                                    "$ref": "#/definitions/OauthClient"
                                 }
                             }
                         }
@@ -157,7 +157,7 @@
                     "client"
                 ],
                 "description": "This method is retrieves an Oauth client based on its ID.",
-                "operationId": "findClientById",
+                "operationId": "findOauthClientById",
                 "parameters": [
                     {
                         "name": "user_id",
@@ -169,14 +169,14 @@
                     {
                         "name": "client_id",
                         "in": "path",
-                        "description": "ID of client to retrieve",
+                        "description": "ID of Oauth client to retrieve",
                         "required": true,
                         "type": "string"
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Client retrieved",
+                        "description": "Oauth Client retrieved",
                         "schema": {
                             "type": "object",
                             "required": [
@@ -184,7 +184,7 @@
                             ],
                             "properties": {
                                 "data": {
-                                    "$ref": "#/definitions/Client"
+                                    "$ref": "#/definitions/OauthClient"
                                 }
                             }
                         }
@@ -208,7 +208,7 @@
                     "client"
                 ],
                 "description": "This method updates an existing Oauth client.",
-                "operationId": "updateClient",
+                "operationId": "updateOauthClient",
                 "parameters": [
                     {
                         "name": "user_id",
@@ -220,14 +220,14 @@
                     {
                         "name": "client_id",
                         "in": "path",
-                        "description": "ID of client to retrieve",
+                        "description": "ID of Oauth client to retrieve",
                         "required": true,
                         "type": "string"
                     },
                     {
-                        "name": "ClientUpdateItem",
+                        "name": "OauthClientUpdateItem",
                         "in": "body",
-                        "description": "Client object to edit",
+                        "description": "Oauth Client object to edit",
                         "required": true,
                         "schema": {
                             "type": "object",
@@ -236,7 +236,7 @@
                             ],
                             "properties": {
                                 "data": {
-                                    "$ref": "#/definitions/Client"
+                                    "$ref": "#/definitions/OauthClient"
                                 }
                             }
                         }
@@ -244,7 +244,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Client updated",
+                        "description": "Oauth Client updated",
                         "schema": {
                             "type": "object",
                             "required": [
@@ -252,7 +252,7 @@
                             ],
                             "properties": {
                                 "data": {
-                                    "$ref": "#/definitions/Client"
+                                    "$ref": "#/definitions/OauthClient"
                                 }
                             }
                         }
@@ -275,8 +275,8 @@
                 "tags": [
                     "client"
                 ],
-                "description": "This method deletes an Oauth client using the client and user IDs.",
-                "operationId": "deleteClient",
+                "description": "This method deletes an Oauth client using the Oauth client and user IDs.",
+                "operationId": "deleteOauthClient",
                 "parameters": [
                     {
                         "name": "user_id",
@@ -288,7 +288,7 @@
                     {
                         "name": "client_id",
                         "in": "path",
-                        "description": "ID of client to delete",
+                        "description": "ID of Oauth client to delete",
                         "required": true,
                         "type": "string"
                     }
@@ -4609,7 +4609,7 @@
                 }
             }
         },
-        "Client": {
+        "OauthClient": {
             "type": "object",
             "required": [
                 "type"
@@ -4636,7 +4636,7 @@
                         },
                         "name": {
                             "type": "string",
-                            "example": "Client Name"
+                            "example": "Oauth Client Name"
                         },
                         "personal_access_client": {
                             "type": "boolean"

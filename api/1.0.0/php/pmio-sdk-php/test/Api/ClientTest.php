@@ -1,6 +1,6 @@
 <?php
 /**
- * ProcessmakerApiTest
+ * ClientTest
  * PHP version 5
  *
  * @category Class
@@ -50,7 +50,6 @@ use ProcessMaker\PMIO\Model\GroupItem;
 use ProcessMaker\PMIO\Model\GroupRemoveUsersItem;
 use ProcessMaker\PMIO\Model\GroupUpdateItem;
 use ProcessMaker\PMIO\Model\InstanceUpdateItem;
-use ProcessMaker\PMIO\Model\MetaResult;
 use ProcessMaker\PMIO\Model\ResultSuccess;
 use ProcessMaker\PMIO\Model\TaskItem;
 use ProcessMaker\PMIO\Model\User;
@@ -98,10 +97,10 @@ use ProcessMaker\PMIO\Model\InputOutputAttributes;
 use ProcessMaker\PMIO\Model\InputOutput;
 use ProcessMaker\PMIO\Model\InputOutputCreateItem;
 use ProcessMaker\PMIO\Model\InputOutputUpdateItem;
-use ProcessMaker\PMIO\Model\Client;
-use ProcessMaker\PMIO\Model\ClientCreateItem;
-use ProcessMaker\PMIO\Model\ClientUpdateItem;
-use ProcessMaker\PMIO\Model\ClientAttributes;
+use ProcessMaker\PMIO\Model\OauthClient;
+use ProcessMaker\PMIO\Model\OauthClientCreateItem;
+use ProcessMaker\PMIO\Model\OauthClientUpdateItem;
+use ProcessMaker\PMIO\Model\OauthClientAttributes;
 use ProcessMaker\PMIO\Model\EventConnector;
 use ProcessMaker\PMIO\Model\EventConnectorCreateItem;
 use ProcessMaker\PMIO\Model\EventConnectorAttributes;
@@ -110,7 +109,6 @@ use ProcessMaker\PMIO\Model\TaskConnector;
 use ProcessMaker\PMIO\Model\TaskConnectorCreateItem;
 use ProcessMaker\PMIO\Model\TaskConnectorAttributes;
 use ProcessMaker\PMIO\Model\TaskConnectorUpdateItem;
-use ProcessMaker\PMIO\ProcessmakerApi;
 
 
 /**
@@ -122,9 +120,9 @@ use ProcessMaker\PMIO\ProcessmakerApi;
  * @license  http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link     https://github.com/swagger-api/swagger-codegen
  */
-class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
+class ClientTest extends \PHPUnit_Framework_TestCase
 {
-    /** @var ProcessmakerApi $apiInstance */
+    /** @var \ProcessMaker\PMIO\Client $apiInstance */
     private $apiInstance;
 
     /** @var  User uid for TaskInstance tests */
@@ -155,7 +153,7 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
         $apiClient = new ApiClient();
         $apiClient->getConfig()->setHost($host);
 
-        $this->apiInstance = new ProcessmakerApi($apiClient);
+        $this->apiInstance = new \ProcessMaker\PMIO\Client($apiClient);
         if (in_array('--debug', $_SERVER['argv'])) {
             $this->apiInstance->getApiClient()->getConfig()->setDebug(true);
             $this->apiInstance->getApiClient()->getConfig()->setDebugFile('mydebug.log');
@@ -1549,21 +1547,21 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
 
 
     /**
-     * Test case for addClient
+     * Test case for addOauthClient
      * @return array of IDs
      */
 
-    public function testAddClient()
+    public function testAddOauthClient()
     {
         try {
             /*Creating 2 objects for Flow under the same Process Id */
-            $clientAttr = new ClientAttributes();
-            $clientAttr->setName('Client name');
-            $result = $this->apiInstance->addClient(
+            $clientAttr = new OauthClientAttributes();
+            $clientAttr->setName('OauthClient name');
+            $result = $this->apiInstance->addOauthClient(
                 $this->testUserUid,
-                new ClientCreateItem(
+                new OauthClientCreateItem(
                     [
-                        'data' => new Client(['attributes' => $clientAttr])
+                        'data' => new OauthClient(['attributes' => $clientAttr])
                     ]
                 )
             );
@@ -1579,15 +1577,15 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test case for findClients
+     * Test case for findOauthClients
      *
      */
 
-    public function testFindClients()
+    public function testFindOauthClients()
     {
         try {
-            $this->testAddClient();
-            $result = $this->apiInstance->findClients($this->testUserUid)->getData();
+            $this->testAddOauthClient();
+            $result = $this->apiInstance->findOauthClients($this->testUserUid)->getData();
             $this->assertGreaterThan(0, count($result));
             //print_r($result);
         } catch (ApiException $e) {
@@ -1596,16 +1594,16 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test case for findClientById
+     * Test case for findOauthClientById
      *
      */
 
-    public function testFindClientById()
+    public function testFindOauthClientById()
     {
-        $clientId = $this->testAddClient();
+        $clientId = $this->testAddOauthClient();
         try {
 
-            $result = $this->apiInstance->findClientById($this->testUserUid, $clientId)->getData()->getAttributes();
+            $result = $this->apiInstance->findOauthClientById($this->testUserUid, $clientId)->getData()->getAttributes();
             $this->assertNotEmpty($result);
 
         } catch (ApiException $e) {
@@ -1614,20 +1612,20 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test case for updateClient
+     * Test case for updateOauthClient
      *
      */
 
-    public function testUpdateClient()
+    public function testUpdateOauthClient()
     {
         try {
-            $clientId = $this->testAddClient();
-            $itemData = new ClientAttributes();
-            $itemData->setName('New Client name');
-            $result = $this->apiInstance->updateClient(
+            $clientId = $this->testAddOauthClient();
+            $itemData = new OauthClientAttributes();
+            $itemData->setName('New OauthClient name');
+            $result = $this->apiInstance->updateOauthClient(
                 $this->testUserUid,
                 $clientId,
-                new ClientUpdateItem(['data' => new Client(['attributes' => $itemData])])
+                new OauthClientUpdateItem(['data' => new OauthClient(['attributes' => $itemData])])
             );
             $this->assertEquals($itemData->getName(), $result->getData()->getAttributes()->getName(), 'Name should be updated');
         } catch (ApiException $e) {
@@ -1640,11 +1638,11 @@ class ProcessmakerApiTest extends \PHPUnit_Framework_TestCase
      *
      */
 
-    public function testDeleteClient()
+    public function testDeleteOauthClient()
     {
-        $clientId = $this->testAddClient();
+        $clientId = $this->testAddOauthClient();
         try {
-            $result = $this->apiInstance->deleteClient($this->testUserUid, $clientId);
+            $result = $this->apiInstance->deleteOauthClient($this->testUserUid, $clientId);
             $this->assertEquals('1831', $result->getMeta()->getCode(), 'Result code expected');
         } catch (ApiException $e) {
             $this->dumpError($e, __METHOD__);
