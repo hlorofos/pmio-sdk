@@ -45,6 +45,10 @@
             "description": "Operations about user groups"
         },
         {
+            "name": "oauth",
+            "description": "Operations with Oauth clients and tokens"
+        },
+        {
             "name": "Pagination",
             "description": "Pagination description (can use markdown syntax)",
             "x-traitTag": true
@@ -55,7 +59,8 @@
             "name": "User Management",
             "tags": [
                 "users",
-                "groups"
+                "groups",
+                "oauth"
             ]
         },
         {
@@ -63,13 +68,20 @@
             "tags": [
                 "pagination"
             ]
+        },
+        {
+            "name": "Everything",
+            "tags": [
+                "client"
+            ]
         }
     ],
     "paths": {
         "/users/{user_id}/clients": {
             "get": {
                 "tags": [
-                    "client"
+                    "client",
+                    "oauth"
                 ],
                 "description": "This method retrieves all existing Oauth clients belonging to an user.",
                 "operationId": "findOauthClients",
@@ -118,7 +130,8 @@
             },
             "post": {
                 "tags": [
-                    "client"
+                    "client",
+                    "oauth"
                 ],
                 "description": "This method creates a new Oauth client for the user",
                 "operationId": "addOauthClient",
@@ -182,7 +195,8 @@
         "/users/{user_id}/clients/{client_id}": {
             "get": {
                 "tags": [
-                    "client"
+                    "client",
+                    "oauth"
                 ],
                 "description": "This method is retrieves an Oauth client based on its ID.",
                 "operationId": "findOauthClientById",
@@ -4145,7 +4159,8 @@
             "get": {
                 "tags": [
                     "client",
-                    "users"
+                    "users",
+                    "pagination"
                 ],
                 "description": "This method returns all existing users in the system.",
                 "operationId": "findUsers",
@@ -4200,7 +4215,7 @@
                     "client",
                     "users"
                 ],
-                "description": "This method creates a new user in the system.",
+                "description": "This method creates a new user in the system.\nFrom the result you may retrieve `client_id`\n\nThis `client_id` required to obtain `client_secret` and then you will be able to perform Oauth authorization key. Refer to [Oauth Client APIs](#tag/oauth)",
                 "operationId": "addUser",
                 "parameters": [
                     {
@@ -4249,7 +4264,13 @@
                             "$ref": "#/definitions/errorArray"
                         }
                     }
-                }
+                },
+                "x-code-samples": [
+                    {
+                        "lang": "PHP",
+                        "source": "$bobAttr = new UserAttributes();\r\n$bobAttr->setLastname('Doe');\r\n$bobAttr->setFirstname('Bob');\r\n$bobAttr->setUsername('Bob');\r\n$bobAttr->setPassword('Bobpassword');\r\n$bobAttr->setEmail('bob@processmaker.com');\r\n\r\n\/** @var UserItem $bob *\/\r\n$bob = $client->addUser(new UserCreateItem([\r\n    'data' => new User(['attributes' => $bobAttr])\r\n]));"
+                    }
+                ]
             }
         },
         "/users/{id}": {
