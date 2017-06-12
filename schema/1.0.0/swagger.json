@@ -49,9 +49,32 @@
             "description": "Operations with Oauth clients and tokens"
         },
         {
-            "name": "Pagination",
-            "description": "Pagination description (can use markdown syntax)",
-            "x-traitTag": true
+            "name": "input/output",
+            "description": "Operations with Input/Output objects"
+        },
+        {
+            "name": "process",
+            "description": "Operations with Process objects"
+        },
+        {
+            "name": "process instance",
+            "description": "Operations with Process Instance objects"
+        },
+        {
+            "name": "task",
+            "description": "Operations with Task objects"
+        },
+        {
+            "name": "flow",
+            "description": "Operations with Flow objects"
+        },
+        {
+            "name": "gateway",
+            "description": "Operations with Gateway objects"
+        },
+        {
+            "name": "event",
+            "description": "Operations with Event objects"
         }
     ],
     "x-tagGroups": [
@@ -64,15 +87,15 @@
             ]
         },
         {
-            "name": "Pagination",
+            "name": "Process Management",
             "tags": [
-                "pagination"
-            ]
-        },
-        {
-            "name": "Everything",
-            "tags": [
-                "client"
+                "process",
+                "flow",
+                "process instance",
+                "task",
+                "gateway",
+                "event",
+                "input/output"
             ]
         }
     ],
@@ -366,7 +389,8 @@
         "/processes/{process_id}/tasks/{task_id}/inputoutput": {
             "get": {
                 "tags": [
-                    "client"
+                    "client",
+                    "input/output"
                 ],
                 "description": "This method retrieves all existing Input/Output objects in the related task instance.",
                 "operationId": "findInputOutputs",
@@ -422,7 +446,8 @@
             },
             "post": {
                 "tags": [
-                    "client"
+                    "client",
+                    "input/output"
                 ],
                 "description": "This method creates a new Input/Output object",
                 "operationId": "addInputOutput",
@@ -499,7 +524,8 @@
         "/processes/{process_id}/tasks/{task_id}/inputoutput/{inputoutput_uid}": {
             "get": {
                 "tags": [
-                    "client"
+                    "client",
+                    "input/output"
                 ],
                 "description": "This method retrieves an Input/Output object using its ID.",
                 "operationId": "findInputOutputById",
@@ -557,7 +583,8 @@
             },
             "put": {
                 "tags": [
-                    "client"
+                    "client",
+                    "input/output"
                 ],
                 "description": "This method updates an existing Input/Output object.",
                 "operationId": "updateInputOutput",
@@ -632,7 +659,8 @@
             },
             "delete": {
                 "tags": [
-                    "client"
+                    "client",
+                    "input/output"
                 ],
                 "description": "This method deletes the Input/Output based on the Input/Output ID, process ID and task ID.",
                 "operationId": "deleteInputOutput",
@@ -690,7 +718,8 @@
         "/processes/import": {
             "post": {
                 "tags": [
-                    "client"
+                    "client",
+                    "process"
                 ],
                 "description": "This method imports BPMN files. A new process is created when import is successful.",
                 "operationId": "importBpmnFile",
@@ -759,7 +788,8 @@
         "/processes/{process_id}/instances/{instance_id}/datamodel": {
             "get": {
                 "tags": [
-                    "client"
+                    "client",
+                    "process instance"
                 ],
                 "description": "This method returns the instance DataModel and lets the user work with it directly",
                 "operationId": "findDataModel",
@@ -818,7 +848,8 @@
         "/task_instances/{task_instance_id}": {
             "get": {
                 "tags": [
-                    "client"
+                    "client",
+                    "task"
                 ],
                 "description": "This method retrieves a task instance based on its ID.",
                 "operationId": "findTaskInstanceById",
@@ -868,7 +899,8 @@
             },
             "patch": {
                 "tags": [
-                    "client"
+                    "client",
+                    "task"
                 ],
                 "description": "This method updates an existing task instance.",
                 "operationId": "updateTaskInstance",
@@ -931,7 +963,8 @@
         "/task_instances": {
             "get": {
                 "tags": [
-                    "client"
+                    "client",
+                    "task"
                 ],
                 "description": "This method retrieves all existing task instances",
                 "operationId": "findTaskInstances",
@@ -975,7 +1008,8 @@
         "/processes/{process_id}/instances": {
             "get": {
                 "tags": [
-                    "client"
+                    "client",
+                    "process instance"
                 ],
                 "description": "This method retrieves related to the process using  the Process ID",
                 "operationId": "findInstances",
@@ -1024,7 +1058,8 @@
             },
             "post": {
                 "tags": [
-                    "client"
+                    "client",
+                    "process instance"
                 ],
                 "description": "This method creates a new instance.",
                 "operationId": "addInstance",
@@ -1100,7 +1135,8 @@
         "/processes/{process_id}/instances/{instance_id}": {
             "get": {
                 "tags": [
-                    "client"
+                    "client",
+                    "process instance"
                 ],
                 "description": "This method retrieves an instance using its ID.",
                 "operationId": "findInstanceById",
@@ -1151,7 +1187,8 @@
             },
             "put": {
                 "tags": [
-                    "client"
+                    "client",
+                    "process instance"
                 ],
                 "description": "This method updates  an existing instance.",
                 "operationId": "updateInstance",
@@ -1219,7 +1256,8 @@
             },
             "delete": {
                 "tags": [
-                    "client"
+                    "client",
+                    "process instance"
                 ],
                 "description": "This method deletes an instance using the instance ID and process ID.",
                 "operationId": "deleteInstance",
@@ -1270,7 +1308,8 @@
         "/processes/{process_id}/flows": {
             "get": {
                 "tags": [
-                    "client"
+                    "client",
+                    "flow"
                 ],
                 "description": "This method retrieves all existing flows.",
                 "operationId": "findFlows",
@@ -1319,7 +1358,8 @@
             },
             "post": {
                 "tags": [
-                    "client"
+                    "client",
+                    "flow"
                 ],
                 "description": "This method creates a new Sequence flow",
                 "operationId": "addFlow",
@@ -1395,7 +1435,8 @@
         "/processes/{process_id}/flows/{flow_id}": {
             "get": {
                 "tags": [
-                    "client"
+                    "client",
+                    "flow"
                 ],
                 "description": "This method retrieves a flow based on its ID.",
                 "operationId": "findFlowById",
@@ -1446,7 +1487,8 @@
             },
             "put": {
                 "tags": [
-                    "client"
+                    "client",
+                    "flow"
                 ],
                 "description": "This method updates an existing flow.",
                 "operationId": "updateFlow",
@@ -1514,7 +1556,8 @@
             },
             "delete": {
                 "tags": [
-                    "client"
+                    "client",
+                    "flow"
                 ],
                 "description": "This method deletes a sequence flow using the flow ID and process ID.",
                 "operationId": "deleteFlow",
@@ -1565,7 +1608,8 @@
         "/processes/{process_id}/gateways": {
             "get": {
                 "tags": [
-                    "client"
+                    "client",
+                    "gateway"
                 ],
                 "description": "This method retrieves all existing gateways.",
                 "operationId": "findGateways",
@@ -1614,7 +1658,8 @@
             },
             "post": {
                 "tags": [
-                    "client"
+                    "client",
+                    "gateway"
                 ],
                 "description": "This method creates a new gateway.",
                 "operationId": "addGateway",
@@ -1690,7 +1735,8 @@
         "/processes/{process_id}/gateways/{gateway_id}": {
             "get": {
                 "tags": [
-                    "client"
+                    "client",
+                    "gateway"
                 ],
                 "description": "This method retrieves a gateway based on its ID.",
                 "operationId": "findGatewayById",
@@ -1741,7 +1787,8 @@
             },
             "put": {
                 "tags": [
-                    "client"
+                    "client",
+                    "gateway"
                 ],
                 "description": "This method updates an existing gateway.",
                 "operationId": "updateGateway",
@@ -1809,7 +1856,8 @@
             },
             "delete": {
                 "tags": [
-                    "client"
+                    "client",
+                    "gateway"
                 ],
                 "description": "This method is deletes a single item using the gateway ID and process ID.",
                 "operationId": "deleteGateway",
@@ -1860,7 +1908,8 @@
         "/processes/{process_id}/events": {
             "get": {
                 "tags": [
-                    "client"
+                    "client",
+                    "event"
                 ],
                 "description": "This method returns all events related to the runned process",
                 "operationId": "findEvents",
@@ -1909,7 +1958,8 @@
             },
             "post": {
                 "tags": [
-                    "client"
+                    "client",
+                    "event"
                 ],
                 "description": "This method creates the new event.",
                 "operationId": "addEvent",
@@ -1985,7 +2035,8 @@
         "/processes/{process_id}/events/{event_id}": {
             "get": {
                 "tags": [
-                    "client"
+                    "client",
+                    "event"
                 ],
                 "description": "This method retrieves an event using its ID.",
                 "operationId": "findEventById",
@@ -2036,7 +2087,8 @@
             },
             "put": {
                 "tags": [
-                    "client"
+                    "client",
+                    "event"
                 ],
                 "description": "This method updates an existing event",
                 "operationId": "updateEvent",
@@ -2104,7 +2156,8 @@
             },
             "delete": {
                 "tags": [
-                    "client"
+                    "client",
+                    "event"
                 ],
                 "description": "This method deletes an event using the event ID and process ID",
                 "operationId": "deleteEvent",
@@ -2155,7 +2208,8 @@
         "/processes/{process_id}/events/{event_id}/trigger": {
             "post": {
                 "tags": [
-                    "client"
+                    "client",
+                    "event"
                 ],
                 "description": "This method starts/triggers an event.",
                 "operationId": "EventTrigger",
@@ -2194,7 +2248,7 @@
                 ],
                 "responses": {
                     "201": {
-                        "description": "Event started",
+                        "description": "Event triggered",
                         "schema": {
                             "type": "object",
                             "title": "DataModelItem",
@@ -2214,8 +2268,58 @@
                             "$ref": "#/definitions/errorArray"
                         }
                     },
-                    "500": {
-                        "description": "Internal server error",
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/errorArray"
+                        }
+                    }
+                }
+            }
+        },
+        "/processes/{process_id}/events/{event_id}/webhook": {
+            "post": {
+                "tags": [
+                    "client",
+                    "event"
+                ],
+                "description": "This webhook method triggers given Event object.",
+                "operationId": "EventWebhook",
+                "parameters": [
+                    {
+                        "name": "process_id",
+                        "in": "path",
+                        "description": "Process ID related to the event",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "event_id",
+                        "in": "path",
+                        "description": "ID of event to trigger",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "TriggerBody",
+                        "in": "body",
+                        "description": "Freeform JSON structure, it will be passed to newly created DataModel",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Event triggered, please note - result will be always empty string",
+                        "schema": {
+                            "type": "string",
+                            "title": "WebhookResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Item not found",
                         "schema": {
                             "$ref": "#/definitions/errorArray"
                         }
@@ -2232,7 +2336,8 @@
         "/processes/{process_id}/events/{event_id}/connectors": {
             "get": {
                 "tags": [
-                    "client"
+                    "client",
+                    "event"
                 ],
                 "description": "This method returns all Event connectors related to the run Process and Event.",
                 "operationId": "findEventConnectors",
@@ -2288,7 +2393,8 @@
             },
             "post": {
                 "tags": [
-                    "client"
+                    "client",
+                    "event"
                 ],
                 "description": "This method is intended for creating a new Event connector.",
                 "operationId": "addEventConnector",
@@ -2371,7 +2477,8 @@
         "/processes/{process_id}/events/{event_id}/connectors/{connector_id}": {
             "get": {
                 "tags": [
-                    "client"
+                    "client",
+                    "event"
                 ],
                 "description": "This method returns all Event connectors related to the run Process and Event.",
                 "operationId": "findEventConnectorById",
@@ -2429,7 +2536,8 @@
             },
             "put": {
                 "tags": [
-                    "client"
+                    "client",
+                    "event"
                 ],
                 "description": "This method lets update the existing Event connector with new parameters values",
                 "operationId": "updateEventConnector",
@@ -2510,7 +2618,8 @@
             },
             "delete": {
                 "tags": [
-                    "client"
+                    "client",
+                    "event"
                 ],
                 "description": "This method is intended for deleting a single Event connector based on Event ID, Process ID and Connector ID.",
                 "operationId": "deleteEventConnector",
@@ -2568,7 +2677,8 @@
         "/processes/{process_id}/tasks": {
             "get": {
                 "tags": [
-                    "client"
+                    "client",
+                    "task"
                 ],
                 "description": "This method is intended for returning a list of all Tasks related to the process",
                 "operationId": "findTasks",
@@ -2617,7 +2727,8 @@
             },
             "post": {
                 "tags": [
-                    "client"
+                    "client",
+                    "task"
                 ],
                 "description": "This method creates a new task.",
                 "operationId": "addTask",
@@ -2693,7 +2804,8 @@
         "/processes/{process_id}/tasks/{task_id}": {
             "get": {
                 "tags": [
-                    "client"
+                    "client",
+                    "task"
                 ],
                 "description": "This method is retrieves a task using its ID.",
                 "operationId": "findTaskById",
@@ -2744,7 +2856,8 @@
             },
             "put": {
                 "tags": [
-                    "client"
+                    "client",
+                    "task"
                 ],
                 "description": "This method is intended for updating an existing task.",
                 "operationId": "updateTask",
@@ -2812,7 +2925,8 @@
             },
             "delete": {
                 "tags": [
-                    "client"
+                    "client",
+                    "task"
                 ],
                 "description": "This method deletes a task using the task ID and process ID.",
                 "operationId": "deleteTask",
@@ -2863,7 +2977,8 @@
         "/processes/{process_id}/tasks/{task_id}/connectors": {
             "get": {
                 "tags": [
-                    "client"
+                    "client",
+                    "task"
                 ],
                 "description": "This method returns all Task connectors related to the run Process and Task.",
                 "operationId": "findTaskConnectors",
@@ -2919,7 +3034,8 @@
             },
             "post": {
                 "tags": [
-                    "client"
+                    "client",
+                    "task"
                 ],
                 "description": "This method is intended for creating a new task connector.",
                 "operationId": "addTaskConnector",
@@ -3002,7 +3118,8 @@
         "/processes/{process_id}/tasks/{task_id}/connectors/{connector_id}": {
             "get": {
                 "tags": [
-                    "client"
+                    "client",
+                    "task"
                 ],
                 "description": "This method is intended for retrieving an Task connector based on it's ID.",
                 "operationId": "findTaskConnectorById",
@@ -3060,7 +3177,8 @@
             },
             "put": {
                 "tags": [
-                    "client"
+                    "client",
+                    "task"
                 ],
                 "description": "This method lets update the existing Task connector with new parameters values",
                 "operationId": "updateTaskConnector",
@@ -3141,7 +3259,8 @@
             },
             "delete": {
                 "tags": [
-                    "client"
+                    "client",
+                    "task"
                 ],
                 "description": "This method is intended for deleting a single Task connector based on Task ID, Process ID and Connector ID.",
                 "operationId": "deleteTaskConnector",
@@ -3199,7 +3318,8 @@
         "/processes/{process_id}/tasks/{task_id}/groups": {
             "put": {
                 "tags": [
-                    "client"
+                    "client",
+                    "task"
                 ],
                 "description": "This method assigns group(s) to the choosen task",
                 "operationId": "addGroupsToTask",
@@ -3271,7 +3391,8 @@
             },
             "delete": {
                 "tags": [
-                    "client"
+                    "client",
+                    "task"
                 ],
                 "description": "This method removes groups from a task",
                 "operationId": "removeGroupsFromTask",
@@ -3343,7 +3464,8 @@
             },
             "post": {
                 "tags": [
-                    "client"
+                    "client",
+                    "task"
                 ],
                 "description": "This method synchronizes a one or more groups with a task.",
                 "operationId": "syncGroupsToTask",
@@ -3411,7 +3533,8 @@
         "/processes": {
             "get": {
                 "tags": [
-                    "client"
+                    "client",
+                    "process"
                 ],
                 "description": "This method retrieves all existing processes.",
                 "operationId": "findProcesses",
@@ -3465,7 +3588,8 @@
             },
             "post": {
                 "tags": [
-                    "client"
+                    "client",
+                    "process"
                 ],
                 "description": "This method creates a new process",
                 "operationId": "addProcess",
@@ -3528,7 +3652,8 @@
         "/processes/{id}": {
             "get": {
                 "tags": [
-                    "client"
+                    "client",
+                    "process"
                 ],
                 "description": "This method retrieves a process using its ID",
                 "operationId": "findProcessById",
@@ -3572,7 +3697,8 @@
             },
             "put": {
                 "tags": [
-                    "client"
+                    "client",
+                    "process"
                 ],
                 "description": "This method updates an existing process.",
                 "operationId": "updateProcess",
@@ -3633,7 +3759,8 @@
             },
             "delete": {
                 "tags": [
-                    "client"
+                    "client",
+                    "process"
                 ],
                 "description": "This method deletes a process using the process ID.",
                 "operationId": "deleteProcess",
@@ -4159,8 +4286,7 @@
             "get": {
                 "tags": [
                     "client",
-                    "users",
-                    "pagination"
+                    "users"
                 ],
                 "description": "This method returns all existing users in the system.",
                 "operationId": "findUsers",

@@ -821,6 +821,23 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * Test case for EventWebhook
+     */
+    public function testEventWebhook()
+    {
+        $arrayContent = ['some_key' => 10, 'one_more_key' => 5];
+        $arrayUids = $this->testAddEvent();
+        $dataModelattr = new DataModelAttributes();
+        $dataModelattr->setContent(json_encode($arrayContent));
+        $result = $this->apiInstance->eventWebhook(
+            $arrayUids['process_uid'],
+            $arrayUids['event_uid'],
+            json_encode($arrayContent)
+        );
+
+        $this->assertEquals('', $result);
+    }
 
     /**
      * Test case for findEvents
