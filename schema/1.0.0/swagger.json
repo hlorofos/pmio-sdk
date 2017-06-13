@@ -33,10 +33,6 @@
     ],
     "tags": [
         {
-            "name": "client",
-            "description": "Everything about PM.IO"
-        },
-        {
             "name": "users",
             "description": "Operations about user"
         },
