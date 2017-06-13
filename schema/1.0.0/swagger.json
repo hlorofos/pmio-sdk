@@ -3,12 +3,16 @@
     "info": {
         "version": "1.0.0",
         "title": "ProcessMaker API",
-        "description": "This ProcessMaker I/O API provides access to a BPMN 2.0 compliant workflow engine api that is designed to be used as a microservice to support enterprise cloud applications.  The current Alpha 1.0 version supports most of the descriptive class of the BPMN 2.0 specification.",
+        "description": "You can use your favorite\nHTTP/REST library for your programming language to use PMIO API, or\nyou can use one of our SDKs:\nLanguage | GitHub Link | Download Link\n--- | --- | ---\nPHP | [PHP SDK](https://github.com/ProcessMaker/pmio-sdk-php) | [Download PHP SDK](https://github.com/ProcessMaker/pmio-sdk-php/archive/master.zip)\nC# | [C#](https://github.com/ProcessMaker/pmio-sdk-csharp) | [Download C# SDK](https://github.com/ProcessMaker/pmio-sdk-csharp/archive/master.zip)\n\nYou can find out more about Swagger at\n[http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).\nFor this sample, you can use the api key `special-key` to test the authorization filters.\n# Introduction\nThis API is documented in **OpenAPI format** and is based on\n[Petstore sample](http://petstore.swagger.io/) provided by [swagger.io](http://swagger.io) team.\nIt was **extended** to illustrate features of [generator-openapi-repo](https://github.com/Rebilly/generator-openapi-repo)\ntool and [ReDoc](https://github.com/Rebilly/ReDoc) documentation. In addition to standard\nOpenAPI syntax we use a few [vendor extensions](https://github.com/Rebilly/ReDoc/blob/master/docs/redoc-vendor-extensions.md).\n# OpenAPI Specification\nThis API is documented in **OpenAPI format** and is based on\n[Petstore sample](http://petstore.swagger.io/) provided by [swagger.io](http://swagger.io) team.\nIt was **extended** to illustrate features of [generator-openapi-repo](https://github.com/Rebilly/generator-openapi-repo)\ntool and [ReDoc](https://github.com/Rebilly/ReDoc) documentation. In addition to standard\nOpenAPI syntax we use a few [vendor extensions](https://github.com/Rebilly/ReDoc/blob/master/docs/redoc-vendor-extensions.md).\n# Cross-Origin Resource Sharing\nThis API features Cross-Origin Resource Sharing (CORS) implemented in compliance with  [W3C spec](https://www.w3.org/TR/cors/).\nAnd that allows cross-domain communication from the browser.\nAll responses have a wildcard same-origin which makes them completely public and accessible to everyone, including any code on any site.\n# Authentication\nPetstore offers two forms of authentication:\n  - API Key\n  - OAuth2\n\nOAuth2 - an open protocol to allow secure authorization in a simple\nand standard method from web, mobile and desktop applications.\n<!-- ReDoc-Inject: <security-definitions> -->\nThis ProcessMaker I/O API provides<br>\n#Test\n<br>\naccess to a BPMN 2.0 compliant workflow engine api that is designed to be used as a microservice to support enterprise cloud applications.  The current Alpha 1.0 version supports most of the descriptive class of the BPMN 2.0 specification.",
         "termsOfService": "http://processmaker.com/terms/",
         "contact": {
             "name": "ProcessMaker API Team",
             "email": "support@processmaker.io",
             "url": "https://www.processmaker.io/"
+        },
+        "x-logo": {
+            "url": "https://www.processmaker.io/img/logo-black.svg",
+            "backgroundColor": "#FFFFFF"
         }
     },
     "host": "CHANGEME.api.processmaker.io",
@@ -27,51 +31,106 @@
             "PasswordGrant": []
         }
     ],
+    "tags": [
+        {
+            "name": "users",
+            "description": "Operations about user"
+        },
+        {
+            "name": "groups",
+            "description": "Operations about user groups"
+        },
+        {
+            "name": "oauth",
+            "description": "Operations with Oauth clients and tokens"
+        },
+        {
+            "name": "input/output",
+            "description": "Operations with Input/Output objects"
+        },
+        {
+            "name": "process",
+            "description": "Operations with Process objects"
+        },
+        {
+            "name": "process instance",
+            "description": "Operations with Process Instance objects"
+        },
+        {
+            "name": "task",
+            "description": "Operations with Task objects"
+        },
+        {
+            "name": "flow",
+            "description": "Operations with Flow objects"
+        },
+        {
+            "name": "gateway",
+            "description": "Operations with Gateway objects"
+        },
+        {
+            "name": "event",
+            "description": "Operations with Event objects"
+        }
+    ],
+    "x-tagGroups": [
+        {
+            "name": "User Management",
+            "tags": [
+                "users",
+                "groups",
+                "oauth"
+            ]
+        },
+        {
+            "name": "Process Management",
+            "tags": [
+                "process",
+                "flow",
+                "process instance",
+                "task",
+                "gateway",
+                "event",
+                "input/output"
+            ]
+        }
+    ],
     "paths": {
         "/users/{user_id}/clients": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "oauth"
                 ],
-                "description": "This method retrieves all existing clients belonging to an user.",
-                "operationId": "findClients",
+                "description": "This method retrieves all existing Oauth clients belonging to an user.",
+                "operationId": "findOauthClients",
                 "parameters": [
                     {
                         "name": "user_id",
                         "in": "path",
-                        "description": "User ID related to the clients",
+                        "description": "User ID related to the Oauth clients",
                         "required": true,
                         "type": "string"
                     },
                     {
-                        "name": "pagefindProcessById",
-                        "in": "query",
-                        "description": "Page numbers to fetch",
-                        "required": false,
-                        "default": 1,
-                        "type": "integer"
+                        "$ref": "#/parameters/page"
                     },
                     {
-                        "name": "per_page",
-                        "in": "query",
-                        "description": "Amount of items per page",
-                        "required": false,
-                        "default": 15,
-                        "type": "integer"
+                        "$ref": "#/parameters/per_page"
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "List of clients retrieved",
+                        "description": "List of Oauth clients retrieved",
                         "schema": {
-                            "title": "ClientCollection",
-                            "description": "JSON API response with a collection of the clients in an array",
+                            "title": "OauthClientCollection",
+                            "description": "JSON API response with a collection of the Oauth clients in an array",
                             "type": "object",
                             "properties": {
                                 "data": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/definitions/Client"
+                                        "$ref": "#/definitions/OauthClient"
                                     }
                                 },
                                 "meta": {
@@ -90,10 +149,11 @@
             },
             "post": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "oauth"
                 ],
                 "description": "This method creates a new Oauth client for the user",
-                "operationId": "addClient",
+                "operationId": "addOauthClient",
                 "parameters": [
                     {
                         "name": "user_id",
@@ -103,7 +163,7 @@
                         "type": "string"
                     },
                     {
-                        "name": "ClientCreateItem",
+                        "name": "OauthClientCreateItem",
                         "in": "body",
                         "description": "JSON API with the Oauth Client object to add",
                         "required": true,
@@ -114,7 +174,7 @@
                             ],
                             "properties": {
                                 "data": {
-                                    "$ref": "#/definitions/Client"
+                                    "$ref": "#/definitions/OauthClient"
                                 }
                             }
                         }
@@ -122,16 +182,16 @@
                 ],
                 "responses": {
                     "201": {
-                        "description": "The client was created",
+                        "description": "The Oauth client was created",
                         "schema": {
                             "type": "object",
-                            "title": "ClientItem",
+                            "title": "OauthClientItem",
                             "required": [
                                 "data"
                             ],
                             "properties": {
                                 "data": {
-                                    "$ref": "#/definitions/Client"
+                                    "$ref": "#/definitions/OauthClient"
                                 }
                             }
                         }
@@ -154,10 +214,11 @@
         "/users/{user_id}/clients/{client_id}": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "oauth"
                 ],
                 "description": "This method is retrieves an Oauth client based on its ID.",
-                "operationId": "findClientById",
+                "operationId": "findOauthClientById",
                 "parameters": [
                     {
                         "name": "user_id",
@@ -169,14 +230,14 @@
                     {
                         "name": "client_id",
                         "in": "path",
-                        "description": "ID of client to retrieve",
+                        "description": "ID of Oauth client to retrieve",
                         "required": true,
                         "type": "string"
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Client retrieved",
+                        "description": "Oauth Client retrieved",
                         "schema": {
                             "type": "object",
                             "required": [
@@ -184,7 +245,7 @@
                             ],
                             "properties": {
                                 "data": {
-                                    "$ref": "#/definitions/Client"
+                                    "$ref": "#/definitions/OauthClient"
                                 }
                             }
                         }
@@ -205,10 +266,10 @@
             },
             "put": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
                 "description": "This method updates an existing Oauth client.",
-                "operationId": "updateClient",
+                "operationId": "updateOauthClient",
                 "parameters": [
                     {
                         "name": "user_id",
@@ -220,14 +281,14 @@
                     {
                         "name": "client_id",
                         "in": "path",
-                        "description": "ID of client to retrieve",
+                        "description": "ID of Oauth client to retrieve",
                         "required": true,
                         "type": "string"
                     },
                     {
-                        "name": "ClientUpdateItem",
+                        "name": "OauthClientUpdateItem",
                         "in": "body",
-                        "description": "Client object to edit",
+                        "description": "Oauth Client object to edit",
                         "required": true,
                         "schema": {
                             "type": "object",
@@ -236,7 +297,7 @@
                             ],
                             "properties": {
                                 "data": {
-                                    "$ref": "#/definitions/Client"
+                                    "$ref": "#/definitions/OauthClient"
                                 }
                             }
                         }
@@ -244,7 +305,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Client updated",
+                        "description": "Oauth Client updated",
                         "schema": {
                             "type": "object",
                             "required": [
@@ -252,7 +313,7 @@
                             ],
                             "properties": {
                                 "data": {
-                                    "$ref": "#/definitions/Client"
+                                    "$ref": "#/definitions/OauthClient"
                                 }
                             }
                         }
@@ -273,10 +334,10 @@
             },
             "delete": {
                 "tags": [
-                    "processmaker"
+                    "client"
                 ],
-                "description": "This method deletes an Oauth client using the client and user IDs.",
-                "operationId": "deleteClient",
+                "description": "This method deletes an Oauth client using the Oauth client and user IDs.",
+                "operationId": "deleteOauthClient",
                 "parameters": [
                     {
                         "name": "user_id",
@@ -288,7 +349,7 @@
                     {
                         "name": "client_id",
                         "in": "path",
-                        "description": "ID of client to delete",
+                        "description": "ID of Oauth client to delete",
                         "required": true,
                         "type": "string"
                     }
@@ -324,7 +385,8 @@
         "/processes/{process_id}/tasks/{task_id}/inputoutput": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "input/output"
                 ],
                 "description": "This method retrieves all existing Input/Output objects in the related task instance.",
                 "operationId": "findInputOutputs",
@@ -344,20 +406,10 @@
                         "type": "string"
                     },
                     {
-                        "name": "page",
-                        "in": "query",
-                        "description": "Page number to fetch",
-                        "required": false,
-                        "default": 1,
-                        "type": "integer"
+                        "$ref": "#/parameters/page"
                     },
                     {
-                        "name": "per_page",
-                        "in": "query",
-                        "description": "Amount of items per page",
-                        "required": false,
-                        "default": 15,
-                        "type": "integer"
+                        "$ref": "#/parameters/per_page"
                     }
                 ],
                 "responses": {
@@ -390,7 +442,8 @@
             },
             "post": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "input/output"
                 ],
                 "description": "This method creates a new Input/Output object",
                 "operationId": "addInputOutput",
@@ -467,7 +520,8 @@
         "/processes/{process_id}/tasks/{task_id}/inputoutput/{inputoutput_uid}": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "input/output"
                 ],
                 "description": "This method retrieves an Input/Output object using its ID.",
                 "operationId": "findInputOutputById",
@@ -525,7 +579,8 @@
             },
             "put": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "input/output"
                 ],
                 "description": "This method updates an existing Input/Output object.",
                 "operationId": "updateInputOutput",
@@ -600,7 +655,8 @@
             },
             "delete": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "input/output"
                 ],
                 "description": "This method deletes the Input/Output based on the Input/Output ID, process ID and task ID.",
                 "operationId": "deleteInputOutput",
@@ -658,7 +714,8 @@
         "/processes/import": {
             "post": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "process"
                 ],
                 "description": "This method imports BPMN files. A new process is created when import is successful.",
                 "operationId": "importBpmnFile",
@@ -727,7 +784,8 @@
         "/processes/{process_id}/instances/{instance_id}/datamodel": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "process instance"
                 ],
                 "description": "This method returns the instance DataModel and lets the user work with it directly",
                 "operationId": "findDataModel",
@@ -747,20 +805,10 @@
                         "type": "string"
                     },
                     {
-                        "name": "page",
-                        "in": "query",
-                        "description": "Page number to fetch",
-                        "required": false,
-                        "default": 1,
-                        "type": "integer"
+                        "$ref": "#/parameters/page"
                     },
                     {
-                        "name": "per_page",
-                        "in": "query",
-                        "description": "Amount of items per Page",
-                        "required": false,
-                        "default": 15,
-                        "type": "integer"
+                        "$ref": "#/parameters/per_page"
                     }
                 ],
                 "responses": {
@@ -796,7 +844,8 @@
         "/task_instances/{task_instance_id}": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "task"
                 ],
                 "description": "This method retrieves a task instance based on its ID.",
                 "operationId": "findTaskInstanceById",
@@ -809,20 +858,10 @@
                         "type": "string"
                     },
                     {
-                        "name": "page",
-                        "in": "query",
-                        "description": "Page number to fetch",
-                        "required": false,
-                        "default": 1,
-                        "type": "integer"
+                        "$ref": "#/parameters/page"
                     },
                     {
-                        "name": "per_page",
-                        "in": "query",
-                        "description": "Amount of items per page",
-                        "required": false,
-                        "default": 15,
-                        "type": "integer"
+                        "$ref": "#/parameters/per_page"
                     }
                 ],
                 "responses": {
@@ -856,7 +895,8 @@
             },
             "patch": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "task"
                 ],
                 "description": "This method updates an existing task instance.",
                 "operationId": "updateTaskInstance",
@@ -919,26 +959,17 @@
         "/task_instances": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "task"
                 ],
                 "description": "This method retrieves all existing task instances",
                 "operationId": "findTaskInstances",
                 "parameters": [
                     {
-                        "name": "page",
-                        "in": "query",
-                        "description": "Page number to fetch",
-                        "required": false,
-                        "default": 1,
-                        "type": "integer"
+                        "$ref": "#/parameters/page"
                     },
                     {
-                        "name": "per_page",
-                        "in": "query",
-                        "description": "Amount of items per page",
-                        "required": false,
-                        "default": 15,
-                        "type": "integer"
+                        "$ref": "#/parameters/per_page"
                     }
                 ],
                 "responses": {
@@ -973,7 +1004,8 @@
         "/processes/{process_id}/instances": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "process instance"
                 ],
                 "description": "This method retrieves related to the process using  the Process ID",
                 "operationId": "findInstances",
@@ -986,20 +1018,10 @@
                         "type": "string"
                     },
                     {
-                        "name": "page",
-                        "in": "query",
-                        "description": "Page number to fetch",
-                        "required": false,
-                        "default": 1,
-                        "type": "integer"
+                        "$ref": "#/parameters/page"
                     },
                     {
-                        "name": "per_page",
-                        "in": "query",
-                        "description": "Amount of items per page",
-                        "required": false,
-                        "default": 15,
-                        "type": "integer"
+                        "$ref": "#/parameters/per_page"
                     }
                 ],
                 "responses": {
@@ -1032,7 +1054,8 @@
             },
             "post": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "process instance"
                 ],
                 "description": "This method creates a new instance.",
                 "operationId": "addInstance",
@@ -1108,7 +1131,8 @@
         "/processes/{process_id}/instances/{instance_id}": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "process instance"
                 ],
                 "description": "This method retrieves an instance using its ID.",
                 "operationId": "findInstanceById",
@@ -1159,7 +1183,8 @@
             },
             "put": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "process instance"
                 ],
                 "description": "This method updates  an existing instance.",
                 "operationId": "updateInstance",
@@ -1227,7 +1252,8 @@
             },
             "delete": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "process instance"
                 ],
                 "description": "This method deletes an instance using the instance ID and process ID.",
                 "operationId": "deleteInstance",
@@ -1278,7 +1304,8 @@
         "/processes/{process_id}/flows": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "flow"
                 ],
                 "description": "This method retrieves all existing flows.",
                 "operationId": "findFlows",
@@ -1291,20 +1318,10 @@
                         "type": "string"
                     },
                     {
-                        "name": "page",
-                        "in": "query",
-                        "description": "Page numbers to fetch",
-                        "required": false,
-                        "default": 1,
-                        "type": "integer"
+                        "$ref": "#/parameters/page"
                     },
                     {
-                        "name": "per_page",
-                        "in": "query",
-                        "description": "Amount of items per Page",
-                        "required": false,
-                        "default": 15,
-                        "type": "integer"
+                        "$ref": "#/parameters/per_page"
                     }
                 ],
                 "responses": {
@@ -1337,7 +1354,8 @@
             },
             "post": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "flow"
                 ],
                 "description": "This method creates a new Sequence flow",
                 "operationId": "addFlow",
@@ -1413,7 +1431,8 @@
         "/processes/{process_id}/flows/{flow_id}": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "flow"
                 ],
                 "description": "This method retrieves a flow based on its ID.",
                 "operationId": "findFlowById",
@@ -1464,7 +1483,8 @@
             },
             "put": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "flow"
                 ],
                 "description": "This method updates an existing flow.",
                 "operationId": "updateFlow",
@@ -1532,7 +1552,8 @@
             },
             "delete": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "flow"
                 ],
                 "description": "This method deletes a sequence flow using the flow ID and process ID.",
                 "operationId": "deleteFlow",
@@ -1583,7 +1604,8 @@
         "/processes/{process_id}/gateways": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "gateway"
                 ],
                 "description": "This method retrieves all existing gateways.",
                 "operationId": "findGateways",
@@ -1596,20 +1618,10 @@
                         "type": "string"
                     },
                     {
-                        "name": "page",
-                        "in": "query",
-                        "description": "Page number to fetch",
-                        "required": false,
-                        "default": 1,
-                        "type": "integer"
+                        "$ref": "#/parameters/page"
                     },
                     {
-                        "name": "per_page",
-                        "in": "query",
-                        "description": "Amount of items per page",
-                        "required": false,
-                        "default": 15,
-                        "type": "integer"
+                        "$ref": "#/parameters/per_page"
                     }
                 ],
                 "responses": {
@@ -1642,7 +1654,8 @@
             },
             "post": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "gateway"
                 ],
                 "description": "This method creates a new gateway.",
                 "operationId": "addGateway",
@@ -1718,7 +1731,8 @@
         "/processes/{process_id}/gateways/{gateway_id}": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "gateway"
                 ],
                 "description": "This method retrieves a gateway based on its ID.",
                 "operationId": "findGatewayById",
@@ -1769,7 +1783,8 @@
             },
             "put": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "gateway"
                 ],
                 "description": "This method updates an existing gateway.",
                 "operationId": "updateGateway",
@@ -1837,7 +1852,8 @@
             },
             "delete": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "gateway"
                 ],
                 "description": "This method is deletes a single item using the gateway ID and process ID.",
                 "operationId": "deleteGateway",
@@ -1888,7 +1904,8 @@
         "/processes/{process_id}/events": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "event"
                 ],
                 "description": "This method returns all events related to the runned process",
                 "operationId": "findEvents",
@@ -1901,20 +1918,10 @@
                         "type": "string"
                     },
                     {
-                        "name": "page",
-                        "in": "query",
-                        "description": "Page numbers to fetch",
-                        "required": false,
-                        "default": 1,
-                        "type": "integer"
+                        "$ref": "#/parameters/page"
                     },
                     {
-                        "name": "per_page",
-                        "in": "query",
-                        "description": "Amount of items per Page",
-                        "required": false,
-                        "default": 15,
-                        "type": "integer"
+                        "$ref": "#/parameters/per_page"
                     }
                 ],
                 "responses": {
@@ -1947,7 +1954,8 @@
             },
             "post": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "event"
                 ],
                 "description": "This method creates the new event.",
                 "operationId": "addEvent",
@@ -2023,7 +2031,8 @@
         "/processes/{process_id}/events/{event_id}": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "event"
                 ],
                 "description": "This method retrieves an event using its ID.",
                 "operationId": "findEventById",
@@ -2074,7 +2083,8 @@
             },
             "put": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "event"
                 ],
                 "description": "This method updates an existing event",
                 "operationId": "updateEvent",
@@ -2142,7 +2152,8 @@
             },
             "delete": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "event"
                 ],
                 "description": "This method deletes an event using the event ID and process ID",
                 "operationId": "deleteEvent",
@@ -2193,7 +2204,8 @@
         "/processes/{process_id}/events/{event_id}/trigger": {
             "post": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "event"
                 ],
                 "description": "This method starts/triggers an event.",
                 "operationId": "EventTrigger",
@@ -2232,7 +2244,7 @@
                 ],
                 "responses": {
                     "201": {
-                        "description": "Event started",
+                        "description": "Event triggered",
                         "schema": {
                             "type": "object",
                             "title": "DataModelItem",
@@ -2252,8 +2264,58 @@
                             "$ref": "#/definitions/errorArray"
                         }
                     },
-                    "500": {
-                        "description": "Internal server error",
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/errorArray"
+                        }
+                    }
+                }
+            }
+        },
+        "/processes/{process_id}/events/{event_id}/webhook": {
+            "post": {
+                "tags": [
+                    "client",
+                    "event"
+                ],
+                "description": "This webhook method triggers given Event object.",
+                "operationId": "EventWebhook",
+                "parameters": [
+                    {
+                        "name": "process_id",
+                        "in": "path",
+                        "description": "Process ID related to the event",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "event_id",
+                        "in": "path",
+                        "description": "ID of event to trigger",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "TriggerBody",
+                        "in": "body",
+                        "description": "Freeform JSON structure, it will be passed to newly created DataModel",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Event triggered, please note - result will be always empty string",
+                        "schema": {
+                            "type": "string",
+                            "title": "WebhookResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Item not found",
                         "schema": {
                             "$ref": "#/definitions/errorArray"
                         }
@@ -2270,7 +2332,8 @@
         "/processes/{process_id}/events/{event_id}/connectors": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "event"
                 ],
                 "description": "This method returns all Event connectors related to the run Process and Event.",
                 "operationId": "findEventConnectors",
@@ -2290,20 +2353,10 @@
                         "type": "string"
                     },
                     {
-                        "name": "page",
-                        "in": "query",
-                        "description": "Page number to fetch",
-                        "required": false,
-                        "default": 1,
-                        "type": "integer"
+                        "$ref": "#/parameters/page"
                     },
                     {
-                        "name": "per_page",
-                        "in": "query",
-                        "description": "Amount of items per Page",
-                        "required": false,
-                        "default": 15,
-                        "type": "integer"
+                        "$ref": "#/parameters/per_page"
                     }
                 ],
                 "responses": {
@@ -2336,7 +2389,8 @@
             },
             "post": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "event"
                 ],
                 "description": "This method is intended for creating a new Event connector.",
                 "operationId": "addEventConnector",
@@ -2419,7 +2473,8 @@
         "/processes/{process_id}/events/{event_id}/connectors/{connector_id}": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "event"
                 ],
                 "description": "This method returns all Event connectors related to the run Process and Event.",
                 "operationId": "findEventConnectorById",
@@ -2477,7 +2532,8 @@
             },
             "put": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "event"
                 ],
                 "description": "This method lets update the existing Event connector with new parameters values",
                 "operationId": "updateEventConnector",
@@ -2558,7 +2614,8 @@
             },
             "delete": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "event"
                 ],
                 "description": "This method is intended for deleting a single Event connector based on Event ID, Process ID and Connector ID.",
                 "operationId": "deleteEventConnector",
@@ -2616,7 +2673,8 @@
         "/processes/{process_id}/tasks": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "task"
                 ],
                 "description": "This method is intended for returning a list of all Tasks related to the process",
                 "operationId": "findTasks",
@@ -2629,20 +2687,10 @@
                         "type": "string"
                     },
                     {
-                        "name": "page",
-                        "in": "query",
-                        "description": "Page number to fetch",
-                        "required": false,
-                        "default": 1,
-                        "type": "integer"
+                        "$ref": "#/parameters/page"
                     },
                     {
-                        "name": "per_page",
-                        "in": "query",
-                        "description": "Amount of items per Page",
-                        "required": false,
-                        "default": 15,
-                        "type": "integer"
+                        "$ref": "#/parameters/per_page"
                     }
                 ],
                 "responses": {
@@ -2675,7 +2723,8 @@
             },
             "post": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "task"
                 ],
                 "description": "This method creates a new task.",
                 "operationId": "addTask",
@@ -2751,7 +2800,8 @@
         "/processes/{process_id}/tasks/{task_id}": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "task"
                 ],
                 "description": "This method is retrieves a task using its ID.",
                 "operationId": "findTaskById",
@@ -2802,7 +2852,8 @@
             },
             "put": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "task"
                 ],
                 "description": "This method is intended for updating an existing task.",
                 "operationId": "updateTask",
@@ -2870,7 +2921,8 @@
             },
             "delete": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "task"
                 ],
                 "description": "This method deletes a task using the task ID and process ID.",
                 "operationId": "deleteTask",
@@ -2921,7 +2973,8 @@
         "/processes/{process_id}/tasks/{task_id}/connectors": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "task"
                 ],
                 "description": "This method returns all Task connectors related to the run Process and Task.",
                 "operationId": "findTaskConnectors",
@@ -2941,20 +2994,10 @@
                         "type": "string"
                     },
                     {
-                        "name": "page",
-                        "in": "query",
-                        "description": "Page number to fetch",
-                        "required": false,
-                        "default": 1,
-                        "type": "integer"
+                        "$ref": "#/parameters/page"
                     },
                     {
-                        "name": "per_page",
-                        "in": "query",
-                        "description": "Amount of items per Page",
-                        "required": false,
-                        "default": 15,
-                        "type": "integer"
+                        "$ref": "#/parameters/per_page"
                     }
                 ],
                 "responses": {
@@ -2987,7 +3030,8 @@
             },
             "post": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "task"
                 ],
                 "description": "This method is intended for creating a new task connector.",
                 "operationId": "addTaskConnector",
@@ -3070,7 +3114,8 @@
         "/processes/{process_id}/tasks/{task_id}/connectors/{connector_id}": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "task"
                 ],
                 "description": "This method is intended for retrieving an Task connector based on it's ID.",
                 "operationId": "findTaskConnectorById",
@@ -3128,7 +3173,8 @@
             },
             "put": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "task"
                 ],
                 "description": "This method lets update the existing Task connector with new parameters values",
                 "operationId": "updateTaskConnector",
@@ -3209,7 +3255,8 @@
             },
             "delete": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "task"
                 ],
                 "description": "This method is intended for deleting a single Task connector based on Task ID, Process ID and Connector ID.",
                 "operationId": "deleteTaskConnector",
@@ -3267,7 +3314,8 @@
         "/processes/{process_id}/tasks/{task_id}/groups": {
             "put": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "task"
                 ],
                 "description": "This method assigns group(s) to the choosen task",
                 "operationId": "addGroupsToTask",
@@ -3339,7 +3387,8 @@
             },
             "delete": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "task"
                 ],
                 "description": "This method removes groups from a task",
                 "operationId": "removeGroupsFromTask",
@@ -3411,7 +3460,8 @@
             },
             "post": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "task"
                 ],
                 "description": "This method synchronizes a one or more groups with a task.",
                 "operationId": "syncGroupsToTask",
@@ -3479,26 +3529,17 @@
         "/processes": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "process"
                 ],
                 "description": "This method retrieves all existing processes.",
                 "operationId": "findProcesses",
                 "parameters": [
                     {
-                        "name": "page",
-                        "in": "query",
-                        "description": "Page number to fetch",
-                        "required": false,
-                        "default": 1,
-                        "type": "integer"
+                        "$ref": "#/parameters/page"
                     },
                     {
-                        "name": "per_page",
-                        "in": "query",
-                        "description": "Amount of items per page",
-                        "required": false,
-                        "default": 15,
-                        "type": "integer"
+                        "$ref": "#/parameters/per_page"
                     }
                 ],
                 "responses": {
@@ -3543,7 +3584,8 @@
             },
             "post": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "process"
                 ],
                 "description": "This method creates a new process",
                 "operationId": "addProcess",
@@ -3606,7 +3648,8 @@
         "/processes/{id}": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "process"
                 ],
                 "description": "This method retrieves a process using its ID",
                 "operationId": "findProcessById",
@@ -3650,7 +3693,8 @@
             },
             "put": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "process"
                 ],
                 "description": "This method updates an existing process.",
                 "operationId": "updateProcess",
@@ -3711,7 +3755,8 @@
             },
             "delete": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "process"
                 ],
                 "description": "This method deletes a process using the process ID.",
                 "operationId": "deleteProcess",
@@ -3761,26 +3806,17 @@
         "/groups": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "groups"
                 ],
                 "description": "This method retrieves all existing groups.",
                 "operationId": "findGroups",
                 "parameters": [
                     {
-                        "name": "page",
-                        "in": "query",
-                        "description": "Page number to fetch",
-                        "required": false,
-                        "default": 1,
-                        "type": "integer"
+                        "$ref": "#/parameters/page"
                     },
                     {
-                        "name": "per_page",
-                        "in": "query",
-                        "description": "Amount of items per Page",
-                        "required": false,
-                        "default": 15,
-                        "type": "integer"
+                        "$ref": "#/parameters/per_page"
                     }
                 ],
                 "responses": {
@@ -3813,7 +3849,8 @@
             },
             "post": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "groups"
                 ],
                 "description": "This method creates a new group.",
                 "operationId": "addGroup",
@@ -3870,7 +3907,8 @@
         "/groups/{id}": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "groups"
                 ],
                 "description": "This method retrieves a group using its ID.",
                 "operationId": "findGroupById",
@@ -3914,7 +3952,8 @@
             },
             "put": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "groups"
                 ],
                 "description": "This method updates an existing group.",
                 "operationId": "updateGroup",
@@ -3975,7 +4014,8 @@
             },
             "delete": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "groups"
                 ],
                 "description": "This method deletes a group using the group ID",
                 "operationId": "deleteGroup",
@@ -4019,7 +4059,8 @@
         "/groups/{id}/users": {
             "put": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "groups"
                 ],
                 "description": "This method adds one or more new users to a group.",
                 "operationId": "addUsersToGroup",
@@ -4078,7 +4119,8 @@
             },
             "delete": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "groups"
                 ],
                 "description": "This method removes one or more users from a group.",
                 "operationId": "removeUsersFromGroup",
@@ -4137,7 +4179,8 @@
             },
             "post": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "groups"
                 ],
                 "description": "This method synchronizes one or more users with a group.",
                 "operationId": "syncUsersToGroup",
@@ -4192,26 +4235,17 @@
         "/users/myself": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "users"
                 ],
                 "description": "This method returns user information using a token",
                 "operationId": "myselfUser",
                 "parameters": [
                     {
-                        "name": "page",
-                        "in": "query",
-                        "description": "Page number to fetch",
-                        "required": false,
-                        "default": 1,
-                        "type": "integer"
+                        "$ref": "#/parameters/page"
                     },
                     {
-                        "name": "per_page",
-                        "in": "query",
-                        "description": "Amount of items per page",
-                        "required": false,
-                        "default": 15,
-                        "type": "integer"
+                        "$ref": "#/parameters/per_page"
                     }
                 ],
                 "responses": {
@@ -4247,31 +4281,32 @@
         "/users": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "users"
                 ],
-                "description": "This method returs all existing users in the system.",
+                "description": "This method returns all existing users in the system.",
                 "operationId": "findUsers",
                 "parameters": [
                     {
-                        "name": "page",
-                        "in": "query",
-                        "description": "Page number to fetch",
-                        "required": false,
-                        "default": 1,
-                        "type": "integer"
+                        "$ref": "#/parameters/page"
                     },
                     {
-                        "name": "per_page",
-                        "in": "query",
-                        "description": "Amount of items per page",
-                        "required": false,
-                        "default": 15,
-                        "type": "integer"
+                        "$ref": "#/parameters/per_page"
                     }
                 ],
                 "responses": {
                     "200": {
                         "description": "List of users retrieved",
+                        "headers": {
+                            "X-Rate-Limit-Limit": {
+                                "description": "The number of allowed requests in the current period",
+                                "type": "integer"
+                            },
+                            "X-Rate-Limit-Remaining": {
+                                "description": "The number of remaining requests in the current period",
+                                "type": "integer"
+                            }
+                        },
                         "schema": {
                             "title": "UserCollection",
                             "description": "JSON API response with the collection of users in an array",
@@ -4299,9 +4334,10 @@
             },
             "post": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "users"
                 ],
-                "description": "This method creates a new user in the system.",
+                "description": "This method creates a new user in the system.\nFrom the result you may retrieve `client_id`\n\nThis `client_id` required to obtain `client_secret` and then you will be able to perform Oauth authorization key. Refer to [Oauth Client APIs](#tag/oauth)",
                 "operationId": "addUser",
                 "parameters": [
                     {
@@ -4350,13 +4386,20 @@
                             "$ref": "#/definitions/errorArray"
                         }
                     }
-                }
+                },
+                "x-code-samples": [
+                    {
+                        "lang": "PHP",
+                        "source": "$bobAttr = new UserAttributes();\r\n$bobAttr->setLastname('Doe');\r\n$bobAttr->setFirstname('Bob');\r\n$bobAttr->setUsername('Bob');\r\n$bobAttr->setPassword('Bobpassword');\r\n$bobAttr->setEmail('bob@processmaker.com');\r\n\r\n\/** @var UserItem $bob *\/\r\n$bob = $client->addUser(new UserCreateItem([\r\n    'data' => new User(['attributes' => $bobAttr])\r\n]));"
+                    }
+                ]
             }
         },
         "/users/{id}": {
             "get": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "users"
                 ],
                 "description": "This method returns a user using its ID.",
                 "operationId": "findUserById",
@@ -4400,7 +4443,8 @@
             },
             "put": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "users"
                 ],
                 "description": "This method updates an existing user.",
                 "operationId": "updateUser",
@@ -4462,7 +4506,8 @@
             },
             "delete": {
                 "tags": [
-                    "processmaker"
+                    "client",
+                    "users"
                 ],
                 "description": "This method deletes a user from the system.",
                 "operationId": "deleteUser",
@@ -4509,7 +4554,8 @@
             "type": "oauth2",
             "flow": "password",
             "tokenUrl": "/oauth/access_token",
-            "authorizationUrl": "/oauth/access_token"
+            "authorizationUrl": "/oauth/access_token",
+            "description": "*TODO:* Oauth2 token description goes here"
         }
     },
     "definitions": {
@@ -4609,7 +4655,7 @@
                 }
             }
         },
-        "Client": {
+        "OauthClient": {
             "type": "object",
             "required": [
                 "type"
@@ -4636,7 +4682,7 @@
                         },
                         "name": {
                             "type": "string",
-                            "example": "Client Name"
+                            "example": "Oauth Client Name"
                         },
                         "personal_access_client": {
                             "type": "boolean"
@@ -5842,6 +5888,27 @@
                     "type": "string"
                 }
             }
+        }
+    },
+    "parameters": {
+        "page": {
+            "name": "page",
+            "in": "query",
+            "description": "Page number to fetch",
+            "required": false,
+            "default": 1,
+            "minimum": 1,
+            "type": "integer"
+        },
+        "per_page": {
+            "name": "per_page",
+            "in": "query",
+            "description": "Amount of items per page",
+            "required": false,
+            "default": 15,
+            "minimum": 1,
+            "maximum": 100,
+            "type": "integer"
         }
     }
 }

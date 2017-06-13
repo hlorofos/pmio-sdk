@@ -1,11 +1,11 @@
 #!/bin/bash
 
 VERSION="1.0.0"
-CODEGEN="bin/swagger-codegen-cli-modified.jar"
+CODEGEN="bin/swagger-codegen-cli-2.2.1-patched.jar"
 SCHEMA="schema/$VERSION/swagger.json"
 
 languages="csharp cpprest java javascript perl php python"
-docs="swagger html html2 dynamic-html cwiki"
+docs="swagger html2"
 
 DetectJava() {
 

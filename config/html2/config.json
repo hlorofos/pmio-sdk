@@ -1,0 +1,10 @@
+{
+    "appName": "PMIO",
+    "appDescription": "ProcessMaker I/O API",
+    "infoUrl": "https://www.processmaker.io/",
+    "infoEmail": "support@processmaker.io",
+    "groupId": "ProcessMaker",
+    "artifactId": "PMIO",
+    "artifactVersion": "1.0.0",
+    "invokerPackage": "processmaker.pmio"
+}
