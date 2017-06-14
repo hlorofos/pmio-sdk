@@ -3,7 +3,7 @@
     "info": {
         "version": "1.0.0",
         "title": "ProcessMaker API",
-        "description": "You can use your favorite\nHTTP/REST library for your programming language to use PMIO API, or\nyou can use one of our SDKs:\nLanguage | GitHub Link | Download Link\n--- | --- | ---\nPHP | [PHP SDK](https://github.com/ProcessMaker/pmio-sdk-php) | [Download PHP SDK](https://github.com/ProcessMaker/pmio-sdk-php/archive/master.zip)\nC# | [C#](https://github.com/ProcessMaker/pmio-sdk-csharp) | [Download C# SDK](https://github.com/ProcessMaker/pmio-sdk-csharp/archive/master.zip)\n\nYou can find out more about Swagger at\n[http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).\nFor this sample, you can use the api key `special-key` to test the authorization filters.\n# Introduction\nThis API is documented in **OpenAPI format** and is based on\n[Petstore sample](http://petstore.swagger.io/) provided by [swagger.io](http://swagger.io) team.\nIt was **extended** to illustrate features of [generator-openapi-repo](https://github.com/Rebilly/generator-openapi-repo)\ntool and [ReDoc](https://github.com/Rebilly/ReDoc) documentation. In addition to standard\nOpenAPI syntax we use a few [vendor extensions](https://github.com/Rebilly/ReDoc/blob/master/docs/redoc-vendor-extensions.md).\n# OpenAPI Specification\nThis API is documented in **OpenAPI format** and is based on\n[Petstore sample](http://petstore.swagger.io/) provided by [swagger.io](http://swagger.io) team.\nIt was **extended** to illustrate features of [generator-openapi-repo](https://github.com/Rebilly/generator-openapi-repo)\ntool and [ReDoc](https://github.com/Rebilly/ReDoc) documentation. In addition to standard\nOpenAPI syntax we use a few [vendor extensions](https://github.com/Rebilly/ReDoc/blob/master/docs/redoc-vendor-extensions.md).\n# Cross-Origin Resource Sharing\nThis API features Cross-Origin Resource Sharing (CORS) implemented in compliance with  [W3C spec](https://www.w3.org/TR/cors/).\nAnd that allows cross-domain communication from the browser.\nAll responses have a wildcard same-origin which makes them completely public and accessible to everyone, including any code on any site.\n# Authentication\nPetstore offers two forms of authentication:\n  - API Key\n  - OAuth2\n\nOAuth2 - an open protocol to allow secure authorization in a simple\nand standard method from web, mobile and desktop applications.\n<!-- ReDoc-Inject: <security-definitions> -->\nThis ProcessMaker I/O API provides<br>\n#Test\n<br>\naccess to a BPMN 2.0 compliant workflow engine api that is designed to be used as a microservice to support enterprise cloud applications.  The current Alpha 1.0 version supports most of the descriptive class of the BPMN 2.0 specification.",
+        "description": "You can use your favorite\nHTTP/REST library for your programming language to use PMIO API, or\nyou can use one of our SDKs:\nLanguage | GitHub Link | Download Link\n--- | --- | ---\nPHP | [PHP SDK](https://github.com/ProcessMaker/pmio-sdk-php) | [Download PHP SDK](https://github.com/ProcessMaker/pmio-sdk-php/archive/master.zip)\nC# | [C#](https://github.com/ProcessMaker/pmio-sdk-csharp) | [Download C# SDK](https://github.com/ProcessMaker/pmio-sdk-csharp/archive/master.zip)\n\nYou can find out more about Swagger at\n[http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).\nFor this sample, you can use the api key `special-key` to test the authorization filters.\n# Introduction\nThis API is documented in **OpenAPI format** and is based on\n[Petstore sample](http://petstore.swagger.io/) provided by [swagger.io](http://swagger.io) team.\nIt was **extended** to illustrate features of [generator-openapi-repo](https://github.com/Rebilly/generator-openapi-repo)\ntool and [ReDoc](https://github.com/Rebilly/ReDoc) documentation. In addition to standard\nOpenAPI syntax we use a few [vendor extensions](https://github.com/Rebilly/ReDoc/blob/master/docs/redoc-vendor-extensions.md).\n\n# How to create a new user\n\nUse [addUser](#operation/addUser) API call to create a User. Oauth client and its `client_id` will be returned back along with the User details\n\n## Retrieving client_secret\nYou may retrieve `client_secret` for the User via [findOauthClientById](#operation/findOauthClientById) API call\n\n## Getting authorization key\n\nHaving both `client_id` and `client_secret` you may retrieve `access_token` and `refresh_token` using password grant. Additionally username and password are required to perform the operation.\r\n### PHP Sample to retrieve Oauth tokens\r\n```php\r\n\r\n$args_for_bob = [\r\n    'grant_type' => 'password',\r\n    'client_id' => $bobCredentials->getData()->getId(),\r\n    'client_secret' => $bobCredentials->getData()->getAttributes()->getSecret(),\r\n    'username' => $bobAttr->getUsername(),\r\n    'password' => $bobAttr->getPassword()\r\n];\r\n\r\nprint_r(getCredentials($args_for_bob, $host));\r\n\r\n\/**\r\n * @param array $args Oauth request data\r\n * @param string $host API HOST\r\n * @return mixed\r\n *\/\r\nfunction getCredentials($args, $host)\r\n{\r\n    $ch = curl_init();\r\n    curl_setopt($ch, CURLOPT_URL, \"https:\/\/$host\/oauth\/access_token\");\r\n    curl_setopt($ch, CURLOPT_POST, 1);\r\n    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($args));\r\n    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\r\n    $serverResponse = json_decode(curl_exec($ch));\r\n    curl_close($ch);\r\n    return $serverResponse;\r\n}\r\n```\r\n\r\nHere you will get `access_token` and `refresh_token` to perform Oauth authorization for specific user.\n# How to import BPMN file\r\n\r\nThe following API call will allow you to import BPMN file: [importBpmnFile](#operation\/importBpmnFile). Resulting variable $process will contain an array of created Process(es) objects.\n# How to create and launch a new Process\r\n\r\nUse [addProcess](#operation\/addProcess) API call to create a new Process. As result you will get `process_id`, which can be used to add objects to the Process.\r\n\r\n## How to assign User to Group\r\n\r\nYou may want to delegate Tasks not just to a User, but a Group of Users. \r\nUse [addUsersToGroup](#operation\/addUsersToGroup) API call to add some Users to the Group.\r\n\r\n## How to add objects to Process\r\n\r\nAlso we should add objects to our process, such as Start event and End event.\r\n(use [addEvent](#operation\/addEvent) API call to add these), and at least one Task object (use [addTask](#operation\/addTask) API call).\r\n\r\n## How to add flows between process objects\r\n\r\nAll objects in Process need to be joined by SEQUENTIAL Flows. Use [addFlow](#operation\/addFlow) API call to connect the objects with each other.\r\n\r\n## How to delegate Group of Users to Task\r\n\r\nWhe you have `process_id`, `task_id` and `group_id` you can assign Group as delegate for User Task with the following API method: [AddGroupsToTask](#operation\/addGroupsToTask).\r\n\r\n## How to run process\r\n\r\nTo run process we just need to trigger Start event object by using [eventTrigger](#operation\/eventTrigger) API call. Just pass `process_id`, Start Event `event_id`, and an input data we need for the Process as Data model attributes. Content of Data Model can be associative array keys and values.\r\n\r\nAs result, our engine creates Process instance with status **RUNNING**. To get all Process Instances belonging to Process you can retrieve using [findInstances](#operation\/findInstances) API call.\n# OpenAPI Specification\nThis API is documented in **OpenAPI format** and is based on\n[Petstore sample](http://petstore.swagger.io/) provided by [swagger.io](http://swagger.io) team.\nIt was **extended** to illustrate features of [generator-openapi-repo](https://github.com/Rebilly/generator-openapi-repo)\ntool and [ReDoc](https://github.com/Rebilly/ReDoc) documentation. In addition to standard\nOpenAPI syntax we use a few [vendor extensions](https://github.com/Rebilly/ReDoc/blob/master/docs/redoc-vendor-extensions.md).\n# Cross-Origin Resource Sharing\nThis API features Cross-Origin Resource Sharing (CORS) implemented in compliance with  [W3C spec](https://www.w3.org/TR/cors/).\nAnd that allows cross-domain communication from the browser.\nAll responses have a wildcard same-origin which makes them completely public and accessible to everyone, including any code on any site.\n# Authentication\nPetstore offers two forms of authentication:\n  - API Key\n  - OAuth2\n\nOAuth2 - an open protocol to allow secure authorization in a simple\nand standard method from web, mobile and desktop applications.\n<!-- ReDoc-Inject: <security-definitions> -->\nThis ProcessMaker I/O API provides<br>\n#Test\n<br>\naccess to a BPMN 2.0 compliant workflow engine api that is designed to be used as a microservice to support enterprise cloud applications.  The current Alpha 1.0 version supports most of the descriptive class of the BPMN 2.0 specification.",
         "termsOfService": "http://processmaker.com/terms/",
         "contact": {
             "name": "ProcessMaker API Team",
@@ -217,7 +217,7 @@
                     "client",
                     "oauth"
                 ],
-                "description": "This method is retrieves an Oauth client based on its ID.",
+                "description": "This method is retrieves an Oauth client for the User based on its ID.\n\nResponse contains `client_secret` required to obtain `access_token`.",
                 "operationId": "findOauthClientById",
                 "parameters": [
                     {
@@ -262,7 +262,13 @@
                             "$ref": "#/definitions/errorArray"
                         }
                     }
-                }
+                },
+                "x-code-samples": [
+                    {
+                        "lang": "PHP",
+                        "source": "\/** Getting additional credentials to get access token for created users *\/\r\n\r\n    \/** @var ClientItem $bobCredentials *\/\r\n    $bobCredentials = $apiInstance->findOauthClientById($bob->getData()->getId(), $bob->getData()->getAttributes()->getClients()[0]);\r\n    print_r($bobCredentials);"
+                    }
+                ]
             },
             "put": {
                 "tags": [
@@ -717,7 +723,7 @@
                     "client",
                     "process"
                 ],
-                "description": "This method imports BPMN files. A new process is created when import is successful.",
+                "description": "This method imports BPMN 2.0 files. A new process(es) is/are created and its object returned back when import is successful.",
                 "operationId": "importBpmnFile",
                 "parameters": [
                     {
@@ -766,19 +772,19 @@
                             "$ref": "#/definitions/errorArray"
                         }
                     },
-                    "500": {
-                        "description": "Internal server error",
-                        "schema": {
-                            "$ref": "#/definitions/errorArray"
-                        }
-                    },
                     "default": {
                         "description": "Unexpected error",
                         "schema": {
                             "$ref": "#/definitions/errorArray"
                         }
                     }
-                }
+                },
+                "x-code-samples": [
+                    {
+                        "lang": "PHP",
+                        "source": "$result = $apiInstance->importBpmnFile(new BpmnImportItem(\r\n    [\r\n        'data' => new BpmnFile(\r\n            [\r\n                'attributes' => (new BpmnFileAttributes())\r\n                ->setBpmn(file_get_contents('slack.bpmn'))\r\n            ])\r\n    ]\r\n));\r\n\r\n\/** @var ProcessMaker\\PMIO\\Model\\Process[] $processes *\/\r\n$processes = $result->getData();"
+                    }
+                ]
             }
         },
         "/processes/{process_id}/instances/{instance_id}/datamodel": {
@@ -2208,7 +2214,7 @@
                     "event"
                 ],
                 "description": "This method starts/triggers an event.",
-                "operationId": "EventTrigger",
+                "operationId": "eventTrigger",
                 "parameters": [
                     {
                         "name": "process_id",
@@ -2270,7 +2276,13 @@
                             "$ref": "#/definitions/errorArray"
                         }
                     }
-                }
+                },
+                "x-code-samples": [
+                    {
+                        "lang": "PHP",
+                        "source": "\/** @var array $arrayContent *\/\r\n $arrayContent = ['key' => 6, 'add' => 15, 'confirm' => false];\r\n \/** @var DataModelAttributes $dataModelAttr *\/\r\n $dataModelAttr = new DataModelAttributes();\r\n $dataModelAttr->setContent(json_encode($arrayContent));\r\n \/** @var DataModelItem $result *\/\r\n $result = $apiInstance->eventTrigger(\r\n     $process->getData()->getId(),\r\n     $startEvent->getData()->getId(),\r\n     new TriggerEventCreateItem(\r\n         [\r\n            'data' => new DataModel(['attributes' => $dataModelAttr])\r\n         ]\r\n     )\r\n );"
+                    }
+                ]
             }
         },
         "/processes/{process_id}/events/{event_id}/webhook": {
@@ -2280,7 +2292,7 @@
                     "event"
                 ],
                 "description": "This webhook method triggers given Event object.",
-                "operationId": "EventWebhook",
+                "operationId": "eventWebhook",
                 "parameters": [
                     {
                         "name": "process_id",
@@ -3383,7 +3395,13 @@
                             "$ref": "#/definitions/errorArray"
                         }
                     }
-                }
+                },
+                "x-code-samples": [
+                    {
+                        "lang": "PHP",
+                        "source": "$taskAddGroupsItem = new TaskAddGroupsItem([\r\n   'data' => new GroupIds([\r\n      'groups' => [$group->getData()->getId()]\r\n   ])\r\n ]);\r\n$apiInstance->addGroupsToTask(\r\n       $process->getData()->getId(),\r\n       $userTask->getData()->getId(),\r\n       $taskAddGroupsItem\r\n      );"
+                    }
+                ]
             },
             "delete": {
                 "tags": [
@@ -3630,19 +3648,19 @@
                             "$ref": "#/definitions/errorArray"
                         }
                     },
-                    "500": {
-                        "description": "Internal server error",
-                        "schema": {
-                            "$ref": "#/definitions/errorArray"
-                        }
-                    },
                     "default": {
                         "description": "Unexpected error",
                         "schema": {
                             "$ref": "#/definitions/errorArray"
                         }
                     }
-                }
+                },
+                "x-code-samples": [
+                    {
+                        "lang": "PHP",
+                        "source": "\/** @var ProcessAttributes $processAttr *\/\r\n$processAttr = new ProcessAttributes();\r\n$processAttr->setStatus('ACTIVE');\r\n$processAttr->setName('Example process '.$random);\r\n$processAttr->setDurationBy('WORKING_DAYS');\r\n$processAttr->setType('NORMAL');\r\n$processAttr->setDesignAccess('PUBLIC');\r\n\/** @var ProcessItem $result *\/\r\n$process = $apiInstance->addProcess(new ProcessCreateItem(\r\n        [\r\n            'data' => new Process(['attributes' => $processAttr])\r\n        ]\r\n    )\r\n);"
+                    }
+                ]
             }
         },
         "/processes/{id}": {
@@ -4115,7 +4133,13 @@
                             "$ref": "#/definitions/errorArray"
                         }
                     }
-                }
+                },
+                "x-code-samples": [
+                    {
+                        "lang": "PHP",
+                        "source": "$groupAddUserItem = new GroupAddUsersItem([\r\n     'data' => new UserIds([\r\n         'users' => [$apiInstance->myselfUser()->getData()->getId()]\r\n      ])\r\n  ]);\r\n$apiInstance->addUsersToGroup($group->getData()->getId(), groupAddUserItem);"
+                    }
+                ]
             },
             "delete": {
                 "tags": [
