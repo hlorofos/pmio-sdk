@@ -65,10 +65,11 @@ public class UsersTest {
      */
     @Test
     public void addUserTest() throws ApiException {
-        UserItem response = createUser("testUser" + Math.random());
+        String username = "testUser" + Math.random();
+        UserItem response = createUser(username);
 
         assertNotNull(response.getData().getId());
-        assertEquals(response.getData().getAttributes().getUsername(), "testUser");
+        assertEquals(response.getData().getAttributes().getUsername(), username);
         assertNull(response.getData().getAttributes().getPassword());
         assertEquals(response.getData().getAttributes().getLastname(), "testLast");
         assertEquals(response.getData().getAttributes().getFirstname(), "testFirst");

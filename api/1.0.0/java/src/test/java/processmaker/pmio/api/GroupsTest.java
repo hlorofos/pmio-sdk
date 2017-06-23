@@ -52,7 +52,7 @@ public class GroupsTest {
     @Before
     public void createUser() throws ApiException {
         UserAttributes userAttributes = new UserAttributes();
-        userAttributes.setUsername("testUser");
+        userAttributes.setUsername("testUser"+Math.random());
         userAttributes.setPassword("123");
         userAttributes.setLastname("testLast");
         userAttributes.setFirstname("testFirst");
