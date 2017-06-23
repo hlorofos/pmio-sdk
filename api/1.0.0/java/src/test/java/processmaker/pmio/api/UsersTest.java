@@ -65,7 +65,7 @@ public class UsersTest {
      */
     @Test
     public void addUserTest() throws ApiException {
-        UserItem response = createUser();
+        UserItem response = createUser("testUser" + Math.random());
 
         assertNotNull(response.getData().getId());
         assertEquals(response.getData().getAttributes().getUsername(), "testUser");
@@ -101,12 +101,13 @@ public class UsersTest {
      */
     @Test
     public void findUserByIdTest() throws ApiException {
-        UserItem newUser = createUser();
+        String username = "testUser" + Math.random();
+        UserItem newUser = createUser(username);
 
         UserItem response = api.findUserById(newUser.getData().getId());
 
         assertNotNull(response.getData().getId());
-        assertEquals(response.getData().getAttributes().getUsername(), "testUser");
+        assertEquals(response.getData().getAttributes().getUsername(), username);
         assertNull(response.getData().getAttributes().getPassword());
         assertEquals(response.getData().getAttributes().getLastname(), "testLast");
         assertEquals(response.getData().getAttributes().getFirstname(), "testFirst");
@@ -114,9 +115,9 @@ public class UsersTest {
 
     }
 
-    private UserItem createUser() throws ApiException {
+    private UserItem createUser(String username) throws ApiException {
         UserAttributes userAttributes = new UserAttributes();
-        userAttributes.setUsername("testUser");
+        userAttributes.setUsername(username);
         userAttributes.setPassword("123");
         userAttributes.setLastname("testLast");
         userAttributes.setFirstname("testFirst");
@@ -176,7 +177,8 @@ public class UsersTest {
      */
     @Test
     public void updateUserTest() throws ApiException {
-        UserItem user = createUser();
+        String username = "testUser" + Math.random();
+        UserItem user = createUser(username);
         UserUpdateItem userUpdateItem = new UserUpdateItem();
         User data = new User();
         UserAttributes attributes = new UserAttributes();
@@ -187,7 +189,7 @@ public class UsersTest {
         UserItem response = api.updateUser(user.getData().getId(), userUpdateItem);
 
         assertNotNull(response.getData().getId());
-        assertEquals(response.getData().getAttributes().getUsername(), "testUser");
+        assertEquals(response.getData().getAttributes().getUsername(), username);
         assertNull(response.getData().getAttributes().getPassword());
         assertEquals(response.getData().getAttributes().getLastname(), "testLast");
         assertEquals(response.getData().getAttributes().getFirstname(), "testFirst");
